@@ -28,9 +28,9 @@ class Alexandra extends Controller
         }
     }
 
-    private function instantiate($class)
+    private function instantiate($class): mixed
     {
-        return (new $class);
+        return new $class;
     }
 
     public function addModule(array|string $module): static

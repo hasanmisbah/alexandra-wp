@@ -3,6 +3,8 @@ namespace Alexandra\Base;
 
 class Controller
 {
+    use \Alexandra\App\Trait\Enqueueable;
+
     public $DB;
 
     public function __construct() {
