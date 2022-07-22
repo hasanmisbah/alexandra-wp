@@ -8,7 +8,8 @@
             "Alexandra\\": "src/"
         },
         "files": [
-            "constants.php"
+            "constants.php",
+            "Helpers/helper.php"
         ]
     },
     "authors": [
