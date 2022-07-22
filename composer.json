@@ -1,0 +1,22 @@
+{
+    "name": "misbah/alexandra",
+    "description": "Basic wordpress plugin for learning",
+    "type": "project",
+    "license": "GPL V2 or later",
+    "autoload": {
+        "psr-4": {
+            "Alexandra\\": "src/"
+        },
+        "files": [
+            "constants.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Hasan Misbah",
+            "email": "hasanmisbah01@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

@@ -5,9 +5,9 @@
 
 
 # Development
-- [ ] Installer
-- [ ] Uninstaller
-- [ ] Autoload with composer
+- [x] Installer
+- [x] Uninstaller
+- [x] Autoload with composer
 - [ ] Code Clean up And Optimize Code
 - [ ] Data Modeling
 - [ ] Helper
