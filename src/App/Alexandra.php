@@ -15,15 +15,28 @@ class Alexandra extends Controller
     final public function boot(): void
     {
         // Application Initiator
-        $this->register();
+        if(!$this->instance) {
+            $this->instance = new Alexandra();
+            $this->register();
+        }
     }
 
-    public function register()
+    public function register(): void
     {
         foreach ($this->modules as $module) {
             $instance = $this->instantiate($module);
             if(method_exists($instance, 'register')) {
                 $instance->register();
+            }
+        }
+    }
+
+    public function unregister(): void
+    {
+        foreach ($this->modules as $module) {
+            $instance = $this->instantiate($module);
+            if(method_exists($instance, 'unregister')) {
+                $instance->unregister();
             }
         }
     }

@@ -2,6 +2,8 @@
 
 namespace Alexandra\Base;
 
+use Alexandra\App\Alexandra;
+
 /**
  * * Activator
  *
@@ -21,6 +23,8 @@ class Activator
 
     public static function deactivate(): void
     {
+        $instance = new Alexandra();
+        $instance->unregister();
         flush_rewrite_rules();
     }
 
