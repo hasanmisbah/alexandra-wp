@@ -7,7 +7,7 @@ use Alexandra\Base\Controller;
 class Alexandra extends Controller
 {
     public array $modules = [
-        \Alexandra\App\Module\Admin::class
+        \Alexandra\App\Module\Admin::class,
     ];
 
     private Alexandra|null $instance = null;
