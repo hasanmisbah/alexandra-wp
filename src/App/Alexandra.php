@@ -14,11 +14,12 @@ class Alexandra extends Controller
 
     final public function boot(): void
     {
-        // Application Initiator
         if(!$this->instance) {
+
             $this->instance = new Alexandra();
-            $this->register();
         }
+
+        $this->instance->register();
     }
 
     public function register(): void
