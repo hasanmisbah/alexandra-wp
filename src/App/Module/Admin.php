@@ -5,6 +5,7 @@ namespace Alexandra\App\Module;
 use Alexandra\Base\Controller;
 use Alexandra\Api\SettingsApi;
 use Alexandra\Provider\ViewProvider;
+use Alexandra\Provider\AssetProvider;
 
 class Admin extends Controller
 {
@@ -15,6 +16,7 @@ class Admin extends Controller
     public array $subPages = [];
 
     public ViewProvider $view;
+    public AssetProvider $assets;
 
     public function __construct()
     {
@@ -23,6 +25,7 @@ class Admin extends Controller
 
         $this->settings = new SettingsApi();
         $this->view = new ViewProvider();
+        $this->assets = new AssetProvider();
 
         $this->pages = [
             [
@@ -30,7 +33,7 @@ class Admin extends Controller
                 'menu_title' => 'Alexandra',
                 'capability' => 'manage_options',
                 'menu_slug'  => self::MENU_SLUG,
-                'callback'   => fn ()=> $this->view->render('admin.php'),
+                'callback'   => fn() => $this->view->render('admin.php'),
                 'icon_url'   => 'dashicons-store',
                 'position'   => 110,
             ],
@@ -39,14 +42,19 @@ class Admin extends Controller
 
     public function register(): void
     {
-        $this->settings
-            ->addPages($this->pages)
-            ->withSubpages('Settings')
-            ->addSubpages($this->subPages)
-            ->register()
-        ;
+        $this->settings->addPages($this->pages)->withSubpages('Settings')->addSubpages($this->subPages)->register();
 
         add_filter('plugin_action_links_' . ALEXANDRA, [ $this, 'settingLinks' ]);
+
+        $this->assets->addCss([
+            'handle' => 'Alexandra',
+            'src'    => $this->assets->getStyleSheet('alexandra.css'),
+        ])->addScript([
+            'handle' => 'Alexandra',
+            'src'    => $this->assets->getScript('alexandra.js'),
+        ])
+            ->load();
+
     }
 
 
