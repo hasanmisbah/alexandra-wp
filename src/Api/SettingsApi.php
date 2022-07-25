@@ -2,6 +2,7 @@
 
 namespace Alexandra\Api;
 
+
 class SettingsApi
 {
     public array $adminPages = [];
@@ -32,7 +33,7 @@ class SettingsApi
         if(empty($this->adminPages)) {
             return;
         }
-        
+
         foreach ($this->adminPages as $page) {
 
             $pageTitle = $page['page_title'];
@@ -45,18 +46,18 @@ class SettingsApi
 
             add_menu_page($pageTitle, $menuTitle, $capability, $menuSlug, $callback, $iconUrl, $position);
         }
-        
+
         $this->addAdminSubMenu();
     }
-    
+
     public function addAdminSubMenu(): void
     {
         if(empty($this->adminSubPages)) {
             return;
         }
-        
+
         foreach ($this->adminSubPages as $page) {
-        
+
             $parentSlug = $page['parent_slug'];
             $pageTitle = $page['page_title'];
             $menuTitle = $page['menu_title'];
@@ -64,19 +65,19 @@ class SettingsApi
             $menuSlug = $page['menu_slug'];
             $callback = $page['callback'];
             $position = $page['positions'] ?? null;
-        
+
             add_submenu_page($parentSlug, $pageTitle, $menuTitle, $capability, $menuSlug, $callback, $position);
         }
     }
-    
+
     public function withSubpages(string $title = null): static
     {
         if(empty($this->adminPages)) {
             return $this;
         }
-        
+
         $adminPage = $this->adminPages[0];
-        
+
         $subPage = array(
             array(
                 'parent_slug' => $adminPage['menu_slug'],
@@ -87,19 +88,29 @@ class SettingsApi
                 'callback'   => $adminPage['callback'],
             )
         );
-        
+
         $this->adminSubPages = $subPage;
         return $this;
     }
-    
+
     public function addSubpages(array $pages): static
     {
         if(isAssoc($pages)) {
             $this->adminSubPages[] = $pages;
         }
-        
+
         $this->adminSubPages = array_merge($this->adminSubPages, $pages);
         return $this;
+    }
+
+
+    private function getMenuAttrbute(array $item){
+        // :TODO Minimize attribute building and use this method
+        $attribute = [
+
+        ];
+        //  $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback = '', $position = null
+        //  $page_title, $menu_title, $capability, $menu_slug, $callback = '', $icon_url = '', $position = null
     }
 
 }
