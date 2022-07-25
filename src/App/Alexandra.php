@@ -25,20 +25,26 @@ class Alexandra extends Controller
     public function register(): void
     {
         foreach ($this->modules as $module) {
+
             $instance = $this->instantiate($module);
+
             if(method_exists($instance, 'register')) {
                 $instance->register();
             }
+
         }
     }
 
     public function unregister(): void
     {
         foreach ($this->modules as $module) {
+
             $instance = $this->instantiate($module);
+
             if(method_exists($instance, 'unregister')) {
                 $instance->unregister();
             }
+
         }
     }
 
@@ -50,9 +56,11 @@ class Alexandra extends Controller
     public function addModule(array|string $module): static
     {
         if(is_array($module)) {
+
             foreach ($module as $m) {
                 $this->addModule($m);
             }
+
         }
 
         $this->modules[] = $module;

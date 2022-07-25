@@ -15,6 +15,9 @@
 use Alexandra\Base\Activator;
 
 if(!function_exists('alexandraActivate')) {
+    /**
+     * @return void
+     */
     function alexandraActivate(): void
     {
         Activator::activate();
@@ -22,8 +25,25 @@ if(!function_exists('alexandraActivate')) {
 }
 
 if(!function_exists('alexandraDeactivate')) {
+    /**
+     * @return void
+     */
     function alexandraDeactivate(): void
     {
         Activator::deactivate();
+    }
+}
+
+if(!function_exists('isAssoc')) {
+    /**
+     * Determines if an array is associative.
+     * @param  array  $array
+     * @return bool
+     */
+    function isAssoc(array $array): bool
+    {
+        $keys = array_keys($array);
+
+        return array_keys($keys) !== $keys;
     }
 }
