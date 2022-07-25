@@ -55,6 +55,7 @@ class Alexandra extends Controller
 
     public function addModule(array|string $module): static
     {
+        // :Todo Add Module Resolver to load module instead of writing manually
         if(is_array($module)) {
 
             foreach ($module as $m) {
