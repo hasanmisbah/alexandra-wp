@@ -4,84 +4,57 @@ namespace Alexandra\App\Trait;
 
 trait Enqueueable
 {
-    protected array $stylesheet = [];
+    protected array $stylesheets = [];
     protected array $scripts = [];
+    // :Todo will implement weather script is enqueue to frontend or the admin area
     protected bool $enqueueToFrontEnd = false;
 
-    public function enqueueStyle(...$args): void
+    public function load(): void
     {
-        $handle = $args['handle'] ?? null;
-        $src = $args['src'] ?? null;
-        $deps = $args['deps'] ?? [];
-        $ver = $args['ver'] ?? false;
-        $media = $args['media'] ?? 'all';
-
-        wp_enqueue_style($handle, $src, $deps, $ver, $media);
+        add_action('admin_enqueue_scripts', [ $this, 'registerAssets' ]);
     }
 
-    public function enqueueScript(...$args): void
+    public function addCss(string|array $src): static
     {
-        $handle = $args['handle'] ?? null;
-        $src = $args['src'] ?? '';
-        $deps = $args['deps'] ?? [];
-        $ver = $args['ver'] ?? false;
-        $inFooter = $args['in_footer'] ?? false;
-
-        wp_enqueue_script($handle, $src, $deps, $ver, $inFooter);
-    }
-
-    public function addStyle(...$src): static
-    {
-        $this->stylesheet[] = $src;
+        $this->stylesheets[] = $src;
         return $this;
     }
 
-    public function addScript($src): static
+    public function addScript(string|array $src): static
     {
         $this->scripts[] = $src;
         return $this;
     }
 
-    public function enqueue(): static
+    public function registerAssets(): void
     {
-
-//        if($this->enqueueToFrontEnd) {
-//            do_action('wp_enqueue_scripts', [ $this, 'registerScriptAndStyle' ]);
-//            return $this;
-//        }
-
-        do_action('admin_enqueue_scripts', array($this, 'registerScriptAndStyle'));
-        return $this;
+        $this->registerScripts();
+        $this->registerStyleSheets();
     }
 
-    public function toFrontEnd(): static
+    public function registerStyleSheets(): void
     {
-        $this->enqueueToFrontEnd = true;
-        return $this;
+        if(empty($this->stylesheets)) {
+            return;
+        }
+
+        foreach ($this->stylesheets as $styleSheet) {
+            wp_register_style($styleSheet['handle'], $styleSheet['src'], $styleSheet['deps'] ?? [],
+                $styleSheet['ver'] ?? false, $styleSheet['media'] ?? 'all');
+            wp_enqueue_style($styleSheet['handle']);
+        }
     }
 
-    public function registerScriptAndStyle($hook): void
+    public function registerScripts(): void
     {
-        wp_enqueue_style('my-stylesheet', ALEXANDRA_MODULE_URL . 'CPT/assets/css/stylesheet.css');
-//        if(empty($this->stylesheet) && empty($this->scripts)) {
-//            return;
-//        }
-//
-//        if(!empty($this->stylesheet)) {
-//            foreach ($this->stylesheet as $style) {
-//                $this->enqueueStyle($style);
-//            }
-//        }
-//
-//        if(!empty($this->scripts)) {
-//            foreach ($this->scripts as $script) {
-//                $this->enqueueScript($script);
-//            }
-//        }
+        if(empty($this->scripts)) {
+            return;
+        }
 
-        // Reset everything
-//        $this->stylesheet = [];
-//        $this->scripts = [];
-//        $this->enqueueToFrontEnd = false;
+        foreach ($this->scripts as $script) {
+            wp_register_script($script['handle'], $script['src'], $script['deps'] ?? [], $script['ver'] ?? false,
+                $script['in_footer'] ?? false);
+            wp_enqueue_script($script['handle']);
+        }
     }
 }

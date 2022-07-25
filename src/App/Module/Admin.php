@@ -46,13 +46,15 @@ class Admin extends Controller
 
         add_filter('plugin_action_links_' . ALEXANDRA, [ $this, 'settingLinks' ]);
 
-        $this->assets->addCss([
-            'handle' => 'Alexandra',
-            'src'    => $this->assets->getStyleSheet('alexandra.css'),
-        ])->addScript([
-            'handle' => 'Alexandra',
-            'src'    => $this->assets->getScript('alexandra.js'),
-        ])
+        $this->assets
+            ->addCss([
+                'handle' => 'Alexandra',
+                'src'    => $this->assets->getStyleSheet('alexandra.css'),
+            ])
+            ->addScript([
+                'handle' => 'Alexandra',
+                'src'    => $this->assets->getScript('alexandra.js'),
+            ])
             ->load();
 
     }
