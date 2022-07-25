@@ -78,16 +78,16 @@ class SettingsApi
 
         $adminPage = $this->adminPages[0];
 
-        $subPage = array(
-            array(
+        $subPage = [
+            [
                 'parent_slug' => $adminPage['menu_slug'],
-                'page_title' => $adminPage['page_title'],
-                'menu_title' => $title ?? $adminPage['menu_title'],
-                'capability' => $adminPage['capability'],
-                'menu_slug'  => $adminPage['menu_slug'],
-                'callback'   => $adminPage['callback'],
-            )
-        );
+                'page_title'  => $adminPage['page_title'],
+                'menu_title'  => $title ?? $adminPage['menu_title'],
+                'capability'  => $adminPage['capability'],
+                'menu_slug'   => $adminPage['menu_slug'],
+                'callback'    => $adminPage['callback'],
+            ],
+        ];
 
         $this->adminSubPages = $subPage;
         return $this;
@@ -104,7 +104,8 @@ class SettingsApi
     }
 
 
-    private function getMenuAttrbute(array $item){
+    private function getMenuAttrbute(array $item)
+    {
         // :TODO Minimize attribute building and use this method
         $attribute = [
 
