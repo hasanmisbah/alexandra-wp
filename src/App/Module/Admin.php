@@ -2,6 +2,7 @@
 
 namespace Alexandra\App\Module;
 
+use Alexandra\Base\Form;
 use Alexandra\Base\Controller;
 use Alexandra\Api\SettingsApi;
 use Alexandra\Provider\ViewProvider;
@@ -121,7 +122,9 @@ class Admin extends Controller
                 'title'    => 'Text Example',
                 'callback' => function () {
                     $fieldValue = esc_attr(get_option('text_example'));
-                    echo '<input type="text" class="regular-text" name="text_example" value="' . $fieldValue . '" placeholder="Text Example">';
+                    $html = Form::input('text_example', 'text_example regular-text', 'text', 'text_example',
+                        $fieldValue);
+                    echo $html;
                 },
                 'page'     => self::MENU_SLUG,
                 'section'  => ALEXANDRA_PREFIX . '_admin_index',
