@@ -112,7 +112,7 @@ class SettingsApi
     }
 
 
-    private function getMenuAttrbute(array $item)
+    private function getMenuAttribute(array $item): void
     {
         // :TODO Minimize attribute building and use this method
         $attribute = [

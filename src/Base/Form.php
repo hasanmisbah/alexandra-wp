@@ -21,7 +21,7 @@ class Form
         $input = '';
         return $input;
     }
-    
+
     public static function close(): string
     {
         $tag = '';
