@@ -16,7 +16,7 @@ class Form
         return $tag;
     }
 
-    public static function input($name, $class, $type = 'text', $id): string
+    public static function input($name, $class, $type = 'text', $id, $value = ''): string
     {
         $input = '';
         return $input;

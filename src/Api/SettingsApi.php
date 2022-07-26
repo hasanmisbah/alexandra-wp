@@ -19,7 +19,7 @@ class SettingsApi
         }
 
         if(!empty($this->settings)) {
-            $this->registerCustomFields();
+            add_action('admin_init', [$this, 'registerCustomFields']);
         }
     }
 
@@ -93,21 +93,36 @@ class SettingsApi
         return $this;
     }
 
-    public function adSettings(array $settings): static
+    public function addSettings(array $settings): static
     {
-        $this->settings[] = $settings;
+        if(isAssoc($settings)) {
+            $this->settings[] = $settings;
+            return $this;
+        }
+
+        $this->settings = $settings;
         return $this;
     }
 
-    public function adSection(array $sections): static
+    public function addSection(array $sections): static
     {
-        $this->sections[] = $sections;
+        if(isAssoc($sections)) {
+            $this->sections[] = $sections;
+            return $this;
+        }
+
+        $this->sections = $sections;
         return $this;
     }
 
-    public function adField(array $fields): static
+    public function addField(array $fields): static
     {
-        $this->fields[] = $fields;
+        if(isAssoc($fields)) {
+            $this->fields[] = $fields;
+            return $this;
+        }
+
+        $this->fields = $fields;
         return $this;
     }
 
@@ -122,6 +137,10 @@ class SettingsApi
         //  $page_title, $menu_title, $capability, $menu_slug, $callback = '', $icon_url = '', $position = null
     }
 
+    /**
+     * Loop throw all the settings, section and field and register
+     * @return void
+     */
     public function registerCustomFields(): void
     {
         // register settings
@@ -137,8 +156,8 @@ class SettingsApi
 
         // add setting field
         foreach ($this->fields as $field) {
-            add_settings_field($field['id'], $field['title'], $field['callback'] ?? null, $field['page'], $field['section'] ?? 'default',
-                $field['args'] ?? array());
+            add_settings_field($field['id'], $field['title'], $field['callback'] ?? null, $field['page'],
+                $field['section'] ?? 'default', $field['args'] ?? []);
         }
 
     }
