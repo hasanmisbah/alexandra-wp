@@ -47,3 +47,10 @@ if(!function_exists('isAssoc')) {
         return array_keys($keys) !== $keys;
     }
 }
+
+if(!function_exists('form')) {
+    function form(): \Alexandra\Base\Form
+    {
+        return new \Alexandra\Base\Form();
+    }
+}

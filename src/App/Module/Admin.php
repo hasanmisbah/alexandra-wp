@@ -61,15 +61,7 @@ class Admin extends Controller
 
     public function loadPagesAndAssets()
     {
-        $this->settings
-            ->addPages($this->pages)
-            ->withSubpages('Settings')
-            ->addSubpages($this->subPages)
-            ->addSettings($this->fieldSettings)
-            ->addSection($this->fieldSection)
-            ->addField($this->fields)
-            ->register()
-        ;
+        $this->settings->addPages($this->pages)->withSubpages('Settings')->addSubpages($this->subPages)->addSettings($this->fieldSettings)->addSection($this->fieldSection)->addField($this->fields)->register();
 
         $this->assets->addCss([
             'handle' => 'Alexandra',
@@ -92,37 +84,33 @@ class Admin extends Controller
     public function setSettings()
     {
         $args = [
-            'option_group' => ALEXANDRA_PREFIX . '_options_group',
-            'option_name'  => 'text_example',
-            'callback'     => fn ($input) => $input,
+            [
+                'option_group' => ALEXANDRA_PREFIX . '_options_group',
+                'option_name'  => 'text_example',
+                'callback'     => fn($input) => $input,
+            ],
+            [
+                'option_group' => ALEXANDRA_PREFIX . '_options_group',
+                'option_name'  => 'first_name',
+                'callback'     => fn($input) => $input,
+            ],
         ];
 
         $this->fieldSettings = $args;
-
-        //$this->settings->addSettings($args);
-
-        // option_group
-        // option_name
-        // id
-        // title
-        // page
 
     }
 
     public function setSections()
     {
         $args = [
-            'id'       => ALEXANDRA_PREFIX . '_admin_index',
-            'title'    => 'Settings',
-            'callback' => function () {
-                echo 'Alexandra Callback test';
-            },
-            'page'     => self::MENU_SLUG,
+            [
+                'id'       => ALEXANDRA_PREFIX . '_admin_index',
+                'title'    => 'Settings',
+                'page'     => self::MENU_SLUG,
+            ],
         ];
 
         $this->fieldSection = $args;
-
-        //$this->settings->addSection($args);
     }
 
     public function setFields()
@@ -131,31 +119,31 @@ class Admin extends Controller
             [
                 'id'       => 'text_example',
                 'title'    => 'Text Example',
-                'callback' => function(){
+                'callback' => function () {
                     $fieldValue = esc_attr(get_option('text_example'));
-                    echo '<input type="text" class="regular-text" name="text_example" value="'. $fieldValue .'" placeholder="Text Example">';
+                    echo '<input type="text" class="regular-text" name="text_example" value="' . $fieldValue . '" placeholder="Text Example">';
                 },
                 'page'     => self::MENU_SLUG,
                 'section'  => ALEXANDRA_PREFIX . '_admin_index',
                 'args'     => [
                     'label_for' => 'text_example',
-                    'class' => 'test-class'
+                    'class'     => 'test-class',
                 ],
             ],
             [
-                'id'       => 'text_example',
-                'title'    => 'Text Example',
-                'callback' => function(){
-                    $fieldValue = esc_attr(get_option('text_example'));
-                    echo '<input type="text" class="regular-text" name="text_example" value="'. $fieldValue .'" placeholder="Text Example">';
+                'id'       => 'first_name',
+                'title'    => 'First Name',
+                'callback' => function () {
+                    $fieldValue = esc_attr(get_option('first_name'));
+                    echo '<input type="text" class="regular-text" name="first_name" value="' . $fieldValue . '" placeholder="Text Example">';
                 },
                 'page'     => self::MENU_SLUG,
                 'section'  => ALEXANDRA_PREFIX . '_admin_index',
                 'args'     => [
-                    'label_for' => 'text_example',
-                    'class' => 'test-class'
+                    'label_for' => 'first_name',
+                    'class'     => 'test-class',
                 ],
-            ]
+            ],
         ];
 
         $this->fields = $args;
