@@ -35,16 +35,8 @@ class SettingsApi
         }
 
         foreach ($this->adminPages as $page) {
-
-            $pageTitle = $page['page_title'];
-            $menuTitle = $page['menu_title'];
-            $capability = $page['capability'];
-            $menuSlug = $page['menu_slug'];
-            $callback = $page['callback'];
-            $iconUrl = $page['icon_url'] ?? '';
-            $position = $page['positions'] ?? null;
-
-            add_menu_page($pageTitle, $menuTitle, $capability, $menuSlug, $callback, $iconUrl, $position);
+            add_menu_page($page['page_title'], $page['menu_title'], $page['capability'], $page['menu_slug'],
+                $page['callback'], $page['icon_url'] ?? '', $page['positions'] ?? null);
         }
 
         $this->addAdminSubMenu();
@@ -57,16 +49,8 @@ class SettingsApi
         }
 
         foreach ($this->adminSubPages as $page) {
-
-            $parentSlug = $page['parent_slug'];
-            $pageTitle = $page['page_title'];
-            $menuTitle = $page['menu_title'];
-            $capability = $page['capability'];
-            $menuSlug = $page['menu_slug'];
-            $callback = $page['callback'];
-            $position = $page['positions'] ?? null;
-
-            add_submenu_page($parentSlug, $pageTitle, $menuTitle, $capability, $menuSlug, $callback, $position);
+            add_submenu_page($page['parent_slug'], $page['page_title'], $page['menu_title'], $page['capability'],
+                $page['menu_slug'], $page['callback'], $page['positions'] ?? null);
         }
     }
 
@@ -88,7 +72,7 @@ class SettingsApi
                 'callback'    => $adminPage['callback'],
             ],
         ];
-
+        
         $this->adminSubPages = $subPage;
         return $this;
     }
