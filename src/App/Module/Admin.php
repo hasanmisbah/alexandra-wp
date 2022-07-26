@@ -11,22 +11,20 @@ class Admin extends Controller
 {
     public const MENU_SLUG = 'alexandra';
 
-    public SettingsApi $settings;
     public array $pages = [];
     public array $subPages = [];
 
     public ViewProvider $view;
+    public SettingsApi $settings;
     public AssetProvider $assets;
 
-    public function __construct()
+    public function boot()
     {
-
-        parent::__construct();
-
         $this->settings = new SettingsApi();
         $this->view = new ViewProvider();
         $this->assets = new AssetProvider();
 
+        // :TODO Move to Page handler and automatically register all assets
         $this->pages = [
             [
                 'page_title' => 'Alexandra',
@@ -42,9 +40,20 @@ class Admin extends Controller
 
     public function register(): void
     {
-        $this->settings->addPages($this->pages)->withSubpages('Settings')->addSubpages($this->subPages)->register();
-
+        $this->boot();
+        $this->loadPagesAndAssets();
         add_filter('plugin_action_links_' . ALEXANDRA, [ $this, 'settingLinks' ]);
+
+    }
+
+    public function loadPagesAndAssets()
+    {
+        $this->settings
+            ->addPages($this->pages)
+            ->withSubpages('Settings')
+            ->addSubpages($this->subPages)
+            ->register()
+        ;
 
         $this->assets
             ->addCss([
@@ -55,8 +64,8 @@ class Admin extends Controller
                 'handle' => 'Alexandra',
                 'src'    => $this->assets->getScript('alexandra.js'),
             ])
-            ->load();
-
+            ->load()
+        ;
     }
 
 

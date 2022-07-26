@@ -8,13 +8,19 @@ class SettingsApi
     public array $adminPages = [];
     public array $adminSubPages = [];
 
+    public array $settings = [];
+    public array $sections = [];
+    public array $fields = [];
+
     public function register(): void
     {
-        if(empty($this->adminPages)) {
-            return;
+        if(!empty($this->adminPages)) {
+            add_action('admin_menu', [ $this, 'addAdminMenu' ]);
         }
 
-        add_action('admin_menu', [ $this, 'addAdminMenu' ]);
+        if(!empty($this->settings)) {
+            $this->registerCustomFields();
+        }
     }
 
     public function addPages(array $pages): static
@@ -72,7 +78,7 @@ class SettingsApi
                 'callback'    => $adminPage['callback'],
             ],
         ];
-        
+
         $this->adminSubPages = $subPage;
         return $this;
     }
@@ -87,6 +93,24 @@ class SettingsApi
         return $this;
     }
 
+    public function adSettings(array $settings): static
+    {
+        $this->settings[] = $settings;
+        return $this;
+    }
+
+    public function adSection(array $sections): static
+    {
+        $this->sections[] = $sections;
+        return $this;
+    }
+
+    public function adField(array $fields): static
+    {
+        $this->fields[] = $fields;
+        return $this;
+    }
+
 
     private function getMenuAttrbute(array $item)
     {
@@ -96,6 +120,27 @@ class SettingsApi
         ];
         //  $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback = '', $position = null
         //  $page_title, $menu_title, $capability, $menu_slug, $callback = '', $icon_url = '', $position = null
+    }
+
+    public function registerCustomFields(): void
+    {
+        // register settings
+        foreach ($this->settings as $setting) {
+            register_setting($setting['option_group'], $setting['option_name'], $setting['callback'] ?? []);
+        }
+
+
+        // add setting section
+        foreach ($this->sections as $section) {
+            add_settings_section($section['id'], $section['title'], $section['callback'] ?? null, $section['page']);
+        }
+
+        // add setting field
+        foreach ($this->fields as $field) {
+            add_settings_field($field['id'], $field['title'], $field['callback'] ?? null, $field['page'], $field['section'] ?? 'default',
+                $field['args'] ?? array());
+        }
+
     }
 
 }

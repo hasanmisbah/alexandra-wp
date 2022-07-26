@@ -1,0 +1,19 @@
+{
+  "name": "alexandra",
+  "version": "1.0.0",
+  "description": "```(A test plugin for learning wordpress plugin development)```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasanmisbah/alexandra-wp.git"
+  },
+  "author": "hasan misbah <hasanmisbah01@gmail.com>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/hasanmisbah/alexandra-wp/issues"
+  },
+  "homepage": "https://github.com/hasanmisbah/alexandra-wp#readme"
+}

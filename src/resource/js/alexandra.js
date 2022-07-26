@@ -4,7 +4,4 @@ let alexandra = {
     }
 };
 
-
-(function (){
-    alexandra.init();
-}());
+document.addEventListener('DOMContentLoaded', alexandra.init, true)
