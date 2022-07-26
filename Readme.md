@@ -8,6 +8,9 @@
 - [x] Installer
 - [x] Uninstaller
 - [x] Autoload with composer
+- [x] Provider
+ - [x] Asset Provider
+ -[x] View Provider
 - [ ] Code Clean up And Optimize Code
 - [ ] Data Modeling
 - [ ] Helper
