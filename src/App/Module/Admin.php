@@ -3,13 +3,17 @@
 namespace Alexandra\App\Module;
 
 use Alexandra\Base\Form;
-use Alexandra\Base\Controller;
 use Alexandra\Api\SettingsApi;
+use Alexandra\Base\Controller;
+use Alexandra\App\Trait\HasInput;
 use Alexandra\Provider\ViewProvider;
 use Alexandra\Provider\AssetProvider;
+use Alexandra\App\Trait\Sanitizable;
 
 class Admin extends Controller
 {
+    use Sanitizable, HasInput;
+
     public const MENU_SLUG = 'alexandra';
 
     public array $pages = [];
@@ -75,10 +79,11 @@ class Admin extends Controller
         $this->assets->addCss([
             'handle' => 'Alexandra',
             'src'    => $this->assets->getStyleSheet('alexandra.css'),
-        ])->addScript([
+            ])->addScript([
             'handle' => 'Alexandra',
             'src'    => $this->assets->getScript('alexandra.js'),
-        ])->load();
+            ])
+            ->load();
     }
 
 
@@ -95,13 +100,48 @@ class Admin extends Controller
         $args = [
             [
                 'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => 'text_example',
-                'callback'     => fn($input) => $input,
+                'option_name'  => 'cpt_settings',
+                'callback'     => [$this, 'sanitizeCheckBox'],
             ],
             [
-                'option_group' => ALEXANDRA_PREFIX . '_options_group',
-                'option_name'  => 'first_name',
-                'callback'     => fn($input) => $input,
+                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
+                'option_name'  => 'taxonomy_settings',
+                'callback'     => [$this, 'sanitizeCheckBox'],
+            ],
+            [
+                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
+                'option_name'  => 'widget_settings',
+                'callback'     => [$this, 'sanitizeCheckBox'],
+            ],
+            [
+                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
+                'option_name'  => 'gallery_settings',
+                'callback'     => [$this, 'sanitizeCheckBox'],
+            ],
+            [
+                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
+                'option_name'  => 'testimonial_settings',
+                'callback'     => [$this, 'sanitizeCheckBox'],
+            ],
+            [
+                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
+                'option_name'  => 'template_settings',
+                'callback'     => [$this, 'sanitizeCheckBox'],
+            ],
+            [
+                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
+                'option_name'  => 'login_settings',
+                'callback'     => [$this, 'sanitizeCheckBox'],
+            ],
+            [
+                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
+                'option_name'  => 'membership_settings',
+                'callback'     => [$this, 'sanitizeCheckBox'],
+            ],
+            [
+                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
+                'option_name'  => 'chat_settings',
+                'callback'     => [$this, 'sanitizeCheckBox'],
             ],
         ];
 
@@ -138,20 +178,6 @@ class Admin extends Controller
                 'section'  => ALEXANDRA_PREFIX . '_admin_index',
                 'args'     => [
                     'label_for' => 'text_example',
-                    'class'     => 'test-class',
-                ],
-            ],
-            [
-                'id'       => 'first_name',
-                'title'    => 'First Name',
-                'callback' => function () {
-                    $fieldValue = esc_attr(get_option('first_name'));
-                    echo '<input type="text" class="regular-text" name="first_name" value="' . $fieldValue . '" placeholder="Text Example">';
-                },
-                'page'     => self::MENU_SLUG,
-                'section'  => ALEXANDRA_PREFIX . '_admin_index',
-                'args'     => [
-                    'label_for' => 'first_name',
                     'class'     => 'test-class',
                 ],
             ],
