@@ -66,24 +66,15 @@ class Admin extends Controller
 
     public function loadPagesAndAssets()
     {
-        $this->settings
-            ->addPages($this->pages)
-            ->withSubpages('Settings')
-            ->addSubpages($this->subPages)
-            ->addSettings($this->fieldSettings)
-            ->addSection($this->fieldSection)
-            ->addField($this->fields)
-            ->register()
-        ;
+        $this->settings->addPages($this->pages)->withSubpages('Settings')->addSubpages($this->subPages)->addSettings($this->fieldSettings)->addSection($this->fieldSection)->addField($this->fields)->register();
 
         $this->assets->addCss([
             'handle' => 'Alexandra',
             'src'    => $this->assets->getStyleSheet('alexandra.css'),
-            ])->addScript([
-            'handle' => 'Alexandra',
-            'src'    => $this->assets->getScript('alexandra.js'),
-            ])
-            ->load();
+        ])->addScript([
+                'handle' => 'Alexandra',
+                'src'    => $this->assets->getScript('alexandra.js'),
+            ])->load();
     }
 
 
@@ -101,47 +92,47 @@ class Admin extends Controller
             [
                 'option_group' => ALEXANDRA_PREFIX . '_settings_group',
                 'option_name'  => 'cpt_settings',
-                'callback'     => [$this, 'sanitizeCheckBox'],
+                'callback'     => [ $this, 'sanitizeCheckBox' ],
             ],
             [
                 'option_group' => ALEXANDRA_PREFIX . '_settings_group',
                 'option_name'  => 'taxonomy_settings',
-                'callback'     => [$this, 'sanitizeCheckBox'],
+                'callback'     => [ $this, 'sanitizeCheckBox' ],
             ],
             [
                 'option_group' => ALEXANDRA_PREFIX . '_settings_group',
                 'option_name'  => 'widget_settings',
-                'callback'     => [$this, 'sanitizeCheckBox'],
+                'callback'     => [ $this, 'sanitizeCheckBox' ],
             ],
             [
                 'option_group' => ALEXANDRA_PREFIX . '_settings_group',
                 'option_name'  => 'gallery_settings',
-                'callback'     => [$this, 'sanitizeCheckBox'],
+                'callback'     => [ $this, 'sanitizeCheckBox' ],
             ],
             [
                 'option_group' => ALEXANDRA_PREFIX . '_settings_group',
                 'option_name'  => 'testimonial_settings',
-                'callback'     => [$this, 'sanitizeCheckBox'],
+                'callback'     => [ $this, 'sanitizeCheckBox' ],
             ],
             [
                 'option_group' => ALEXANDRA_PREFIX . '_settings_group',
                 'option_name'  => 'template_settings',
-                'callback'     => [$this, 'sanitizeCheckBox'],
+                'callback'     => [ $this, 'sanitizeCheckBox' ],
             ],
             [
                 'option_group' => ALEXANDRA_PREFIX . '_settings_group',
                 'option_name'  => 'login_settings',
-                'callback'     => [$this, 'sanitizeCheckBox'],
+                'callback'     => [ $this, 'sanitizeCheckBox' ],
             ],
             [
                 'option_group' => ALEXANDRA_PREFIX . '_settings_group',
                 'option_name'  => 'membership_settings',
-                'callback'     => [$this, 'sanitizeCheckBox'],
+                'callback'     => [ $this, 'sanitizeCheckBox' ],
             ],
             [
                 'option_group' => ALEXANDRA_PREFIX . '_settings_group',
                 'option_name'  => 'chat_settings',
-                'callback'     => [$this, 'sanitizeCheckBox'],
+                'callback'     => [ $this, 'sanitizeCheckBox' ],
             ],
         ];
 
@@ -153,9 +144,9 @@ class Admin extends Controller
     {
         $args = [
             [
-                'id'       => ALEXANDRA_PREFIX . '_admin_index',
-                'title'    => 'Settings',
-                'page'     => self::MENU_SLUG,
+                'id'    => ALEXANDRA_PREFIX . '_admin_index',
+                'title' => 'Settings',
+                'page'  => self::MENU_SLUG,
             ],
         ];
 
@@ -166,19 +157,16 @@ class Admin extends Controller
     {
         $args = [
             [
-                'id'       => 'text_example',
+                'id'       => 'cpt_settings',
                 'title'    => 'Text Example',
-                'callback' => function () {
-                    $fieldValue = esc_attr(get_option('text_example'));
-                    $html = Form::input('text_example', 'text_example regular-text', 'text', 'text_example',
-                        $fieldValue);
-                    echo $html;
-                },
+                'callback' => [ $this, 'checkBoxInput' ],
                 'page'     => self::MENU_SLUG,
                 'section'  => ALEXANDRA_PREFIX . '_admin_index',
                 'args'     => [
-                    'label_for' => 'text_example',
+                    'label_for' => 'cpt_settings',
                     'class'     => 'test-class',
+                    'name'      => 'cpt_settings',
+                    'id'        => '',
                 ],
             ],
         ];

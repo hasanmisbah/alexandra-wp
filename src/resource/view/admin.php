@@ -13,7 +13,7 @@
         <div class="tab-pane active" id="settings">
             <?php
                 echo \Alexandra\Base\Form::open('options.php', 'post');
-                    settings_fields(ALEXANDRA_PREFIX . '_options_group');
+                    settings_fields(ALEXANDRA_PREFIX . '_settings_group');
                     do_settings_sections('alexandra');
                     submit_button();
                 echo \Alexandra\Base\Form::close();
