@@ -20,6 +20,6 @@ class AssetProvider
 
     public function getAsset($src , $subPath): string
     {
-        return ALEXANDRA_URL . "/src/resource/{$subPath}/" . $src;
+        return ALEXANDRA_URL . "assets/{$subPath}/" . $src;
     }
 }

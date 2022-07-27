@@ -62,7 +62,15 @@ class Admin extends Controller
 
     public function loadPagesAndAssets()
     {
-        $this->settings->addPages($this->pages)->withSubpages('Settings')->addSubpages($this->subPages)->addSettings($this->fieldSettings)->addSection($this->fieldSection)->addField($this->fields)->register();
+        $this->settings
+            ->addPages($this->pages)
+            ->withSubpages('Settings')
+            ->addSubpages($this->subPages)
+            ->addSettings($this->fieldSettings)
+            ->addSection($this->fieldSection)
+            ->addField($this->fields)
+            ->register()
+        ;
 
         $this->assets->addCss([
             'handle' => 'Alexandra',
@@ -86,7 +94,7 @@ class Admin extends Controller
     {
         $args = [
             [
-                'option_group' => ALEXANDRA_PREFIX . '_options_group',
+                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
                 'option_name'  => 'text_example',
                 'callback'     => fn($input) => $input,
             ],
@@ -150,8 +158,6 @@ class Admin extends Controller
         ];
 
         $this->fields = $args;
-
-        //$this->settings->addField($args);
     }
 
 }

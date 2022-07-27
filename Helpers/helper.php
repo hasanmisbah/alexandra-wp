@@ -65,12 +65,12 @@ if (! function_exists('mix')) {
      *
      * @throws \Exception
      */
-    function mix(string $path, string $manifestDirectory = ''): string
+    function mix(string $path, string $manifestDirectory = ALEXANDRA_URL): string
     {
         static $manifest;
 
         $publicFolder = ALEXANDRA_ASSETS_PATH;
-        $rootPath = $_SERVER['DOCUMENT_ROOT'];
+        $rootPath = ALEXANDRA_PATH;
         $publicPath = $rootPath . $publicFolder;
 
         if ($manifestDirectory && ! str_starts_with($manifestDirectory, '/')) {
@@ -79,7 +79,7 @@ if (! function_exists('mix')) {
 
         if (! $manifest) {
 
-            if (! file_exists($manifestPath = ($rootPath . $manifestDirectory.'/mix-manifest.json') )) {
+            if (! file_exists($manifestPath = ($rootPath .'mix-manifest.json') )) {
                 throw new Exception('The Mix manifest does not exist.');
             }
 
@@ -92,7 +92,7 @@ if (! function_exists('mix')) {
 
         $path = $publicFolder . $path;
 
-        if (! array_key_exists($path, $manifest)) {
+        if (! array_key_exists("/{$path}", $manifest)) {
 
             throw new Exception(
                 "Unable to locate Mix file: {$path}. Please check your ".
@@ -101,8 +101,10 @@ if (! function_exists('mix')) {
 
         }
 
-        return file_exists($publicPath . ($manifestDirectory.'/hot'))
-            ? "http://localhost:8080{$manifest[$path]}"
-            : $manifestDirectory.$manifest[$path];
+        return ALEXANDRA_URL.$manifest["/{$path}"];
+
+//        return file_exists($publicPath . ($manifestDirectory.'/hot'))
+//            ? "http://localhost:8080{$manifest[$path]}"
+//            : $manifestDirectory.$manifest["/{$path}"];
     }
 }

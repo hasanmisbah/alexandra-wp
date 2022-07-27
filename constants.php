@@ -8,4 +8,4 @@ const ALEXANDRA_PREFIX = 'alx';
 const ALEXANDRA_VERSION = '1.0.0';
 const ALEXANDRA_TEXT_DOMAIN = 'alexandra';
 const ALEXANDRA_MODULE_PATH = ALEXANDRA_PATH . '/Module/';
-const ALEXANDRA_ASSETS_PATH = ALEXANDRA_PATH . '/assets/';
+const ALEXANDRA_ASSETS_PATH = 'assets';

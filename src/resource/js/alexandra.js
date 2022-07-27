@@ -29,3 +29,5 @@ const switchTab = (element) => {
     const tab = document.querySelector(`${tabId}`)
     tab.classList.add('active');
 }
+
+console.log('alexandra.js loaded');
