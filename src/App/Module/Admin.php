@@ -53,7 +53,7 @@ class Admin extends Controller
         $this->boot();
 
         // Add Custom setting, sections, fields
-        $this->setSettings();
+        //$this->setSettings();
         $this->setSections();
         $this->setFields();
 
@@ -71,7 +71,12 @@ class Admin extends Controller
         $this->assets->addCss([
             'handle' => 'Alexandra',
             'src'    => $this->assets->getStyleSheet('alexandra.css'),
-        ])->addScript([
+        ])
+            ->addCss([
+                'handle' => 'plugin-style',
+                'src'    => $this->assets->getStyleSheet('style.css'),
+            ])
+            ->addScript([
                 'handle' => 'Alexandra',
                 'src'    => $this->assets->getScript('alexandra.js'),
             ])->load();
@@ -88,55 +93,10 @@ class Admin extends Controller
 
     public function setSettings()
     {
-        $args = [
-            [
-                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => 'cpt_settings',
-                'callback'     => [ $this, 'sanitizeCheckBox' ],
-            ],
-            [
-                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => 'taxonomy_settings',
-                'callback'     => [ $this, 'sanitizeCheckBox' ],
-            ],
-            [
-                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => 'widget_settings',
-                'callback'     => [ $this, 'sanitizeCheckBox' ],
-            ],
-            [
-                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => 'gallery_settings',
-                'callback'     => [ $this, 'sanitizeCheckBox' ],
-            ],
-            [
-                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => 'testimonial_settings',
-                'callback'     => [ $this, 'sanitizeCheckBox' ],
-            ],
-            [
-                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => 'template_settings',
-                'callback'     => [ $this, 'sanitizeCheckBox' ],
-            ],
-            [
-                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => 'login_settings',
-                'callback'     => [ $this, 'sanitizeCheckBox' ],
-            ],
-            [
-                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => 'membership_settings',
-                'callback'     => [ $this, 'sanitizeCheckBox' ],
-            ],
-            [
-                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => 'chat_settings',
-                'callback'     => [ $this, 'sanitizeCheckBox' ],
-            ],
-        ];
+        // :TODO Move to Page handler and automatically register all settings
+        // Not using anymore, code reduced using a single array for settings
 
-        $this->fieldSettings = $args;
+        //$this->fieldSettings = $args;
 
     }
 
@@ -155,23 +115,39 @@ class Admin extends Controller
 
     public function setFields()
     {
-        $args = [
-            [
-                'id'       => 'cpt_settings',
-                'title'    => 'Text Example',
-                'callback' => [ $this, 'checkBoxInput' ],
-                'page'     => self::MENU_SLUG,
-                'section'  => ALEXANDRA_PREFIX . '_admin_index',
-                'args'     => [
-                    'label_for' => 'cpt_settings',
-                    'class'     => 'test-class',
-                    'name'      => 'cpt_settings',
-                    'id'        => '',
-                ],
-            ],
+        // :TODO Move to Page handler and automatically register all fields
+        $fieldList = [
+            'cpt_settings' => 'Activate CPT Manager',
+            'taxonomy_settings' => 'Activate Taxonomy Manager',
+            'widget_settings' => 'Activate Widget Manager',
+            'gallery_settings' => 'Activate Gallery Manager',
+            'testimonial_settings' => 'Activate Testimonial Manager',
+            'template_settings' => 'Activate Template Manager',
+            'login_settings' => 'Activate Login Manager',
+            'membership_settings' => 'Activate Membership Manager',
+            'chat_settings' => 'Activate Chat Manager',
         ];
 
-        $this->fields = $args;
+        foreach ($fieldList as $key => $value) {
+            $this->fieldSettings[] = [
+                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
+                'option_name'  => $key,
+                'callback'     => [ $this, 'sanitizeCheckBox' ],
+            ];
+            $this->fields[] = [
+                    'id'       => $key,
+                    'title'    => $value,
+                    'callback' => [ $this, 'checkBoxInput' ],
+                    'page'     => self::MENU_SLUG,
+                    'section'  => ALEXANDRA_PREFIX . '_admin_index',
+                    'args'     => [
+                        'label_for' => $key,
+                        'class'     => 'regular-text ui-toggle',
+                        'name'      => $key,
+                        'id'        => $key,
+                    ],
+            ];
+        }
     }
 
 }

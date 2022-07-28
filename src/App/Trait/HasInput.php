@@ -6,9 +6,15 @@ use Alexandra\Base\Form;
 
 trait HasInput
 {
-    public function checkBoxInput($args):void
+    public function checkBoxInput($args): void
     {
         $fieldValue = get_option($args['name']);
-       echo Form::input($args['name'], $args['class'], 'checkbox', $args['id'], $fieldValue);
+        $classes = $args['class'] ?? '';
+        $name = $args['name'] ?? $args['label_for'];
+        $id = $args['id'] ?? $args['label_for'];
+
+        echo '<div class="toggle"><input type="checkbox" class="' . $classes . '" name="' . $name . '" id="' . $id . '" value="1" ' .
+            checked(1,
+                $fieldValue, false) . '></div>';
     }
 }
