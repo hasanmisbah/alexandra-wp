@@ -15,6 +15,7 @@ class Admin extends Controller
     use Sanitizable, HasInput;
 
     public const MENU_SLUG = 'alexandra';
+    public const SETTING_SLUG = self::MENU_SLUG . '_settings';
 
     public array $pages = [];
     public array $subPages = [];
@@ -53,7 +54,7 @@ class Admin extends Controller
         $this->boot();
 
         // Add Custom setting, sections, fields
-        //$this->setSettings();
+        $this->setSettings();
         $this->setSections();
         $this->setFields();
 
@@ -62,6 +63,7 @@ class Admin extends Controller
 
         add_filter('plugin_action_links_' . ALEXANDRA, [ $this, 'settingLinks' ]);
 
+        $this->onActivate();
     }
 
     public function loadPagesAndAssets()
@@ -71,12 +73,10 @@ class Admin extends Controller
         $this->assets->addCss([
             'handle' => 'Alexandra',
             'src'    => $this->assets->getStyleSheet('alexandra.css'),
-        ])
-            ->addCss([
+        ])->addCss([
                 'handle' => 'plugin-style',
                 'src'    => $this->assets->getStyleSheet('style.css'),
-            ])
-            ->addScript([
+            ])->addScript([
                 'handle' => 'Alexandra',
                 'src'    => $this->assets->getScript('alexandra.js'),
             ])->load();
@@ -96,7 +96,12 @@ class Admin extends Controller
         // :TODO Move to Page handler and automatically register all settings
         // Not using anymore, code reduced using a single array for settings
 
-        //$this->fieldSettings = $args;
+        // Push to settings array
+        $this->fieldSettings[] = [
+            'option_group' => ALEXANDRA_PREFIX . '_settings_group',
+            'option_name'  => self::SETTING_SLUG,
+            'callback'     => [ $this, 'sanitizeCheckBox' ],
+        ];
 
     }
 
@@ -117,37 +122,57 @@ class Admin extends Controller
     {
         // :TODO Move to Page handler and automatically register all fields
         $fieldList = [
-            'cpt_settings' => 'Activate CPT Manager',
-            'taxonomy_settings' => 'Activate Taxonomy Manager',
-            'widget_settings' => 'Activate Widget Manager',
-            'gallery_settings' => 'Activate Gallery Manager',
+            'cpt_settings'         => 'Activate CPT Manager',
+            'taxonomy_settings'    => 'Activate Taxonomy Manager',
+            'widget_settings'      => 'Activate Widget Manager',
+            'gallery_settings'     => 'Activate Gallery Manager',
             'testimonial_settings' => 'Activate Testimonial Manager',
-            'template_settings' => 'Activate Template Manager',
-            'login_settings' => 'Activate Login Manager',
-            'membership_settings' => 'Activate Membership Manager',
-            'chat_settings' => 'Activate Chat Manager',
+            'template_settings'    => 'Activate Template Manager',
+            'login_settings'       => 'Activate Login Manager',
+            'membership_settings'  => 'Activate Membership Manager',
+            'chat_settings'        => 'Activate Chat Manager',
         ];
 
         foreach ($fieldList as $key => $value) {
-            $this->fieldSettings[] = [
-                'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-                'option_name'  => $key,
-                'callback'     => [ $this, 'sanitizeCheckBox' ],
-            ];
+            // Push to fields array
             $this->fields[] = [
-                    'id'       => $key,
-                    'title'    => $value,
-                    'callback' => [ $this, 'checkBoxInput' ],
-                    'page'     => self::MENU_SLUG,
-                    'section'  => ALEXANDRA_PREFIX . '_admin_index',
-                    'args'     => [
-                        'label_for' => $key,
-                        'class'     => 'regular-text ui-toggle',
-                        'name'      => $key,
-                        'id'        => $key,
-                    ],
+                'id'       => $key,
+                'title'    => $value,
+                'callback' => [ $this, 'checkBoxInput' ],
+                'page'     => self::MENU_SLUG,
+                'section'  => ALEXANDRA_PREFIX . '_admin_index',
+                'args'     => [
+                    'option_name' => self::SETTING_SLUG,
+                    'label_for'   => $key,
+                    'class'       => 'regular-text ui-toggle',
+                    'name'        => $key,
+                    'id'          => $key,
+                ],
             ];
+
         }
+    }
+
+
+    public function onActivate(): void
+    {
+        if(get_option(self::SETTING_SLUG)) {
+            return;
+        }
+
+        $defaultSettings = [
+            'cpt_settings'         => false,
+            'taxonomy_settings'    => false,
+            'widget_settings'      => false,
+            'gallery_settings'     => false,
+            'testimonial_settings' => false,
+            'template_settings'    => false,
+            'login_settings'       => false,
+            'membership_settings'  => false,
+            'chat_settings'        => false,
+        ];
+
+        update_option(self::SETTING_SLUG, $defaultSettings);
     }
 
 }
