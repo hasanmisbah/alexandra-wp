@@ -160,6 +160,8 @@ class Admin extends Controller
             return;
         }
 
+
+        // Set Default Options for the plugin
         $defaultSettings = [
             'cpt_settings'         => false,
             'taxonomy_settings'    => false,
@@ -173,6 +175,15 @@ class Admin extends Controller
         ];
 
         update_option(self::SETTING_SLUG, $defaultSettings);
+    }
+
+    public function unregister()
+    {
+        // Delete options on uninstall
+        // :Todo Need to improve codebase and ask user if they want to delete options
+        if(get_option(self::SETTING_SLUG)) {
+            delete_option(self::SETTING_SLUG);
+        }
     }
 
 }
