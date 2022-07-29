@@ -18,7 +18,7 @@ trait Sanitizable
             'chat_settings' => 'Activate Chat Manager',
         ];
 
-        $output = array();
+        $output = [];
 
         foreach ($fieldList as $key => $value) {
             $output[$key] = isset($input[$key]) ? 1 : 0;

@@ -4,13 +4,5 @@
 
 
 
-
-cpt_settings
-taxonomy_settings
-widget_settings
-gallery_settings
-testimonial_settings
-template_settings
-login_settings
-membership_settings
-chat_settings
+## Links
+- [ ] `https://www.smashingmagazine.com/2011/10/how-to-use-ajax-in-wordpress/`
