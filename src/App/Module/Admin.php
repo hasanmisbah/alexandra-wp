@@ -169,16 +169,16 @@ class Admin extends Controller
             'chat_settings'        => false,
         ];
 
-        update_option(self::SETTING_SLUG, $defaultSettings);
+        update_option($this->settingSlug, $defaultSettings);
     }
 
     public function unregister()
     {
         // Delete options on uninstall
         // :Todo Need to improve codebase and ask user if they want to delete options
-        if(get_option($this->settingSlug)) {
-            delete_option($this->settingSlug);
-        }
+//        if(get_option($this->settingSlug)) {
+//            delete_option($this->settingSlug);
+//        }
     }
 
 }
