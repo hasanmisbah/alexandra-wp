@@ -14,15 +14,25 @@ trait Enqueueable
         add_action('admin_enqueue_scripts', [ $this, 'registerAssets' ]);
     }
 
-    public function addCss(string|array $src): static
+    public function addCss(string|array $srcs): static
     {
-        $this->stylesheets[] = $src;
+        if(!isAssoc($srcs)) {
+            $this->stylesheets = array_merge($this->stylesheets, $srcs);
+            return $this;
+        }
+
+        $this->stylesheets[] = $srcs;
         return $this;
     }
 
-    public function addScript(string|array $src): static
+    public function addScript(string|array $srcs): static
     {
-        $this->scripts[] = $src;
+        if(!isAssoc($srcs)) {
+            $this->scripts = array_merge($this->scripts, $srcs);
+            return $this;
+        }
+
+        $this->scripts[] = $srcs;
         return $this;
     }
 

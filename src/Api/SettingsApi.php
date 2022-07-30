@@ -12,6 +12,10 @@ class SettingsApi
     public array $sections = [];
     public array $fields = [];
 
+    protected string $subPageTitle = 'Settings';
+
+    protected bool $hasSubPages = false;
+
     public function register(): void
     {
         if(!empty($this->adminPages)) {
@@ -23,14 +27,31 @@ class SettingsApi
         }
     }
 
-    public function addPages(array $pages): static
+    public function addPage(array $pages): static
     {
-        if(isAssoc($pages)) {
-            $this->adminPages[] = $pages;
+        if(!isAssoc($pages)) {
+            $this->adminPages = array_merge($this->adminPages, $pages);
             return $this;
         }
 
-        $this->adminPages = $pages;
+        $this->adminPages[] = $pages;
+        return $this;
+    }
+
+    public function addSubpage(array $pages): static
+    {
+        $this->hasSubPages = true;
+
+        if(empty($this->adminSubPages)) {
+            $this->setDefaultSubPage();
+        }
+
+        if(!isAssoc($pages)) {
+            $this->adminSubPages = array_merge($this->adminSubPages, $pages);
+            return $this;
+        }
+
+        $this->adminSubPages[] = $pages;
         return $this;
     }
 
@@ -58,39 +79,6 @@ class SettingsApi
             add_submenu_page($page['parent_slug'], $page['page_title'], $page['menu_title'], $page['capability'],
                 $page['menu_slug'], $page['callback'], $page['positions'] ?? null);
         }
-    }
-
-    public function withSubpages(string $title = null): static
-    {
-        if(empty($this->adminPages)) {
-            return $this;
-        }
-
-        $adminPage = $this->adminPages[0];
-
-        $subPage = [
-            [
-                'parent_slug' => $adminPage['menu_slug'],
-                'page_title'  => $adminPage['page_title'],
-                'menu_title'  => $title ?? $adminPage['menu_title'],
-                'capability'  => $adminPage['capability'],
-                'menu_slug'   => $adminPage['menu_slug'],
-                'callback'    => $adminPage['callback'],
-            ],
-        ];
-
-        $this->adminSubPages = $subPage;
-        return $this;
-    }
-
-    public function addSubpages(array $pages): static
-    {
-        if(isAssoc($pages)) {
-            $this->adminSubPages[] = $pages;
-        }
-
-        $this->adminSubPages = array_merge($this->adminSubPages, $pages);
-        return $this;
     }
 
     public function addSettings(array $settings): static
@@ -160,6 +148,34 @@ class SettingsApi
                 $field['section'] ?? 'default', $field['args'] ?? []);
         }
 
+    }
+
+    public function setSubPageTitle(string $title): string
+    {
+        return $this->subPageTitle = $title;
+    }
+
+
+    public function setDefaultSubPage() :void
+    {
+        if(!$this->adminPages) {
+            return;
+        }
+
+        $adminPage = $this->adminPages[0];
+
+        $subPage = [
+            [
+                'parent_slug' => $adminPage['menu_slug'],
+                'page_title'  => $adminPage['page_title'],
+                'menu_title'  => $this->subPageTitle ?? $adminPage['menu_title'],
+                'capability'  => $adminPage['capability'],
+                'menu_slug'   => $adminPage['menu_slug'],
+                'callback'    => $adminPage['callback'],
+            ],
+        ];
+
+        $this->adminSubPages = $subPage;
     }
 
 }

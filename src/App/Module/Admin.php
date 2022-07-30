@@ -2,48 +2,43 @@
 
 namespace Alexandra\App\Module;
 
-use Alexandra\Base\Form;
-use Alexandra\Api\SettingsApi;
 use Alexandra\Base\Controller;
 use Alexandra\App\Trait\HasInput;
-use Alexandra\Provider\ViewProvider;
-use Alexandra\Provider\AssetProvider;
 use Alexandra\App\Trait\Sanitizable;
 
 class Admin extends Controller
 {
     use Sanitizable, HasInput;
 
-    public const MENU_SLUG = 'alexandra';
-    public const SETTING_SLUG = self::MENU_SLUG . '_settings';
-
-    public array $pages = [];
-    public array $subPages = [];
-
-    public array $fieldSettings = [];
-    public array $fieldSection = [];
-    public array $fields = [];
-
-    public ViewProvider $view;
-    public SettingsApi $settings;
-    public AssetProvider $assets;
+    public string $settingSlug;
 
     public function boot()
     {
-        $this->settings = new SettingsApi();
-        $this->view = new ViewProvider();
-        $this->assets = new AssetProvider();
-
         // :TODO Move to Page handler and automatically register all assets
+
+        $this->settingSlug = $this->menuSlug . '_settings';
+
         $this->pages = [
             [
                 'page_title' => 'Alexandra',
                 'menu_title' => 'Alexandra',
                 'capability' => 'manage_options',
-                'menu_slug'  => self::MENU_SLUG,
+                'menu_slug'  => $this->menuSlug,
                 'callback'   => fn() => $this->view->render('admin.php'),
                 'icon_url'   => 'dashicons-store',
                 'position'   => 110,
+            ],
+        ];
+        $this->subPages = [
+            [
+                'parent_slug' => $this->menuSlug,
+                'page_title'  => 'Custom Post Types',
+                'menu_title'  => 'Custom Post Types',
+                'capability'  => 'manage_options',
+                'menu_slug'   => 'cpt',
+                'callback'    => function(){
+                        echo '<h1>Custom Post Types</h1>';
+                },
             ],
         ];
     }
@@ -58,37 +53,37 @@ class Admin extends Controller
         $this->setSections();
         $this->setFields();
 
+        $this->settingLinks[] = '<a href="admin.php?page=' . $this->menuSlug . '">Administration</a>';
+
         // Load Module Assets
         $this->loadPagesAndAssets();
-
-        add_filter('plugin_action_links_' . ALEXANDRA, [ $this, 'settingLinks' ]);
-
         $this->onActivate();
     }
 
     public function loadPagesAndAssets()
     {
-        $this->settings->addPages($this->pages)->withSubpages('Settings')->addSubpages($this->subPages)->addSettings($this->fieldSettings)->addSection($this->fieldSection)->addField($this->fields)->register();
 
-        $this->assets->addCss([
-            'handle' => 'Alexandra',
-            'src'    => $this->assets->getStyleSheet('alexandra.css'),
-        ])->addCss([
+        $stylesheets = [
+            [
+                'handle' => 'Alexandra',
+                'src'    => $this->assets->getStyleSheet('alexandra.css'),
+            ],
+            [
                 'handle' => 'plugin-style',
                 'src'    => $this->assets->getStyleSheet('style.css'),
-            ])->addScript([
+            ]
+        ];
+
+        $scripts = [
+            [
                 'handle' => 'Alexandra',
                 'src'    => $this->assets->getScript('alexandra.js'),
-            ])->load();
-    }
+            ]
+        ];
 
+        $this->styles = $stylesheets;
+        $this->scripts = $scripts;
 
-    public function settingLinks($links)
-    {
-        $settingLink = '<a href="admin.php?page=' . self::MENU_SLUG . '">Administration</a>';
-        $links[] = $settingLink;
-
-        return $links;
     }
 
     public function setSettings()
@@ -99,7 +94,7 @@ class Admin extends Controller
         // Push to settings array
         $this->fieldSettings[] = [
             'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-            'option_name'  => self::SETTING_SLUG,
+            'option_name'  => $this->settingSlug,
             'callback'     => [ $this, 'sanitizeCheckBox' ],
         ];
 
@@ -111,7 +106,7 @@ class Admin extends Controller
             [
                 'id'    => ALEXANDRA_PREFIX . '_admin_index',
                 'title' => 'Settings',
-                'page'  => self::MENU_SLUG,
+                'page'  => $this->menuSlug,
             ],
         ];
 
@@ -139,10 +134,10 @@ class Admin extends Controller
                 'id'       => $key,
                 'title'    => $value,
                 'callback' => [ $this, 'checkBoxInput' ],
-                'page'     => self::MENU_SLUG,
+                'page'     => $this->menuSlug,
                 'section'  => ALEXANDRA_PREFIX . '_admin_index',
                 'args'     => [
-                    'option_name' => self::SETTING_SLUG,
+                    'option_name' => $this->settingSlug,
                     'label_for'   => $key,
                     'class'       => 'regular-text ui-toggle',
                     'name'        => $key,
@@ -156,7 +151,7 @@ class Admin extends Controller
 
     public function onActivate(): void
     {
-        if(get_option(self::SETTING_SLUG)) {
+        if(get_option($this->settingSlug)) {
             return;
         }
 
@@ -181,8 +176,8 @@ class Admin extends Controller
     {
         // Delete options on uninstall
         // :Todo Need to improve codebase and ask user if they want to delete options
-        if(get_option(self::SETTING_SLUG)) {
-            delete_option(self::SETTING_SLUG);
+        if(get_option($this->settingSlug)) {
+            delete_option($this->settingSlug);
         }
     }
 

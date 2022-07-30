@@ -10,16 +10,16 @@ class AssetProvider
 
     public function getStyleSheet($src): string
     {
-        return $this->getAsset($src, 'css');
+        return $this->getAsset($src, 'css/');
     }
 
     public function getScript($src): string
     {
-        return $this->getAsset($src, 'js');
+        return $this->getAsset($src, 'js/');
     }
 
-    public function getAsset($src , $subPath): string
+    public function getAsset($src , $subPath = ''): string
     {
-        return ALEXANDRA_URL . "assets/{$subPath}/" . $src;
+        return ALEXANDRA_URL . "assets/{$subPath}" . $src;
     }
 }

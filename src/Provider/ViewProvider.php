@@ -2,9 +2,7 @@
 
 namespace Alexandra\Provider;
 
-use Alexandra\Base\Controller;
-
-class ViewProvider extends Controller
+class ViewProvider
 {
     public function render(string $file, mixed $parameter = null)
     {
