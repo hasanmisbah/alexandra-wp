@@ -16,12 +16,12 @@ use Alexandra\App\Alexandra;
  */
 class Activator
 {
-    public static function activate(): void
+    public static function activate()
     {
         flush_rewrite_rules();
     }
 
-    public static function deactivate(): void
+    public static function deactivate()
     {
         $instance = new Alexandra();
         $instance->unregister();

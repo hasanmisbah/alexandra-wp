@@ -1,12 +1,12 @@
 <?php
 
-namespace Alexandra\App\Trait;
+namespace Alexandra\App\Traits;
 
 use Alexandra\Base\Form;
 
 trait HasInput
 {
-    public function checkBoxInput($args): void
+    public function checkBoxInput($args)
     {
         $optionName = $args['option_name'];
         $fieldValue = get_option($optionName);

@@ -18,7 +18,7 @@
  * atom bomb)
  * Version:           1.0.0
  * Requires at least: 5.2
- * Requires PHP:      8.0
+ * Requires PHP:      7.1
  * Author:            Hasan Misbah
  * Author URI:        https://github.com/hasanmisbah
  * Text Domain:       alexandra

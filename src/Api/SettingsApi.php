@@ -5,16 +5,16 @@ namespace Alexandra\Api;
 
 class SettingsApi
 {
-    public array $adminPages = [];
-    public array $adminSubPages = [];
+    public $adminPages = [];
+    public $adminSubPages = [];
 
-    public array $settings = [];
-    public array $sections = [];
-    public array $fields = [];
+    public $settings = [];
+    public $sections = [];
+    public $fields = [];
 
-    protected string $subPageTitle = 'Settings';
+    protected $subPageTitle = 'Settings';
 
-    protected bool $hasSubPages = false;
+    protected $hasSubPages = false;
 
     public function register(): void
     {

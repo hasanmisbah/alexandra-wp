@@ -1,6 +1,6 @@
 <?php
 
-namespace Alexandra\App\Trait;
+namespace Alexandra\App\Traits;
 
 trait ApplicationContract
 {

@@ -9,37 +9,37 @@ use Alexandra\Provider\AssetProvider;
 class Controller
 {
     // Global $wpdb instance
-    public mixed $DB;
+    public $DB;
 
     // SettingsApi instance
-    public SettingsApi $settings;
+    public $settings;
 
     // Register and enqueue assets
-    public AssetProvider $assets;
+    public $assets;
 
     // Register and render views
-    public ViewProvider $view;
+    public $view;
 
     // List of all pages to be registered
-    protected array $pages = [];
+    protected $pages = [];
 
     // List of all subpages to be registered
-    protected array $subPages = [];
+    protected $subPages = [];
 
     // list of stylesheets to be enqueued
-    protected array $styles = [];
+    protected $styles = [];
 
     // list of scripts to be enqueued
-    protected array $scripts = [];
+    protected $scripts = [];
 
 
-    protected array $fieldSettings = [];
-    protected array $fieldSection = [];
-    protected array $fields = [];
+    protected $fieldSettings = [];
+    protected $fieldSection = [];
+    protected $fields = [];
 
-    protected string $menuSlug = 'alexandra';
+    protected $menuSlug = 'alexandra';
 
-    protected array $settingLinks = [];
+    protected $settingLinks = [];
 
     public function __construct()
     {

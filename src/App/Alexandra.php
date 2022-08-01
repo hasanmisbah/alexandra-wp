@@ -3,19 +3,19 @@
 namespace Alexandra\App;
 
 use Alexandra\Base\Controller;
-use Alexandra\App\Trait\ApplicationContract;
+use Alexandra\App\Traits\ApplicationContract;
 
 class Alexandra extends Controller
 {
     use ApplicationContract;
 
-    public array $modules = [
+    public $modules = [
         \Alexandra\App\Module\Admin::class,
         \Alexandra\App\Module\Test::class,
         \Alexandra\App\Module\AuthorBio::class
     ];
 
-    protected array $modulerData = [
+    protected $modulerData = [
 
         // :TODO: Structure this data in a way that it can be used to register modules
         'module_slug' => [
@@ -24,9 +24,9 @@ class Alexandra extends Controller
         ],
     ];
 
-    private Alexandra|null $instance = null;
+    private $instance = null;
 
-    final public function boot(): void
+    final public function boot()
     {
         if(!$this->instance) {
 

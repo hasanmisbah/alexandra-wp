@@ -3,14 +3,14 @@
 namespace Alexandra\App\Module;
 
 use Alexandra\Base\Controller;
-use Alexandra\App\Trait\HasInput;
-use Alexandra\App\Trait\Sanitizable;
+use Alexandra\App\Traits\HasInput;
+use Alexandra\App\Traits\Sanitizable;
 
 class Admin extends Controller
 {
     use Sanitizable, HasInput;
 
-    public string $settingSlug;
+    public $settingSlug;
 
     public function boot()
     {
@@ -24,7 +24,9 @@ class Admin extends Controller
                 'menu_title' => 'Alexandra',
                 'capability' => 'manage_options',
                 'menu_slug'  => $this->menuSlug,
-                'callback'   => fn() => $this->view->render('admin.php'),
+                'callback'   => function(){
+                    return $this->view->render('admin.php');
+                },//fn() => $this->view->render('admin.php'),
                 'icon_url'   => 'dashicons-store',
                 'position'   => 110,
             ],

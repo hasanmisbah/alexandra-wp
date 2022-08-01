@@ -1,20 +1,20 @@
 <?php
 
-namespace Alexandra\App\Trait;
+namespace Alexandra\App\Traits;
 
 trait Enqueueable
 {
-    protected array $stylesheets = [];
-    protected array $scripts = [];
+    protected $stylesheets = [];
+    protected $scripts = [];
     // :Todo will implement weather script is enqueue to frontend or the admin area
-    protected bool $enqueueToFrontEnd = false;
+    protected $enqueueToFrontEnd = false;
 
     public function load(): void
     {
         add_action('admin_enqueue_scripts', [ $this, 'registerAssets' ]);
     }
 
-    public function addCss(string|array $srcs): static
+    public function addCss($srcs)
     {
         if(!isAssoc($srcs)) {
             $this->stylesheets = array_merge($this->stylesheets, $srcs);
@@ -25,7 +25,7 @@ trait Enqueueable
         return $this;
     }
 
-    public function addScript(string|array $srcs): static
+    public function addScript($srcs)
     {
         if(!isAssoc($srcs)) {
             $this->scripts = array_merge($this->scripts, $srcs);
@@ -36,13 +36,13 @@ trait Enqueueable
         return $this;
     }
 
-    public function registerAssets(): void
+    public function registerAssets()
     {
         $this->registerScripts();
         $this->registerStyleSheets();
     }
 
-    public function registerStyleSheets(): void
+    public function registerStyleSheets()
     {
         if(empty($this->stylesheets)) {
             return;
@@ -55,7 +55,7 @@ trait Enqueueable
         }
     }
 
-    public function registerScripts(): void
+    public function registerScripts()
     {
         if(empty($this->scripts)) {
             return;
