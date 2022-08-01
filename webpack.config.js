@@ -11,11 +11,4 @@ module.exports = {
             '~': path.resolve('node_modules')
         }
     },
-    plugins: [
-        new webpack.ProvidePlugin({
-            '$': 'jquery',
-            'jQuery': 'jquery',
-            'window.jQuery': 'jquery',
-        }),
-    ]
 }
