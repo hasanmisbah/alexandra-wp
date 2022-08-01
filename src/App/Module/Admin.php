@@ -65,25 +65,26 @@ class Admin extends Controller
     public function loadPagesAndAssets()
     {
 
-        $stylesheets = [
-            [
-                'handle' => 'Alexandra',
-                'src'    => $this->assets->getStyleSheet('alexandra.css'),
-            ],
-            [
-                'handle' => 'plugin-style',
-                'src'    => $this->assets->getStyleSheet('style.css'),
-            ]
-        ];
+//        $stylesheets = [
+//            [
+//                'handle' => 'Alexandra',
+//                'src'    => $this->assets->getStyleSheet('alexandra.css'),
+//            ],
+//            [
+//                'handle' => 'plugin-style',
+//                'src'    => $this->assets->getStyleSheet('style.css'),
+//            ]
+//        ];
 
         $scripts = [
             [
                 'handle' => 'Alexandra',
-                'src'    => $this->assets->getScript('alexandra.js'),
+                'src'    => $this->assets->getScript('app.js'),
+                'in_footer' => true,
             ]
         ];
 
-        $this->styles = $stylesheets;
+        //$this->styles = $stylesheets;
         $this->scripts = $scripts;
 
     }
