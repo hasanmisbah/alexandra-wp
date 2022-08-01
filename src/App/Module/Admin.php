@@ -81,6 +81,9 @@ class Admin extends Controller
                 'handle' => 'Alexandra',
                 'src'    => $this->assets->getScript('app.js'),
                 'in_footer' => true,
+                'deps' => [
+                    'jquery',
+                ],
             ]
         ];
 

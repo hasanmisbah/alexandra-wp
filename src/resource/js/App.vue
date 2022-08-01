@@ -3,12 +3,11 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 
 export default defineComponent({
     name: 'App',
     setup() {
-
         return {
             message: 'Hello Vue!'
         }
