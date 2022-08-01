@@ -37,7 +37,7 @@ class AuthorBio extends Controller
         return $methods;
     }
 
-    public function markup(): string
+    public function markup()
     {
         $data = '
                 <div class="content">
@@ -65,7 +65,7 @@ class AuthorBio extends Controller
         return $data;
     }
 
-    public function addAuthorBioToPost($content): string
+    public function addAuthorBioToPost($content)
     {
         return $content . $this->markup();
     }

@@ -6,7 +6,7 @@ use Alexandra\Base\Controller;
 
 class Test extends Controller
 {
-    public function register(): void
+    public function register()
     {
 
     }

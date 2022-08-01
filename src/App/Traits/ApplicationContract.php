@@ -4,7 +4,7 @@ namespace Alexandra\App\Traits;
 
 trait ApplicationContract
 {
-    public function register(): void
+    public function register()
     {
         foreach ($this->modules as $module) {
 
@@ -21,7 +21,7 @@ trait ApplicationContract
         $this->loadApplicationData();
     }
 
-    public function unregister(): void
+    public function unregister()
     {
         foreach ($this->modules as $module) {
 
@@ -34,12 +34,12 @@ trait ApplicationContract
         }
     }
 
-    private function instantiate($class): object
+    private function instantiate($class)
     {
         return new $class;
     }
 
-    public function loadApplicationData(): void
+    public function loadApplicationData()
     {
         $this->registerSettings();
         $this->registerAssets();
@@ -47,7 +47,7 @@ trait ApplicationContract
         $this->applySettingLinks();
     }
 
-    public function bindModuleData($instance): void
+    public function bindModuleData($instance)
     {
         $this->styles = array_merge($this->styles, (array) $instance->styles);
         $this->scripts = array_merge($this->scripts, (array) $instance->scripts);

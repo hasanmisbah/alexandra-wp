@@ -4,7 +4,7 @@ namespace Alexandra\App\Traits;
 
 trait Sanitizable
 {
-    public function sanitizeCheckBox($input): array
+    public function sanitizeCheckBox($input)
     {
         $fieldList = [
             'cpt_settings' => 'Activate CPT Manager',

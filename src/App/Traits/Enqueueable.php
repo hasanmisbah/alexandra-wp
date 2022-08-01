@@ -9,7 +9,7 @@ trait Enqueueable
     // :Todo will implement weather script is enqueue to frontend or the admin area
     protected $enqueueToFrontEnd = false;
 
-    public function load(): void
+    public function load()
     {
         add_action('admin_enqueue_scripts', [ $this, 'registerAssets' ]);
     }

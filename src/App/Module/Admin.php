@@ -45,7 +45,7 @@ class Admin extends Controller
         ];
     }
 
-    public function register(): void
+    public function register()
     {
         // Boot up the module
         $this->boot();
@@ -151,7 +151,7 @@ class Admin extends Controller
     }
 
 
-    public function onActivate(): void
+    public function onActivate()
     {
         if(get_option($this->settingSlug)) {
             return;

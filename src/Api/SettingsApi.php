@@ -16,7 +16,7 @@ class SettingsApi
 
     protected $hasSubPages = false;
 
-    public function register(): void
+    public function register()
     {
         if(!empty($this->adminPages)) {
             add_action('admin_menu', [ $this, 'addAdminMenu' ]);
@@ -27,7 +27,7 @@ class SettingsApi
         }
     }
 
-    public function addPage(array $pages): static
+    public function addPage( $pages)
     {
         if(!isAssoc($pages)) {
             $this->adminPages = array_merge($this->adminPages, $pages);
@@ -38,7 +38,7 @@ class SettingsApi
         return $this;
     }
 
-    public function addSubpage(array $pages): static
+    public function addSubpage( $pages)
     {
         $this->hasSubPages = true;
 
@@ -55,7 +55,7 @@ class SettingsApi
         return $this;
     }
 
-    public function addAdminMenu(): void
+    public function addAdminMenu()
     {
         if(empty($this->adminPages)) {
             return;
@@ -69,7 +69,7 @@ class SettingsApi
         $this->addAdminSubMenu();
     }
 
-    public function addAdminSubMenu(): void
+    public function addAdminSubMenu()
     {
         if(empty($this->adminSubPages)) {
             return;
@@ -81,7 +81,7 @@ class SettingsApi
         }
     }
 
-    public function addSettings(array $settings): static
+    public function addSettings($settings)
     {
         if(isAssoc($settings)) {
             $this->settings[] = $settings;
@@ -92,7 +92,7 @@ class SettingsApi
         return $this;
     }
 
-    public function addSection(array $sections): static
+    public function addSection($sections)
     {
         if(isAssoc($sections)) {
             $this->sections[] = $sections;
@@ -103,7 +103,7 @@ class SettingsApi
         return $this;
     }
 
-    public function addField(array $fields): static
+    public function addField($fields)
     {
         if(isAssoc($fields)) {
             $this->fields[] = $fields;
@@ -115,7 +115,7 @@ class SettingsApi
     }
 
 
-    private function getMenuAttribute(array $item): void
+    private function getMenuAttribute($item)
     {
         // :TODO Minimize attribute building and use this method
         $attribute = [
@@ -129,7 +129,7 @@ class SettingsApi
      * Loop throw all the settings, section and field and register
      * @return void
      */
-    public function registerCustomFields(): void
+    public function registerCustomFields()
     {
         // register settings
         foreach ($this->settings as $setting) {
@@ -150,13 +150,13 @@ class SettingsApi
 
     }
 
-    public function setSubPageTitle(string $title): string
+    public function setSubPageTitle(string $title)
     {
         return $this->subPageTitle = $title;
     }
 
 
-    public function setDefaultSubPage() :void
+    public function setDefaultSubPage()
     {
         if(!$this->adminPages) {
             return;
