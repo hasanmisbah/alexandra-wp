@@ -12,6 +12,7 @@ class Alexandra extends Controller
     public array $modules = [
         \Alexandra\App\Module\Admin::class,
         \Alexandra\App\Module\Test::class,
+        \Alexandra\App\Module\AuthorBio::class
     ];
 
     protected array $modulerData = [

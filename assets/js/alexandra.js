@@ -30,6 +30,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 
 /***/ }),
 
+/***/ "./src/resource/css/author_bio.scss":
+/*!******************************************!*\
+  !*** ./src/resource/css/author_bio.scss ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvcmVzb3VyY2UvY3NzL2F1dGhvcl9iaW8uc2Nzcy5qcyIsIm1hcHBpbmdzIjoiO0FBQUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9hbGV4YW5kcmEvLi9zcmMvcmVzb3VyY2UvY3NzL2F1dGhvcl9iaW8uc2Nzcz9hMzA5Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxuZXhwb3J0IHt9OyJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./src/resource/css/author_bio.scss\n");
+
+/***/ }),
+
 /***/ "./src/resource/css/alexandra.css":
 /*!****************************************!*\
   !*** ./src/resource/css/alexandra.css ***!
@@ -37,7 +48,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvcmVzb3VyY2UvY3NzL2FsZXhhbmRyYS5jc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vYWxleGFuZHJhLy4vc3JjL3Jlc291cmNlL2Nzcy9hbGV4YW5kcmEuY3NzPzk1M2MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luXG5leHBvcnQge307Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/resource/css/alexandra.css\n");
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvcmVzb3VyY2UvY3NzL2FsZXhhbmRyYS5jc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vYWxleGFuZHJhLy4vc3JjL3Jlc291cmNlL2Nzcy9hbGV4YW5kcmEuY3NzPzAyMDIiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luXG5leHBvcnQge307Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/resource/css/alexandra.css\n");
 
 /***/ })
 
@@ -128,6 +139,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/assets/js/alexandra": 0,
+/******/ 			"assets/css/author_bio": 0,
 /******/ 			"assets/css/alexandra": 0,
 /******/ 			"assets/css/style": 0
 /******/ 		};
@@ -179,9 +191,10 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["assets/css/alexandra","assets/css/style"], () => (__webpack_require__("./src/resource/js/alexandra.js")))
-/******/ 	__webpack_require__.O(undefined, ["assets/css/alexandra","assets/css/style"], () => (__webpack_require__("./src/resource/css/style.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/css/alexandra","assets/css/style"], () => (__webpack_require__("./src/resource/css/alexandra.css")))
+/******/ 	__webpack_require__.O(undefined, ["assets/css/author_bio","assets/css/alexandra","assets/css/style"], () => (__webpack_require__("./src/resource/js/alexandra.js")))
+/******/ 	__webpack_require__.O(undefined, ["assets/css/author_bio","assets/css/alexandra","assets/css/style"], () => (__webpack_require__("./src/resource/css/style.scss")))
+/******/ 	__webpack_require__.O(undefined, ["assets/css/author_bio","assets/css/alexandra","assets/css/style"], () => (__webpack_require__("./src/resource/css/author_bio.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/css/author_bio","assets/css/alexandra","assets/css/style"], () => (__webpack_require__("./src/resource/css/alexandra.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
