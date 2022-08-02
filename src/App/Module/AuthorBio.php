@@ -6,20 +6,8 @@ use Alexandra\Base\Controller;
 
 class AuthorBio extends Controller
 {
-    // frontend
-//    jQuery.get('alexzandra_admin_ajax', function(data) {
-//        console.log(data);
-//    });
-
-
-
-
     public function register()
     {
-        add_action('wp_ajax_alexzandra_admin_ajax', function () {
-            // do stuffs
-
-        });
 
         add_filter('user_contactmethods', [ $this, 'socialMetaFieldToUserProfile' ]);
         add_filter('the_content', [ $this, 'addAuthorBioToPost' ]);
@@ -72,6 +60,13 @@ class AuthorBio extends Controller
 
     public function enqueueStyleSheet()
     {
-        wp_enqueue_style('alexandra-author-bio', ALEXANDRA_URL . 'assets/css/author_bio.css');
+        $this->styles = [
+            [
+                'handle' => 'author',
+                'src'    => $this->assets->getStyleSheet('author_bio.css'),
+                'media'  => 'all',
+            ],
+        ];
+        //wp_enqueue_style('alexandra-author-bio', ALEXANDRA_URL . 'assets/css/author_bio.css');
     }
 }

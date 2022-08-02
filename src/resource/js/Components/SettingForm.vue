@@ -7,7 +7,13 @@
             <el-switch v-model="settingData.authorBio"/>
         </el-form-item>
             <div class="d-flex">
-                <el-button type="primary" @click="onSubmit">Save</el-button>
+                <el-button
+                    type="primary"
+                    @click="handleSubmit"
+                    :loading="state.loading"
+                >
+                    Save
+                </el-button>
             </div>
     </el-form>
 </template>
@@ -27,19 +33,26 @@ export default defineComponent({
 
     setup(props, { emit }){
 
+        const state = reactive({
+            settingData: props.currentSettings,
+            loading: false
+        })
+
         const settingData = reactive({
             cpt: false,
             authorBio: false,
         })
 
-        const handleSubmit = () => {
+        const handleSubmit = async () => {
 
             if(typeof props.onSubmit !== 'function'){
                 return emit('submit', settingData);
 
             }
 
-            return props.onSubmit(settingData);
+            state.loading = true;
+            await props.onSubmit(settingData);
+            state.loading = false;
         }
 
         watch(() => props.currentSettings, (newSettings) => {
@@ -49,7 +62,8 @@ export default defineComponent({
 
         return {
             handleSubmit,
-            settingData
+            settingData,
+            state
         }
     }
 })

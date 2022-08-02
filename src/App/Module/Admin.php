@@ -12,6 +12,8 @@ class Admin extends Controller
 
     public $settingSlug;
 
+    // :TODO Refactor this and make it more generic and cleaner
+
     public function boot()
     {
         // :TODO Move to Page handler and automatically register all assets

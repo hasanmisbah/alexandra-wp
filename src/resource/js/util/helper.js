@@ -20,4 +20,3 @@ export const getApiResponse = async (callback, {onSuccess = undefined, onError =
         return Promise.reject(error);
     }
 }
-console.log(collection)
