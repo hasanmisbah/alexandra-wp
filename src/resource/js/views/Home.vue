@@ -14,7 +14,7 @@
 import SettingForm from '@/Components/SettingForm';
 
 export default {
-    name: "Home",
+    name: 'Home',
     components: { SettingForm }
 }
 </script>
