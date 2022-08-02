@@ -1,5 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
 
 module.exports = {
     stats: {
@@ -7,8 +6,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            '@': path.resolve('resources/js'),
-            '~': path.resolve('node_modules')
+            '@': path.resolve(__dirname, 'src/resource/js'),
+            '~': path.resolve(__dirname, 'src/node_modules')
         }
-    },
+    }
 }

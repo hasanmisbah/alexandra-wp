@@ -1,3 +1,24 @@
-import {createRouter} from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
+import Home from '@/views/Home'
+import About from '@/views/About'
 
-// :Todo will implement this later
+const routes = [
+    {
+        name: 'home',
+        path: '/',
+        component: Home
+    },
+    {
+        name: 'About',
+        path: '/about',
+        component: About,
+    },
+];
+
+const router = createRouter({
+    history: createWebHashHistory(window.location.pathname),
+    routes,
+});
+
+
+export default router;
