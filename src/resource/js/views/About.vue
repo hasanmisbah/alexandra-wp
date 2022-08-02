@@ -3,8 +3,12 @@
 </template>
 
 <script>
+
 export default {
-    name: 'About'
+    name: 'About',
+    setup(){
+
+    }
 }
 </script>
 

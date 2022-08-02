@@ -12,10 +12,21 @@
 
 <script>
 import SettingForm from '@/Components/SettingForm';
-
+import { getAjaxUrl } from '@/util/helper'
+import jQuery from 'jquery'
+import { onMounted } from 'vue';
 export default {
     name: 'Home',
-    components: { SettingForm }
+    components: { SettingForm },
+    setup(){
+        onMounted(async ()=> {
+            await jQuery.post(getAjaxUrl, {action: 'alex_ajax_action'}, function (data) {
+                console.log(data);
+            }).fail(function (e) {
+                console.log(e);
+            });
+        });
+    }
 }
 </script>
 

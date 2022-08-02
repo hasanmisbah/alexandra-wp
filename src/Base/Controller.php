@@ -41,6 +41,8 @@ class Controller
 
     protected $settingLinks = [];
 
+    protected $ajax = null;
+
     public function __construct()
     {
 
@@ -50,6 +52,8 @@ class Controller
         $this->settings = new SettingsApi();
         $this->assets = new AssetProvider();
         $this->view = new ViewProvider();
+
+        $this->ajax = new Ajax();
     }
 
     public function registerSettings(): void
