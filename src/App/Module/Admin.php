@@ -52,8 +52,8 @@ class Admin extends Controller
 
         $this->ajaxAction = [
             [
-                'action' => 'alexandra_ajax_action',
-                'callback' => [$this, 'ajaxHandler'],
+                'action' => 'alexandra_get_admin_settings',
+                'callback' => [$this, 'getAjaxAdminSettings'],
             ]
         ];
     }
@@ -196,10 +196,10 @@ class Admin extends Controller
         );
     }
 
-    public function ajaxHandler()
+    public function getAjaxAdminSettings()
     {
-        wp_send_json_success('success');
-        //echo 'Hello World';
+        $settings = get_option($this->settingSlug);
+        wp_send_json_success($settings);
     }
 
 }

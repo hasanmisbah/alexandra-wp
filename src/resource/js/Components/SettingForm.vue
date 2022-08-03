@@ -1,10 +1,11 @@
 <template>
     <el-form label-width="15%" label-position="left">
-        <el-form-item label="Enable Custom post type">
-            <el-switch v-model="settingData.cpt"/>
-        </el-form-item>
-        <el-form-item label="Enable Author bio">
-            <el-switch v-model="settingData.authorBio"/>
+        <el-form-item
+            v-for="(setting, index) in state.adminSettingFields"
+            :label="getAdminSettingTitle(setting.key)"
+            :key="`settings-${index}`"
+        >
+            <el-switch v-model="setting.value"/>
         </el-form-item>
         <div class="d-flex">
             <el-button
@@ -20,6 +21,7 @@
 
 <script>
 import { defineComponent, reactive, watch } from 'vue'
+import { getAdminSettingTitle } from '@/util/helper';
 
 export default defineComponent({
 
@@ -34,42 +36,58 @@ export default defineComponent({
     setup(props, { emit }) {
 
         const state = reactive({
-            settingData: props.currentSettings,
-            loading: false
-        })
-
-        const settingData = reactive({
-            cpt: false,
-            authorBio: false,
+            settingData: {},
+            loading: false,
+            adminSettingFields: []
         })
 
         const handleSubmit = async () => {
 
-            if (typeof props.onSubmit !== 'function') {
-                return emit('submit', settingData);
+            let dataToSubmit = {};
 
+            for (const item of state.adminSettingFields) {
+                dataToSubmit[item.key] = item.value;
+            }
+
+
+            if (typeof props.onSubmit !== 'function') {
+                return emit('submit', dataToSubmit);
             }
 
             state.loading = true;
 
             try {
-                await props.onSubmit(settingData);
-            }catch (e) {
+                await props.onSubmit(dataToSubmit);
+            } catch (e) {
                 return Promise.reject(e);
-            }finally {
+            } finally {
                 state.loading = false;
             }
         }
 
+        const populateSettingField = (settings) => {
+
+            let updatedSettings = [];
+
+            Object.keys(settings).forEach(key => (
+                updatedSettings.push({
+                    key,
+                    value: !!settings[key]
+                })
+            ));
+
+            state.adminSettingFields = updatedSettings;
+        }
+
         watch(() => props.currentSettings, (newSettings) => {
-            settingData.cpt = newSettings?.cpt || false;
-            settingData.authorBio = newSettings?.authorBio || false;
+            state.settingData = { ...newSettings };
+            populateSettingField(newSettings);
         }, { immediate: true, deep: true })
 
         return {
             handleSubmit,
-            settingData,
-            state
+            state,
+            getAdminSettingTitle
         }
     }
 })
