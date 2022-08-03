@@ -1,32 +1,97 @@
-import { ElLoading  } from 'element-plus'
+import { ElLoading, ElMessage } from 'element-plus'
 
-export function useLoading() {
+export function useLoading(...options) {
 
-    const loader = {
+    let loader = null;
 
-        instance: null,
+    const config = {
+        lock: true,
+        text: 'Loading...',
+        background: 'rgba(255, 255, 255, 0.9)',
+        target: '#alexandra-container',
+        ...options
+    }
 
-        start(){
+    const startLoading = () => {
 
-            if(!this.instance){
-                ElLoading.service({
-                    lock: true,
-                    text: 'Loading...',
-                    background: 'rgba(0, 0, 0, 0.7)',
-                });
-            }
+        if (loader) return;
 
-        },
+        loader = ElLoading.service(config);
+    }
 
-        stop(){
-            if (this.instance) {
-                this.instance.close();
-            }
-        }
+    const stopLoading = () => {
+
+        if(!loader) return;
+
+        loader.close();
+
+        loader = null;
     }
 
     return {
-        loader
+        startLoading,
+        stopLoading
     }
 
+}
+
+export function useNotification(...options) {
+
+    const config = {
+        duration: 3000,
+        showClose: true,
+        grouping: true,
+        customClass: 'alexandra-notification',
+        ...options
+    }
+
+    const notify = (message, ...options) => {
+
+        ElMessage({
+            ...config,
+            ...options,
+            message,
+        });
+
+    }
+
+    const notifyError = (message, ...options) => {
+
+        ElMessage({
+            ...config,
+            ...options,
+            type: 'error',
+            message,
+        });
+
+    }
+
+    const notifySuccess = (message, ...options) => {
+
+        ElMessage({
+            ...config,
+            ...options,
+            type: 'success',
+            message,
+        });
+
+    }
+
+    const notifyWarning = (message, ...options) => {
+
+        ElMessage({
+            ...config,
+            ...options,
+            type: 'warning',
+            message,
+        });
+
+    }
+
+    return {
+        notify,
+        notifyError,
+        notifySuccess,
+        notifyWarning,
+    }
 }

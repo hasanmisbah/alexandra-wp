@@ -1,5 +1,7 @@
 <template>
-    <RouterView/>
+    <div id="alexandra-container">
+        <RouterView/>
+    </div>
 </template>
 
 <script>

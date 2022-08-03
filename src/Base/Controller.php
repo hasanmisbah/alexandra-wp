@@ -43,6 +43,9 @@ class Controller
 
     protected $ajax = null;
 
+
+    protected $ajaxAction = [];
+
     public function __construct()
     {
 
@@ -81,6 +84,11 @@ class Controller
     public function applySettingLinks(): void
     {
         add_filter('plugin_action_links_' . ALEXANDRA, [ $this, 'registerSettingLinks' ]);
+    }
+
+    public function registerAjaxAction()
+    {
+        $this->ajax->addAction($this->ajaxAction)->register();
     }
 
 }

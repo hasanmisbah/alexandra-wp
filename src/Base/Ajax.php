@@ -6,23 +6,23 @@ class Ajax
 {
     public $actions = [];
 
-    public function __construct()
+    public function register()
     {
-        add_action('wp_ajax_alex_ajax_action', [$this, 'ajaxAction']);
-//        $this->registerActions();
+        foreach ($this->actions as $action => $handler) {
+            add_action('wp_ajax_'.$action, $handler);
+        }
     }
 
-    public function registerActions()
-    {
-//        foreach ($this->actions as $action => $handler) {
-//            add_action('wp_ajax_'.$action, $handler);
-//        }
-    }
 
-    public function ajaxAction()
+    public function addAction($actions)
     {
+        if(isAssoc($actions)) {
+            $this->actions[] = $actions;
+            return $this;
+        }
 
-        wp_send_json_success($_REQUEST);
+        $this->actions = array_merge($this->actions, $actions);
+        return $this;
     }
 
 }

@@ -45,6 +45,7 @@ trait ApplicationContract
         $this->registerAssets();
         $this->registerMetabox();
         $this->applySettingLinks();
+        $this->registerAjaxAction();
     }
 
     public function bindModuleData($instance)
@@ -59,5 +60,6 @@ trait ApplicationContract
         $this->fieldSettings = array_merge($this->fieldSettings, (array) $instance->fieldSettings);
         $this->fieldSection = array_merge($this->fieldSection, (array) $instance->fieldSection);
         $this->fields = array_merge($this->fields, (array) $instance->fields);
+        $this->ajaxAction = array_merge($this->ajaxAction, (array) $instance->ajaxAction);
     }
 }

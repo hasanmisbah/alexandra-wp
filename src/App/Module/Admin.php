@@ -18,6 +18,8 @@ class Admin extends Controller
     {
         // :TODO Move to Page handler and automatically register all assets
 
+        //add_action('wp_ajax_alex_ajax_action', [$this, 'ajaxHandler']);
+
         $this->settingSlug = $this->menuSlug . '_settings';
 
         $this->pages = [
@@ -68,6 +70,12 @@ class Admin extends Controller
 
     public function loadPagesAndAssets()
     {
+        $stylesheets = [
+            [
+                'handle' => 'Alexandra',
+                'src'    => $this->assets->getStyleSheet('alexandra.css'),
+            ]
+        ];
 
         $scripts = [
             [
@@ -78,7 +86,7 @@ class Admin extends Controller
         ];
         add_action( 'admin_enqueue_scripts', [$this, 'localizeScript'] );
 
-        //$this->styles = $stylesheets;
+        $this->styles = $stylesheets;
         $this->scripts = $scripts;
 
     }
@@ -173,18 +181,19 @@ class Admin extends Controller
     {}
 
     public function localizeScript() {
-        wp_enqueue_script( 'alexandra_ajax', $this->assets->getScript('ajax-handler.js'), array('jquery'), null, true );
+        wp_enqueue_script( 'alexandra_ajax', $this->assets->getScript('ajax-handler.js'), ['jquery'], null, true );
         wp_localize_script( 'alexandra_ajax', 'alexandra_collection',
-            array(
+            [
                 'ajax_url' => admin_url( 'admin-ajax.php' ),
                 'nonce' => wp_create_nonce( 'my-nonce' )
-            )
+            ]
         );
     }
 
     public function ajaxHandler()
     {
-        echo 'Hello World';
+        wp_send_json_success('success');
+        //echo 'Hello World';
     }
 
 }
