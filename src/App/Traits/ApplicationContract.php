@@ -52,6 +52,7 @@ trait ApplicationContract
     {
         $this->styles = array_merge($this->styles, (array) $instance->styles);
         $this->scripts = array_merge($this->scripts, (array) $instance->scripts);
+
         $this->pages = array_merge($this->pages, (array) $instance->pages);
         $this->subPages = array_merge($this->subPages, (array) $instance->subPages);
 
@@ -60,6 +61,7 @@ trait ApplicationContract
         $this->fieldSettings = array_merge($this->fieldSettings, (array) $instance->fieldSettings);
         $this->fieldSection = array_merge($this->fieldSection, (array) $instance->fieldSection);
         $this->fields = array_merge($this->fields, (array) $instance->fields);
+
         $this->ajaxAction = array_merge($this->ajaxAction, (array) $instance->ajaxAction);
     }
 }

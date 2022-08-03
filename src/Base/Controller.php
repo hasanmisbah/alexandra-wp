@@ -88,6 +88,7 @@ class Controller
 
     public function registerAjaxAction()
     {
+        //var_dump($this->ajaxAction);
         $this->ajax->addAction($this->ajaxAction)->register();
     }
 

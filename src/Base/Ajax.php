@@ -6,21 +6,17 @@ class Ajax
 {
     public $actions = [];
 
+
     public function register()
     {
-        foreach ($this->actions as $action => $handler) {
-            add_action('wp_ajax_'.$action, $handler);
+        foreach ($this->actions as $action) {
+            add_action('wp_ajax_' . $action['action'], $action['callback']);
         }
     }
 
 
     public function addAction($actions)
     {
-        if(isAssoc($actions)) {
-            $this->actions[] = $actions;
-            return $this;
-        }
-
         $this->actions = array_merge($this->actions, $actions);
         return $this;
     }

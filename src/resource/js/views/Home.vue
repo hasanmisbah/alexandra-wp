@@ -33,20 +33,20 @@ export default {
         const { notifyError, notifySuccess, notify, notifyWarning } = useNotification();
 
         const handleSettingUpdate = async () => {
-            await jQuery.post(getAjaxUrl, { action: 'alex_ajax_action' }, function (data) {
+            await jQuery.post(getAjaxUrl, { action: 'alexandra_ajax_action' }, function (data) {
                 console.log(data);
             }).fail(function (e) {
                 console.log(e);
             });
         }
 
-        onMounted(() => {
-            startLoading();
-
-            setTimeout(() => {
-                stopLoading();
-            }, 5000);
-        })
+        // onMounted(() => {
+        //     startLoading();
+        //
+        //     setTimeout(() => {
+        //         stopLoading();
+        //     }, 5000);
+        // })
 
         return {
             handleSettingUpdate,
