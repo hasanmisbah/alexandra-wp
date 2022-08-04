@@ -27,22 +27,22 @@ class Admin extends Controller
                 'page_title' => 'Alexandra',
                 'menu_title' => 'Alexandra',
                 'capability' => 'manage_options',
-                'menu_slug' => $this->menuSlug,
-                'callback' => function () {
+                'menu_slug'  => $this->menuSlug,
+                'callback'   => function () {
                     return $this->view->render('admin.php');
                 },//fn() => $this->view->render('admin.php'),
-                'icon_url' => 'dashicons-store',
-                'position' => 110,
+                'icon_url'   => 'dashicons-store',
+                'position'   => 110,
             ],
         ];
         $this->subPages = [
             [
                 'parent_slug' => $this->menuSlug,
-                'page_title' => 'Custom Post Types',
-                'menu_title' => 'Custom Post Types',
-                'capability' => 'manage_options',
-                'menu_slug' => 'cpt',
-                'callback' => function () {
+                'page_title'  => 'Custom Post Types',
+                'menu_title'  => 'Custom Post Types',
+                'capability'  => 'manage_options',
+                'menu_slug'   => 'cpt',
+                'callback'    => function () {
                     echo '<h1>Custom Post Types</h1>';
                 },
             ],
@@ -52,11 +52,11 @@ class Admin extends Controller
 
         $this->ajaxAction = [
             [
-                'action' => 'alexandra_get_admin_settings',
+                'action'   => 'alexandra_get_admin_settings',
                 'callback' => [$this, 'getAjaxAdminSettings'],
             ],
             [
-                'action' => 'alexandra_update_admin_settings',
+                'action'   => 'alexandra_update_admin_settings',
                 'callback' => [$this, 'updateAjaxAdminSettings'],
             ]
         ];
@@ -84,14 +84,14 @@ class Admin extends Controller
         $stylesheets = [
             [
                 'handle' => 'Alexandra',
-                'src' => $this->assets->getStyleSheet('alexandra.css'),
+                'src'    => $this->assets->getStyleSheet('alexandra.css'),
             ]
         ];
 
         $scripts = [
             [
-                'handle' => 'Alexandra',
-                'src' => $this->assets->getScript('app.js'),
+                'handle'    => 'Alexandra',
+                'src'       => $this->assets->getScript('app.js'),
                 'in_footer' => true,
             ],
         ];
@@ -109,8 +109,8 @@ class Admin extends Controller
         // Push to settings array
         $this->fieldSettings[] = [
             'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-            'option_name' => $this->settingSlug,
-            'callback' => [$this, 'sanitizeCheckBox'],
+            'option_name'  => $this->settingSlug,
+            'callback'     => [$this, 'sanitizeCheckBox'],
         ];
     }
 
@@ -118,9 +118,9 @@ class Admin extends Controller
     {
         $args = [
             [
-                'id' => ALEXANDRA_PREFIX . '_admin_index',
+                'id'    => ALEXANDRA_PREFIX . '_admin_index',
                 'title' => 'Settings',
-                'page' => $this->menuSlug,
+                'page'  => $this->menuSlug,
             ],
         ];
 
@@ -131,31 +131,31 @@ class Admin extends Controller
     {
         // :TODO Move to Page handler and automatically register all fields
         $fieldList = [
-            'cpt_settings' => 'Activate CPT Manager',
-            'taxonomy_settings' => 'Activate Taxonomy Manager',
-            'widget_settings' => 'Activate Widget Manager',
-            'gallery_settings' => 'Activate Gallery Manager',
+            'cpt_settings'         => 'Activate CPT Manager',
+            'taxonomy_settings'    => 'Activate Taxonomy Manager',
+            'widget_settings'      => 'Activate Widget Manager',
+            'gallery_settings'     => 'Activate Gallery Manager',
             'testimonial_settings' => 'Activate Testimonial Manager',
-            'template_settings' => 'Activate Template Manager',
-            'login_settings' => 'Activate Login Manager',
-            'membership_settings' => 'Activate Membership Manager',
-            'chat_settings' => 'Activate Chat Manager',
+            'template_settings'    => 'Activate Template Manager',
+            'login_settings'       => 'Activate Login Manager',
+            'membership_settings'  => 'Activate Membership Manager',
+            'chat_settings'        => 'Activate Chat Manager',
         ];
 
         foreach ($fieldList as $key => $value) {
             // Push to fields array
             $this->fields[] = [
-                'id' => $key,
-                'title' => $value,
+                'id'       => $key,
+                'title'    => $value,
                 'callback' => [$this, 'checkBoxInput'],
-                'page' => $this->menuSlug,
-                'section' => ALEXANDRA_PREFIX . '_admin_index',
-                'args' => [
+                'page'     => $this->menuSlug,
+                'section'  => ALEXANDRA_PREFIX . '_admin_index',
+                'args'     => [
                     'option_name' => $this->settingSlug,
-                    'label_for' => $key,
-                    'class' => 'regular-text ui-toggle',
-                    'name' => $key,
-                    'id' => $key,
+                    'label_for'   => $key,
+                    'class'       => 'regular-text ui-toggle',
+                    'name'        => $key,
+                    'id'          => $key,
                 ],
             ];
         }
@@ -171,15 +171,15 @@ class Admin extends Controller
 
         // Set Default Options for the plugin
         $defaultSettings = [
-            'cpt_settings' => false,
-            'taxonomy_settings' => false,
-            'widget_settings' => false,
-            'gallery_settings' => false,
+            'cpt_settings'         => false,
+            'taxonomy_settings'    => false,
+            'widget_settings'      => false,
+            'gallery_settings'     => false,
             'testimonial_settings' => false,
-            'template_settings' => false,
-            'login_settings' => false,
-            'membership_settings' => false,
-            'chat_settings' => false,
+            'template_settings'    => false,
+            'login_settings'       => false,
+            'membership_settings'  => false,
+            'chat_settings'        => false,
         ];
 
         update_option($this->settingSlug, $defaultSettings);
@@ -195,7 +195,7 @@ class Admin extends Controller
         wp_localize_script('alexandra_ajax', 'alexandra_collection',
             [
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('my-nonce')
+                'nonce'    => wp_create_nonce('my-nonce')
             ]
         );
     }
@@ -208,7 +208,28 @@ class Admin extends Controller
 
     public function updateAjaxAdminSettings()
     {
-        wp_send_json(['message' => 'success']);
+        $settings = [
+            'cpt_settings'         => (bool) $_POST['cpt_settings'],
+            'taxonomy_settings'    => (bool) $_POST['taxonomy_settings'],
+            'widget_settings'      => (bool) $_POST['widget_settings'],
+            'gallery_settings'     => (bool) $_POST['gallery_settings'],
+            'testimonial_settings' => (bool) $_POST['testimonial_settings'],
+            'template_settings'    => (bool) $_POST['template_settings'],
+            'login_settings'       => (bool) $_POST['login_settings'],
+            'membership_settings'  => (bool) $_POST['membership_settings'],
+            'chat_settings'        => (bool) $_POST['chat_settings'],
+        ];
+
+        $filteredArray = array_filter($settings, function($value) {
+            return $value;
+        });
+
+
+        update_option($this->settingSlug, $filteredArray);
+
+        wp_send_json_error(null, 500);
+
+        //$this->getAjaxAdminSettings();
     }
 
 }

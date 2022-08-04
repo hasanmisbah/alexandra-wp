@@ -64,9 +64,10 @@ export default {
     const handleSettingUpdate = async (data) => {
       data.action = 'alexandra_update_admin_settings';
       await jQuery.post(getAjaxUrl, data, function (data) {
-        console.log(data);
+        state.adminSettings = data.data;
+        notifySuccess('Setting successfully updated');
       }).fail(function (e) {
-        console.log(e);
+        notifyError('Something went wrong. please try later')
       });
     }
 

@@ -42,10 +42,12 @@ export function useLoading(...options) {
 
 export function useNotification(...options) {
 
+  // Todo: remove code duplication and use a singleton instance of ElMessage
+  // @see: https://element.eleme.io/#/en-US/component/message
+
   const config = {
     duration: 3000,
     showClose: true,
-    grouping: true,
     customClass: 'alexandra-notification',
     ...options
   }
@@ -56,35 +58,38 @@ export function useNotification(...options) {
       ...config,
       ...options,
       message,
-    }, appInstance);
+    });
 
   }
 
   const notifyError = (message, ...options) => {
-    notify(message, {
+    ElMessage({
       ...config,
       ...options,
       type: 'error',
-    });
+      message,
+    },appInstance);
   }
 
   const notifySuccess = (message, ...options) => {
 
-    notify(message, {
+    ElMessage({
       ...config,
       ...options,
       type: 'success',
-    });
+      message,
+    }, appInstance);
 
   }
 
   const notifyWarning = (message, ...options) => {
 
-    notify(message, {
+    ElMessage({
       ...config,
       ...options,
       type: 'warning',
-    });
+      message,
+    }, appInstance);
   }
 
   return {

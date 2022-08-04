@@ -42,7 +42,7 @@ export default defineComponent({
       let dataToSubmit = {};
 
       for (const item of state.adminSettingFields) {
-        dataToSubmit[item.key] = item.value;
+        dataToSubmit[item.key] = item.value ? 1 : 0;
       }
 
 
