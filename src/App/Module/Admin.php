@@ -226,10 +226,7 @@ class Admin extends Controller
 
 
         update_option($this->settingSlug, $filteredArray);
-
-        wp_send_json_error(null, 500);
-
-        //$this->getAjaxAdminSettings();
+        $this->getAjaxAdminSettings();
     }
 
 }
