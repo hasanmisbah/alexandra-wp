@@ -18,7 +18,7 @@ class Form
         return sprintf('<label for="%s" class="%s">%s</label>', $for, $label, $class);
     }
 
-    public static function input($name, $class, $type='text', $id = '', $value = '')
+    public static function input($name, $class, $type = 'text', $id = '', $value = '')
     {
         $input = sprintf('<input name="%s" class="%s" type="%s" id="%s" value="%s"/>', $name, $class, $type, $id,
             $value);

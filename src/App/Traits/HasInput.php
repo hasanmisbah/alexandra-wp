@@ -14,7 +14,7 @@ trait HasInput
         $name = $args['name'] ?? $args['label_for'];
         $id = $args['id'] ?? $args['label_for'];
 
-        echo '<div class="toggle"><input type="checkbox" class="' . $classes . '" name="' . $optionName.'['.$name.']' . '" id="' .
+        echo '<div class="toggle"><input type="checkbox" class="' . $classes . '" name="' . $optionName . '[' . $name . ']' . '" id="' .
             $id . '" value="1" ' . checked(1, $fieldValue[$name] ?? 0, false) . '></div>';
     }
 }

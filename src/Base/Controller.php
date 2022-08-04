@@ -48,7 +48,6 @@ class Controller
 
     public function __construct()
     {
-
         global $wpdb;
         $this->DB = $wpdb;
 
@@ -83,7 +82,7 @@ class Controller
 
     public function applySettingLinks(): void
     {
-        add_filter('plugin_action_links_' . ALEXANDRA, [ $this, 'registerSettingLinks' ]);
+        add_filter('plugin_action_links_' . ALEXANDRA, [$this, 'registerSettingLinks']);
     }
 
     public function registerAjaxAction()

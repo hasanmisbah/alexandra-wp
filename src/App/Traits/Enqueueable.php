@@ -11,12 +11,12 @@ trait Enqueueable
 
     public function load()
     {
-        add_action('admin_enqueue_scripts', [ $this, 'registerAssets' ]);
+        add_action('admin_enqueue_scripts', [$this, 'registerAssets']);
     }
 
     public function addCss($srcs)
     {
-        if(!isAssoc($srcs)) {
+        if (!isAssoc($srcs)) {
             $this->stylesheets = array_merge($this->stylesheets, $srcs);
             return $this;
         }
@@ -27,7 +27,7 @@ trait Enqueueable
 
     public function addScript($srcs)
     {
-        if(!isAssoc($srcs)) {
+        if (!isAssoc($srcs)) {
             $this->scripts = array_merge($this->scripts, $srcs);
             return $this;
         }
@@ -44,7 +44,7 @@ trait Enqueueable
 
     public function registerStyleSheets()
     {
-        if(empty($this->stylesheets)) {
+        if (empty($this->stylesheets)) {
             return;
         }
 
@@ -57,7 +57,7 @@ trait Enqueueable
 
     public function registerScripts()
     {
-        if(empty($this->scripts)) {
+        if (empty($this->scripts)) {
             return;
         }
 

@@ -18,7 +18,7 @@ class AssetProvider
         return $this->getAsset($src, 'js/');
     }
 
-    public function getAsset($src , $subPath = '')
+    public function getAsset($src, $subPath = '')
     {
         return ALEXANDRA_URL . "assets/{$subPath}" . $src;
     }

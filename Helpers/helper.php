@@ -14,7 +14,7 @@
 
 use Alexandra\Base\Activator;
 
-if(!function_exists('alexandraActivate')) {
+if (!function_exists('alexandraActivate')) {
     /**
      * @return void
      */
@@ -24,7 +24,7 @@ if(!function_exists('alexandraActivate')) {
     }
 }
 
-if(!function_exists('alexandraDeactivate')) {
+if (!function_exists('alexandraDeactivate')) {
     /**
      * @return void
      */
@@ -34,10 +34,10 @@ if(!function_exists('alexandraDeactivate')) {
     }
 }
 
-if(!function_exists('isAssoc')) {
+if (!function_exists('isAssoc')) {
     /**
      * Determines if an array is associative.
-     * @param  array  $array
+     * @param array $array
      * @return bool
      */
     function isAssoc(array $array): bool
@@ -48,14 +48,14 @@ if(!function_exists('isAssoc')) {
     }
 }
 
-if(!function_exists('form')) {
+if (!function_exists('form')) {
     function form(): \Alexandra\Base\Form
     {
         return new \Alexandra\Base\Form();
     }
 }
 
-if (! function_exists('mix')) {
+if (!function_exists('mix')) {
     /**
      * Get the path to a versioned Mix file.
      *
@@ -73,35 +73,32 @@ if (! function_exists('mix')) {
         $rootPath = ALEXANDRA_PATH;
         $publicPath = $rootPath . $publicFolder;
 
-        if ($manifestDirectory && ! str_starts_with($manifestDirectory, '/')) {
+        if ($manifestDirectory && !str_starts_with($manifestDirectory, '/')) {
             $manifestDirectory = "/{$manifestDirectory}";
         }
 
-        if (! $manifest) {
-
-            if (! file_exists($manifestPath = ($rootPath .'mix-manifest.json') )) {
+        if (!$manifest) {
+            if (!file_exists($manifestPath = ($rootPath . 'mix-manifest.json'))) {
                 throw new Exception('The Mix manifest does not exist.');
             }
 
             $manifest = json_decode(file_get_contents($manifestPath), true);
         }
 
-        if (! str_starts_with($path, '/')) {
+        if (!str_starts_with($path, '/')) {
             $path = "/{$path}";
         }
 
         $path = $publicFolder . $path;
 
-        if (! array_key_exists("/{$path}", $manifest)) {
-
+        if (!array_key_exists("/{$path}", $manifest)) {
             throw new Exception(
-                "Unable to locate Mix file: {$path}. Please check your ".
+                "Unable to locate Mix file: {$path}. Please check your " .
                 'webpack.mix.js output paths and try again.'
             );
-
         }
 
-        return ALEXANDRA_URL.$manifest["/{$path}"];
+        return ALEXANDRA_URL . $manifest["/{$path}"];
 
 //        return file_exists($publicPath . ($manifestDirectory.'/hot'))
 //            ? "http://localhost:8080{$manifest[$path]}"

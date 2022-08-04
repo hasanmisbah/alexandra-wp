@@ -28,8 +28,7 @@ class Alexandra extends Controller
 
     final public function boot()
     {
-        if(!$this->instance) {
-
+        if (!$this->instance) {
             $this->instance = new Alexandra();
         }
 

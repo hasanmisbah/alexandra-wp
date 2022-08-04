@@ -32,7 +32,7 @@ defined('ABSPATH') or die();
 
 // Check if autoload file exist
 // if not exist it will kill the app or force to suicide the app
-if(!file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+if (!file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
     die();
 }
 

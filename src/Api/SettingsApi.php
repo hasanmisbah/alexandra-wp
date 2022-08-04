@@ -18,18 +18,18 @@ class SettingsApi
 
     public function register()
     {
-        if(!empty($this->adminPages)) {
-            add_action('admin_menu', [ $this, 'addAdminMenu' ]);
+        if (!empty($this->adminPages)) {
+            add_action('admin_menu', [$this, 'addAdminMenu']);
         }
 
-        if(!empty($this->settings)) {
+        if (!empty($this->settings)) {
             add_action('admin_init', [$this, 'registerCustomFields']);
         }
     }
 
-    public function addPage( $pages)
+    public function addPage($pages)
     {
-        if(!isAssoc($pages)) {
+        if (!isAssoc($pages)) {
             $this->adminPages = array_merge($this->adminPages, $pages);
             return $this;
         }
@@ -38,15 +38,15 @@ class SettingsApi
         return $this;
     }
 
-    public function addSubpage( $pages)
+    public function addSubpage($pages)
     {
         $this->hasSubPages = true;
 
-        if(empty($this->adminSubPages)) {
+        if (empty($this->adminSubPages)) {
             $this->setDefaultSubPage();
         }
 
-        if(!isAssoc($pages)) {
+        if (!isAssoc($pages)) {
             $this->adminSubPages = array_merge($this->adminSubPages, $pages);
             return $this;
         }
@@ -57,7 +57,7 @@ class SettingsApi
 
     public function addAdminMenu()
     {
-        if(empty($this->adminPages)) {
+        if (empty($this->adminPages)) {
             return;
         }
 
@@ -71,7 +71,7 @@ class SettingsApi
 
     public function addAdminSubMenu()
     {
-        if(empty($this->adminSubPages)) {
+        if (empty($this->adminSubPages)) {
             return;
         }
 
@@ -83,7 +83,7 @@ class SettingsApi
 
     public function addSettings($settings)
     {
-        if(isAssoc($settings)) {
+        if (isAssoc($settings)) {
             $this->settings[] = $settings;
             return $this;
         }
@@ -94,7 +94,7 @@ class SettingsApi
 
     public function addSection($sections)
     {
-        if(isAssoc($sections)) {
+        if (isAssoc($sections)) {
             $this->sections[] = $sections;
             return $this;
         }
@@ -105,7 +105,7 @@ class SettingsApi
 
     public function addField($fields)
     {
-        if(isAssoc($fields)) {
+        if (isAssoc($fields)) {
             $this->fields[] = $fields;
             return $this;
         }
@@ -147,7 +147,6 @@ class SettingsApi
             add_settings_field($field['id'], $field['title'], $field['callback'] ?? null, $field['page'],
                 $field['section'] ?? 'default', $field['args'] ?? []);
         }
-
     }
 
     public function setSubPageTitle(string $title)
@@ -158,7 +157,7 @@ class SettingsApi
 
     public function setDefaultSubPage()
     {
-        if(!$this->adminPages) {
+        if (!$this->adminPages) {
             return;
         }
 
@@ -167,11 +166,11 @@ class SettingsApi
         $subPage = [
             [
                 'parent_slug' => $adminPage['menu_slug'],
-                'page_title'  => $adminPage['page_title'],
-                'menu_title'  => $this->subPageTitle ?? $adminPage['menu_title'],
-                'capability'  => $adminPage['capability'],
-                'menu_slug'   => $adminPage['menu_slug'],
-                'callback'    => $adminPage['callback'],
+                'page_title' => $adminPage['page_title'],
+                'menu_title' => $this->subPageTitle ?? $adminPage['menu_title'],
+                'capability' => $adminPage['capability'],
+                'menu_slug' => $adminPage['menu_slug'],
+                'callback' => $adminPage['callback'],
             ],
         ];
 

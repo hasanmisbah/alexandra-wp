@@ -54,6 +54,10 @@ class Admin extends Controller
             [
                 'action' => 'alexandra_get_admin_settings',
                 'callback' => [$this, 'getAjaxAdminSettings'],
+            ],
+            [
+                'action' => 'alexandra_update_admin_settings',
+                'callback' => [$this, 'updateAjaxAdminSettings'],
             ]
         ];
     }
@@ -200,6 +204,11 @@ class Admin extends Controller
     {
         $settings = get_option($this->settingSlug);
         wp_send_json_success($settings);
+    }
+
+    public function updateAjaxAdminSettings()
+    {
+        wp_send_json(['message' => 'success']);
     }
 
 }

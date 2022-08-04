@@ -8,6 +8,5 @@ class Test extends Controller
 {
     public function register()
     {
-
     }
 }

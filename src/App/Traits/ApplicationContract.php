@@ -7,10 +7,9 @@ trait ApplicationContract
     public function register()
     {
         foreach ($this->modules as $module) {
-
             $instance = $this->instantiate($module);
 
-            if(!method_exists($instance, 'register')) {
+            if (!method_exists($instance, 'register')) {
                 return;
             }
 
@@ -24,13 +23,11 @@ trait ApplicationContract
     public function unregister()
     {
         foreach ($this->modules as $module) {
-
             $instance = $this->instantiate($module);
 
-            if(method_exists($instance, 'unregister')) {
+            if (method_exists($instance, 'unregister')) {
                 $instance->unregister();
             }
-
         }
     }
 
@@ -50,18 +47,18 @@ trait ApplicationContract
 
     public function bindModuleData($instance)
     {
-        $this->styles = array_merge($this->styles, (array) $instance->styles);
-        $this->scripts = array_merge($this->scripts, (array) $instance->scripts);
+        $this->styles = array_merge($this->styles, (array)$instance->styles);
+        $this->scripts = array_merge($this->scripts, (array)$instance->scripts);
 
-        $this->pages = array_merge($this->pages, (array) $instance->pages);
-        $this->subPages = array_merge($this->subPages, (array) $instance->subPages);
+        $this->pages = array_merge($this->pages, (array)$instance->pages);
+        $this->subPages = array_merge($this->subPages, (array)$instance->subPages);
 
-        $this->settingLinks = array_merge($this->settingLinks, (array) $instance->settingLinks);
+        $this->settingLinks = array_merge($this->settingLinks, (array)$instance->settingLinks);
 
-        $this->fieldSettings = array_merge($this->fieldSettings, (array) $instance->fieldSettings);
-        $this->fieldSection = array_merge($this->fieldSection, (array) $instance->fieldSection);
-        $this->fields = array_merge($this->fields, (array) $instance->fields);
+        $this->fieldSettings = array_merge($this->fieldSettings, (array)$instance->fieldSettings);
+        $this->fieldSection = array_merge($this->fieldSection, (array)$instance->fieldSection);
+        $this->fields = array_merge($this->fields, (array)$instance->fields);
 
-        $this->ajaxAction = array_merge($this->ajaxAction, (array) $instance->ajaxAction);
+        $this->ajaxAction = array_merge($this->ajaxAction, (array)$instance->ajaxAction);
     }
 }

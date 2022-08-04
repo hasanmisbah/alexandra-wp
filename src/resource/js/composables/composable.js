@@ -1,97 +1,96 @@
 import { ElLoading, ElMessage } from 'element-plus'
+import { getCurrentInstance } from 'vue'
+
+const appInstance = getCurrentInstance();
 
 export function useLoading(...options) {
 
-    let loader = null;
+  let loader = null;
 
-    const config = {
-        lock: true,
-        text: 'Loading...',
-        background: 'rgba(255, 255, 255, 0.9)',
-        target: '#alexandra-container',
-        ...options
-    }
+  const config = {
+    lock: true,
+    text: 'Loading...',
+    background: 'rgba(255, 255, 255, 0.9)',
+    target: '#alexandra-container',
+    ...options
+  }
 
-    const startLoading = () => {
+  const startLoading = () => {
 
-        if (loader) return;
+    if (loader) return;
 
-        loader = ElLoading.service(config);
-    }
+    loader = ElLoading.service({
+      ...config
+    });
+  }
 
-    const stopLoading = () => {
+  const stopLoading = () => {
 
-        if(!loader) return;
+    if (!loader) return;
 
-        loader.close();
+    loader.close();
 
-        loader = null;
-    }
+    loader = null;
+  }
 
-    return {
-        startLoading,
-        stopLoading
-    }
+  return {
+    startLoading,
+    stopLoading
+  }
 
 }
 
 export function useNotification(...options) {
 
-    const config = {
-        duration: 3000,
-        showClose: true,
-        grouping: true,
-        customClass: 'alexandra-notification',
-        ...options
-    }
+  const config = {
+    duration: 3000,
+    showClose: true,
+    grouping: true,
+    customClass: 'alexandra-notification',
+    ...options
+  }
 
-    const notify = (message, ...options) => {
+  const notify = (message, ...options) => {
 
-        ElMessage({
-            ...config,
-            ...options,
-            message,
-        });
+    ElMessage({
+      ...config,
+      ...options,
+      message,
+    }, appInstance);
 
-    }
+  }
 
-    const notifyError = (message, ...options) => {
+  const notifyError = (message, ...options) => {
+    notify(message, {
+      ...config,
+      ...options,
+      type: 'error',
+    });
+  }
 
-        ElMessage({
-            ...config,
-            ...options,
-            type: 'error',
-            message,
-        });
+  const notifySuccess = (message, ...options) => {
 
-    }
+    notify(message, {
+      ...config,
+      ...options,
+      type: 'success',
+    });
 
-    const notifySuccess = (message, ...options) => {
+  }
 
-        ElMessage({
-            ...config,
-            ...options,
-            type: 'success',
-            message,
-        });
+  const notifyWarning = (message, ...options) => {
 
-    }
+    notify(message, {
+      ...config,
+      ...options,
+      type: 'warning',
+    });
+  }
 
-    const notifyWarning = (message, ...options) => {
-
-        ElMessage({
-            ...config,
-            ...options,
-            type: 'warning',
-            message,
-        });
-
-    }
-
-    return {
-        notify,
-        notifyError,
-        notifySuccess,
-        notifyWarning,
-    }
+  return {
+    notify,
+    notifyError,
+    notifySuccess,
+    notifyWarning,
+  }
 }

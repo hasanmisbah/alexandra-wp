@@ -1,7 +1,9 @@
-# Alexandra 
+# Alexandra
+
 ```(A test plugin for learning wordpress plugin development)```
 
 ## Features
+
 - [ ] Modular Administration Area
 - [ ] CPT Manager
 - [ ] Custom Taxonomy Manager
@@ -14,12 +16,13 @@
 - [ ] Chat system
 
 # Development
+
 - [x] Installer
 - [x] Uninstaller
 - [x] Autoload with composer
 - [x] Provider
- - [x] Asset Provider
- -[x] View Provider
+- [x] Asset Provider
+-[x] View Provider
 - [ ] Code Clean up And Optimize Code
 - [ ] Data Modeling
 - [ ] Helper
