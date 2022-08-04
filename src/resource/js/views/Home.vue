@@ -40,7 +40,9 @@ export default {
         testimonial_settings: 0,
         widget_settings: 0,
       },
+
       loading: true,
+
     })
 
     const getSettings = async () => {
@@ -50,10 +52,14 @@ export default {
       const data = { action: LIST_AJAX_ACTION.GET_ADMIN_SETTINGS };
 
       try {
+
         const response = await jQuery.post(getAjaxUrl, data);
         state.adminSettings = response.data;
+
       } finally {
+
         state.loading = false;
+
       }
     }
 
@@ -62,12 +68,20 @@ export default {
     });
 
     const handleSettingUpdate = async (data) => {
+
       data.action = 'alexandra_update_admin_settings';
+
       await jQuery.post(getAjaxUrl, data, function (data) {
+
         state.adminSettings = data.data;
+
         notifySuccess('Setting successfully updated');
-      }).fail(function (e) {
-        notifyError('Something went wrong. please try later')
+
+      })
+        .fail(function (e) {
+
+          notifyError('Something went wrong. please try later')
+
       });
     }
 
