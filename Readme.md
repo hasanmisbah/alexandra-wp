@@ -7,6 +7,19 @@
   this plugin should update only wordpress_option data using ajax
 ```
 
+## installation
+  
+  ```
+    1. download the plugin
+    2. unzip the plugin
+    3. run `composer dump-autoload`
+    4. run `npm install`
+    5. run `npm run production`
+    6. activate the plugin
+    7. click on submit button
+    8. you will get a message that your plugin is activated
+  ```
+
 ## Features
 
 - [ ] Modular Administration Area
