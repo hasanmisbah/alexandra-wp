@@ -2,6 +2,11 @@
 
 ```(A test plugin for learning wordpress plugin development)```
 
+```
+  as per last discussion with shamim vai
+  this plugin should update only wordpress_option data using ajax
+```
+
 ## Features
 
 - [ ] Modular Administration Area
