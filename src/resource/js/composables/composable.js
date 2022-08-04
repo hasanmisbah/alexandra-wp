@@ -1,5 +1,5 @@
-import { ElLoading, ElMessage } from 'element-plus'
-import { getCurrentInstance } from 'vue'
+import { ElLoading, ElMessage } from 'element-plus';
+import { getCurrentInstance } from 'vue';
 
 const appInstance = getCurrentInstance();
 
@@ -13,7 +13,7 @@ export function useLoading(...options) {
     background: 'rgba(255, 255, 255, 0.9)',
     target: '#alexandra-container',
     ...options
-  }
+  };
 
   const startLoading = () => {
 
@@ -22,7 +22,7 @@ export function useLoading(...options) {
     loader = ElLoading.service({
       ...config
     });
-  }
+  };
 
   const stopLoading = () => {
 
@@ -31,12 +31,12 @@ export function useLoading(...options) {
     loader.close();
 
     loader = null;
-  }
+  };
 
   return {
     startLoading,
     stopLoading
-  }
+  };
 
 }
 
@@ -50,7 +50,7 @@ export function useNotification(...options) {
     showClose: true,
     customClass: 'alexandra-notification',
     ...options
-  }
+  };
 
   const notify = (message, ...options) => {
 
@@ -60,7 +60,7 @@ export function useNotification(...options) {
       message,
     });
 
-  }
+  };
 
   const notifyError = (message, ...options) => {
     ElMessage({
@@ -69,7 +69,7 @@ export function useNotification(...options) {
       type: 'error',
       message,
     },appInstance);
-  }
+  };
 
   const notifySuccess = (message, ...options) => {
 
@@ -80,7 +80,7 @@ export function useNotification(...options) {
       message,
     }, appInstance);
 
-  }
+  };
 
   const notifyWarning = (message, ...options) => {
 
@@ -90,12 +90,12 @@ export function useNotification(...options) {
       type: 'warning',
       message,
     }, appInstance);
-  }
+  };
 
   return {
     notify,
     notifyError,
     notifySuccess,
     notifyWarning,
-  }
+  };
 }

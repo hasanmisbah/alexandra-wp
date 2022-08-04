@@ -22,6 +22,8 @@
   "homepage": "https://github.com/hasanmisbah/alexandra-wp#readme",
   "devDependencies": {
     "cross-env": "^7.0.3",
+    "eslint": "^8.21.0",
+    "eslint-plugin-vue": "^9.3.0",
     "laravel-mix": "^6.0.49",
     "node-sass": "^7.0.1",
     "resolve-url-loader": "^5.0.0",

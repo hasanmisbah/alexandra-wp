@@ -8,6 +8,12 @@ class AuthorBio extends Controller
 {
     public function register()
     {
+        $settings = get_option(MODULE_SETTINGS_SLUG);
+
+        if(!isset($settings ['author_bio']) || !$settings ['author_bio']) {
+            return;
+        }
+
         add_filter('user_contactmethods', [$this, 'socialMetaFieldToUserProfile']);
         add_filter('the_content', [$this, 'addAuthorBioToPost']);
         add_action('wp_enqueue_scripts', [$this, 'enqueueStyleSheet']);
@@ -22,16 +28,15 @@ class AuthorBio extends Controller
         return $methods;
     }
 
-    public function markup()
+    public function markup($user)
     {
         $data = '
                 <div class="content">
                   <div class="card">
                     <div class="firstinfo"><img src="https://randomuser.me/api/portraits/lego/6.jpg"/>
                       <div class="profileinfo">
-                        <h1>Francesco Moustache</h1>
-                        <h3>Python Ninja</h3>
-                        <p class="bio">Lived all my life on the top of mount Fuji, learning the way to be a Ninja Dev.</p>
+                        <h1>'. $user['name'] .'</h1>
+                        <p class="bio">'. $user['bio'] .'</p>
                       </div>
                     </div>
                   </div>
@@ -52,7 +57,8 @@ class AuthorBio extends Controller
 
     public function addAuthorBioToPost($content)
     {
-        return $content . $this->markup();
+        $user = get_user_by('id', get_the_author_meta('ID'));
+        return $content . $this->markup($user);
     }
 
     public function enqueueStyleSheet()

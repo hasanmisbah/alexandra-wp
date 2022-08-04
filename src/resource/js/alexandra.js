@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
   navigationElement.forEach(element => {
     element.addEventListener('click', (e) => {
       e.preventDefault();
-      switchTab(element)
+      switchTab(element);
     });
-  })
+  });
 });
 
 
@@ -19,14 +19,14 @@ const removeActive = () => {
 
   navigationElement.forEach(element => element.classList.remove('active'));
   tabElement.forEach(element => element.classList.remove('active'));
-}
+};
 
 const switchTab = (element) => {
   removeActive();
-  element.classList.add('active')
+  element.classList.add('active');
   const tabId = element.childNodes[0].getAttribute('href');
-  const tab = document.querySelector(`${ tabId }`)
+  const tab = document.querySelector(`${ tabId }`);
   tab.classList.add('active');
-}
+};
 
 console.log('alexandra.js loaded');

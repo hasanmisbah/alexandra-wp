@@ -1,14 +1,21 @@
 <template>
-  <el-form label-width="15%" label-position="left">
+  <el-form
+    label-width="15%"
+    label-position="left"
+  >
     <el-form-item
       v-for="(setting, index) in state.adminSettingFields"
-      :label="getAdminSettingTitle(setting.key)"
       :key="`settings-${index}`"
+      :label="getAdminSettingTitle(setting.key)"
     >
-      <el-switch v-model="setting.value"/>
+      <el-switch v-model="setting.value" />
     </el-form-item>
     <div class="d-flex">
-      <el-button type="primary" @click="handleSubmit" :loading="state.loading">
+      <el-button
+        type="primary"
+        :loading="state.loading"
+        @click="handleSubmit"
+      >
         Save
       </el-button>
     </div>
@@ -16,18 +23,18 @@
 </template>
 
 <script>
-import { defineComponent, reactive, watch } from 'vue'
+import { defineComponent, reactive, watch } from 'vue';
 import { getAdminSettingTitle } from '@/util/helper';
 
 export default defineComponent({
 
   name: 'SettingForm',
-  emits: ['submit'],
 
   props: {
     onSubmit: Function,
     currentSettings: Object
   },
+  emits: ['submit'],
 
   setup(props, { emit }) {
 
@@ -35,7 +42,7 @@ export default defineComponent({
       settingData: {},
       loading: false,
       adminSettingFields: []
-    })
+    });
 
     const handleSubmit = async () => {
 
@@ -59,7 +66,7 @@ export default defineComponent({
       } finally {
         state.loading = false;
       }
-    }
+    };
 
     const populateSettingField = (settings) => {
 
@@ -73,20 +80,20 @@ export default defineComponent({
       ));
 
       state.adminSettingFields = updatedSettings;
-    }
+    };
 
     watch(() => props.currentSettings, (newSettings) => {
       state.settingData = { ...newSettings };
       populateSettingField(newSettings);
-    }, { immediate: true, deep: true })
+    }, { immediate: true, deep: true });
 
     return {
       handleSubmit,
       state,
       getAdminSettingTitle
-    }
+    };
   }
-})
+});
 </script>
 
 <style scoped>

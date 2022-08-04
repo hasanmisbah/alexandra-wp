@@ -1,15 +1,15 @@
 <template>
   <div id="alexandra-container">
-    <RouterView/>
+    <RouterView />
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'App',
-})
+});
 </script>
 
 <style scoped>

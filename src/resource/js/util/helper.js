@@ -19,11 +19,11 @@ export const getApiResponse = async (callback, { onSuccess = undefined, onError 
 
     return Promise.reject(error);
   }
-}
+};
 
 export const getAdminSettingTitle = (setting) => {
   return setting in LIST_ADMIN_SETTINGS
     ? LIST_ADMIN_SETTINGS[setting]
     : setting
     ;
-}
+};

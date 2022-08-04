@@ -12,15 +12,9 @@ class Admin extends Controller
 
     public $settingSlug;
 
-    // :TODO Refactor this and make it more generic and cleaner
-
     public function boot()
     {
-        // :TODO Move to Page handler and automatically register all assets
-
-        //add_action('wp_ajax_alex_ajax_action', [$this, 'ajaxHandler']);
-
-        $this->settingSlug = $this->menuSlug . '_settings';
+        $this->settingSlug = MODULE_SETTINGS_SLUG;
 
         $this->pages = [
             [
@@ -28,27 +22,11 @@ class Admin extends Controller
                 'menu_title' => 'Alexandra',
                 'capability' => 'manage_options',
                 'menu_slug'  => $this->menuSlug,
-                'callback'   => function () {
-                    return $this->view->render('admin.php');
-                },//fn() => $this->view->render('admin.php'),
+                'callback'   => function () { return $this->view->render('admin.php');},
                 'icon_url'   => 'dashicons-store',
                 'position'   => 110,
             ],
         ];
-        $this->subPages = [
-            [
-                'parent_slug' => $this->menuSlug,
-                'page_title'  => 'Custom Post Types',
-                'menu_title'  => 'Custom Post Types',
-                'capability'  => 'manage_options',
-                'menu_slug'   => 'cpt',
-                'callback'    => function () {
-                    echo '<h1>Custom Post Types</h1>';
-                },
-            ],
-        ];
-
-        //add_action('wp_ajax_alex_ajax_action', [$this, 'ajaxHandler']);
 
         $this->ajaxAction = [
             [
@@ -67,11 +45,6 @@ class Admin extends Controller
         // Boot up the module
         $this->boot();
 
-        // Add Custom setting, sections, fields
-        $this->setSettings();
-        $this->setSections();
-        $this->setFields();
-
         $this->settingLinks[] = '<a href="admin.php?page=' . $this->menuSlug . '">Administration</a>';
 
         // Load Module Assets
@@ -81,86 +54,24 @@ class Admin extends Controller
 
     public function loadPagesAndAssets()
     {
-        $stylesheets = [
+        $this->styles = [
             [
                 'handle' => 'Alexandra',
                 'src'    => $this->assets->getStyleSheet('alexandra.css'),
             ]
         ];
 
-        $scripts = [
+        $this->scripts = [
             [
                 'handle'    => 'Alexandra',
                 'src'       => $this->assets->getScript('app.js'),
                 'in_footer' => true,
             ],
         ];
+
+        // Add localized scripts
         add_action('admin_enqueue_scripts', [$this, 'localizeScript']);
-
-        $this->styles = $stylesheets;
-        $this->scripts = $scripts;
     }
-
-    public function setSettings()
-    {
-        // :TODO Move to Page handler and automatically register all settings
-        // Not using anymore, code reduced using a single array for settings
-
-        // Push to settings array
-        $this->fieldSettings[] = [
-            'option_group' => ALEXANDRA_PREFIX . '_settings_group',
-            'option_name'  => $this->settingSlug,
-            'callback'     => [$this, 'sanitizeCheckBox'],
-        ];
-    }
-
-    public function setSections()
-    {
-        $args = [
-            [
-                'id'    => ALEXANDRA_PREFIX . '_admin_index',
-                'title' => 'Settings',
-                'page'  => $this->menuSlug,
-            ],
-        ];
-
-        $this->fieldSection = $args;
-    }
-
-    public function setFields()
-    {
-        // :TODO Move to Page handler and automatically register all fields
-        $fieldList = [
-            'cpt_settings'         => 'Activate CPT Manager',
-            'taxonomy_settings'    => 'Activate Taxonomy Manager',
-            'widget_settings'      => 'Activate Widget Manager',
-            'gallery_settings'     => 'Activate Gallery Manager',
-            'testimonial_settings' => 'Activate Testimonial Manager',
-            'template_settings'    => 'Activate Template Manager',
-            'login_settings'       => 'Activate Login Manager',
-            'membership_settings'  => 'Activate Membership Manager',
-            'chat_settings'        => 'Activate Chat Manager',
-        ];
-
-        foreach ($fieldList as $key => $value) {
-            // Push to fields array
-            $this->fields[] = [
-                'id'       => $key,
-                'title'    => $value,
-                'callback' => [$this, 'checkBoxInput'],
-                'page'     => $this->menuSlug,
-                'section'  => ALEXANDRA_PREFIX . '_admin_index',
-                'args'     => [
-                    'option_name' => $this->settingSlug,
-                    'label_for'   => $key,
-                    'class'       => 'regular-text ui-toggle',
-                    'name'        => $key,
-                    'id'          => $key,
-                ],
-            ];
-        }
-    }
-
 
     public function onActivate()
     {
@@ -171,15 +82,7 @@ class Admin extends Controller
 
         // Set Default Options for the plugin
         $defaultSettings = [
-            'cpt_settings'         => false,
-            'taxonomy_settings'    => false,
-            'widget_settings'      => false,
-            'gallery_settings'     => false,
-            'testimonial_settings' => false,
-            'template_settings'    => false,
-            'login_settings'       => false,
-            'membership_settings'  => false,
-            'chat_settings'        => false,
+            'author_bio'        => false,
         ];
 
         update_option($this->settingSlug, $defaultSettings);
@@ -209,23 +112,11 @@ class Admin extends Controller
     public function updateAjaxAdminSettings()
     {
         $settings = [
-            'cpt_settings'         => (bool) $_POST['cpt_settings'],
-            'taxonomy_settings'    => (bool) $_POST['taxonomy_settings'],
-            'widget_settings'      => (bool) $_POST['widget_settings'],
-            'gallery_settings'     => (bool) $_POST['gallery_settings'],
-            'testimonial_settings' => (bool) $_POST['testimonial_settings'],
-            'template_settings'    => (bool) $_POST['template_settings'],
-            'login_settings'       => (bool) $_POST['login_settings'],
-            'membership_settings'  => (bool) $_POST['membership_settings'],
-            'chat_settings'        => (bool) $_POST['chat_settings'],
+            'author_bio'        => (bool)$_POST['author_bio'],
         ];
 
-        $filteredArray = array_filter($settings, function($value) {
-            return $value;
-        });
+        update_option($this->settingSlug, $settings);
 
-
-        update_option($this->settingSlug, $filteredArray);
         $this->getAjaxAdminSettings();
     }
 

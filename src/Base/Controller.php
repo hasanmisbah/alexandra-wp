@@ -87,8 +87,13 @@ class Controller
 
     public function registerAjaxAction()
     {
-        //var_dump($this->ajaxAction);
         $this->ajax->addAction($this->ajaxAction)->register();
+    }
+
+    public function isActive(string $module)
+    {
+        $options = get_option(MODULE_SETTINGS_SLUG);
+        return $options[$module] ?? false;
     }
 
 }

@@ -9,3 +9,4 @@ const ALEXANDRA_VERSION = '1.0.0';
 const ALEXANDRA_TEXT_DOMAIN = 'alexandra';
 const ALEXANDRA_MODULE_PATH = ALEXANDRA_PATH . '/Module/';
 const ALEXANDRA_ASSETS_PATH = 'assets';
+const MODULE_SETTINGS_SLUG = 'alexandra_settings';

@@ -1,25 +1,38 @@
 <template>
-  <div class="wrap" v-loading="state.loading">
-    <el-tabs type="border-card">
+  <div
+    v-loading="state.loading"
+    class="wrap"
+  >
+    <el-skeleton
+      v-if="!state.isLoaded"
+      :rows="5"
+      animated
+    />
+    <el-tabs
+      v-else
+      type="border-card"
+    >
       <el-tab-pane label="Settings">
         <SettingForm
           :current-settings="state.adminSettings"
-          :onSubmit="handleSettingUpdate"
+          :on-submit="handleSettingUpdate"
         />
       </el-tab-pane>
-      <el-tab-pane label="Update"></el-tab-pane>
-      <el-tab-pane label="About">Role</el-tab-pane>
+      <el-tab-pane label="Update" />
+      <el-tab-pane label="About">
+        Role
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
 import SettingForm from '@/Components/SettingForm';
-import { getAjaxUrl } from '@/util/helper'
-import jQuery from 'jquery'
+import { getAjaxUrl } from '@/util/helper';
+const jQuery = window.jQuery;
 import { useNotification } from '@/composables/composable';
-import { onMounted, reactive } from 'vue';
-import { LIST_ADMIN_SETTINGS, LIST_AJAX_ACTION } from '@/util/constants';
+import { onBeforeMount, reactive } from 'vue';
+import { LIST_AJAX_ACTION } from '@/util/constants';
 
 export default {
   name: 'Home',
@@ -29,21 +42,11 @@ export default {
     const { notifyError, notifySuccess, notify, notifyWarning } = useNotification();
 
     const state = reactive({
-      adminSettings: {
-        chat_settings: 0,
-        cpt_settings: 0,
-        gallery_settings: 0,
-        login_settings: 0,
-        membership_settings: 0,
-        taxonomy_settings: 0,
-        template_settings: 0,
-        testimonial_settings: 0,
-        widget_settings: 0,
-      },
-
+      adminSettings: {},
       loading: true,
+      isLoaded: false,
 
-    })
+    });
 
     const getSettings = async () => {
 
@@ -61,11 +64,7 @@ export default {
         state.loading = false;
 
       }
-    }
-
-    onMounted(() => {
-      getSettings();
-    });
+    };
 
     const handleSettingUpdate = async (data) => {
 
@@ -73,17 +72,22 @@ export default {
 
       await jQuery.post(getAjaxUrl, data, function (data) {
 
-        state.adminSettings = data.data;
+          state.adminSettings = data.data;
 
-        notifySuccess('Setting successfully updated');
+          notifySuccess('Setting successfully updated');
 
-      })
+        })
         .fail(function (e) {
 
-          notifyError('Something went wrong. please try later')
+          notifyError('Something went wrong. please try later');
 
-      });
-    }
+        });
+    };
+
+    onBeforeMount(async () => {
+      await getSettings();
+      state.isLoaded = true;
+    });
 
     return {
       handleSettingUpdate,
@@ -92,9 +96,9 @@ export default {
       notify,
       notifyWarning,
       state
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>
