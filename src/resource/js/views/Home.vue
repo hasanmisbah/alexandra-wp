@@ -75,7 +75,7 @@ export default {
 
           state.adminSettings = data.data;
 
-          notifySuccess('Setting successfully updated');
+          notifySuccess('Setting successfully updated', );
 
         })
         .fail(function (e) {

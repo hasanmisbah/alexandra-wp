@@ -40,11 +40,6 @@ export function useLoading(options) {
 
 }
 
-/**
- *
- * @param options
- * @returns {{notifyWarning: notifyWarning, notifyError: notifyError, notify: notify, notifySuccess: notifySuccess}}
- */
 export function useNotification(options) {
 
   const config = {
@@ -65,6 +60,7 @@ export function useNotification(options) {
   };
 
   const notifyError = (message, options) => {
+
     notify(message, {
       ...options,
       type: 'error',
