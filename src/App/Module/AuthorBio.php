@@ -16,7 +16,8 @@ class AuthorBio extends Controller
 
         add_filter('user_contactmethods', [$this, 'socialMetaFieldToUserProfile']);
         add_filter('the_content', [$this, 'addAuthorBioToPost']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueueStyleSheet']);
+        $this->enqueueStyleSheet();
+        //add_action('wp_enqueue_scripts', [$this, 'enqueueStyleSheet']);
     }
 
     public function socialMetaFieldToUserProfile($methods)
@@ -41,13 +42,9 @@ class AuthorBio extends Controller
                     </div>
                   </div>
                   <div class="badgescard">
-                    <span class="devicons devicons-django"></span>
-                    <span class="devicons devicons-python"> </span>
-                    <span class="devicons devicons-codepen"></span>
-                    <span class="devicons devicons-javascript_badge"></span>
-                    <span class="devicons devicons-gulp"></span>
-                    <span class="devicons devicons-angular"></span>
-                    <span class="devicons devicons-sass"> </span>
+                  <a href="'.$user['facebook'].'"><i class="fa-brands fa-facebook"></i></a>
+                  <a href="'.$user['twitter'].'"><i class="fa-brands fa-twitter"></i></a>
+                  <a href="'.$user['linkedin'].'"><i class="fa-brands fa-linkedin"></i></a>
                   </div>
                 </div>
         ';
@@ -57,19 +54,29 @@ class AuthorBio extends Controller
 
     public function addAuthorBioToPost($content)
     {
-        $user = get_user_by('id', get_the_author_meta('ID'));
+        global $post;
+
+        $author = get_user_by('id', $post->post_author);
+
+        $user = [
+            'name' => $author->nickname,
+            'bio' => get_user_meta($author->ID, 'description', true) ?? '',
+            'twitter' => get_user_meta($author->ID, 'twitter', true) ?? '',
+            'facebook' => get_user_meta($author->ID, 'facebook', true) ?? '',
+            'linkedin' => get_user_meta($author->ID, 'linkedin', true) ?? '',
+        ];
+
         return $content . $this->markup($user);
     }
 
     public function enqueueStyleSheet()
     {
-        $this->styles = [
-            [
-                'handle' => 'author',
-                'src' => $this->assets->getStyleSheet('author_bio.css'),
-                'media' => 'all',
-            ],
-        ];
-        //wp_enqueue_style('alexandra-author-bio', ALEXANDRA_URL . 'assets/css/author_bio.css');
+//        $this->styles = [
+//            [
+//                'handle' => 'author_bio',
+//                'src'    => $this->assets->getStyleSheet('author_bio.css'),
+//            ]
+//        ];
+        wp_enqueue_style('alexandra-author-bio', ALEXANDRA_URL . 'assets/css/author_bio.css');
     }
 }

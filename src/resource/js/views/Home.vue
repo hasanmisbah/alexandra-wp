@@ -18,7 +18,7 @@
           :on-submit="handleSettingUpdate"
         />
       </el-tab-pane>
-      <el-tab-pane label="Update" />
+      <el-tab-pane label="Update"/>
       <el-tab-pane label="About">
         Role
       </el-tab-pane>
@@ -29,10 +29,11 @@
 <script>
 import SettingForm from '@/Components/SettingForm';
 import { getAjaxUrl } from '@/util/helper';
-const jQuery = window.jQuery;
 import { useNotification } from '@/composables/composable';
 import { onBeforeMount, reactive } from 'vue';
 import { LIST_AJAX_ACTION } from '@/util/constants';
+
+const jQuery = window.jQuery;
 
 export default {
   name: 'Home',
