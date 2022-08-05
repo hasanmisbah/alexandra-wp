@@ -3,7 +3,7 @@ import { getCurrentInstance } from 'vue';
 
 const appInstance = getCurrentInstance();
 
-export function useLoading(...options) {
+export function useLoading(options) {
 
   let loader = null;
 
@@ -40,10 +40,7 @@ export function useLoading(...options) {
 
 }
 
-export function useNotification(...options) {
-
-  // Todo: remove code duplication and use a singleton instance of ElMessage
-  // @see: https://element.eleme.io/#/en-US/component/message
+export function useNotification(options) {
 
   const config = {
     duration: 3000,
@@ -52,44 +49,41 @@ export function useNotification(...options) {
     ...options
   };
 
-  const notify = (message, ...options) => {
+  const notify = (message, options) => {
 
     ElMessage({
       ...config,
       ...options,
       message,
+    }, appInstance);
+
+  };
+
+  const notifyError = (message, options) => {
+    notify(message, {
+      ...options,
+      type: 'error',
     });
 
   };
 
-  const notifyError = (message, ...options) => {
-    ElMessage({
-      ...config,
-      ...options,
-      type: 'error',
-      message,
-    },appInstance);
-  };
+  const notifySuccess = (message, options) => {
 
-  const notifySuccess = (message, ...options) => {
-
-    ElMessage({
-      ...config,
+    notify(message, {
       ...options,
       type: 'success',
-      message,
-    }, appInstance);
+    });
+
 
   };
 
-  const notifyWarning = (message, ...options) => {
+  const notifyWarning = (message, options) => {
 
-    ElMessage({
-      ...config,
+    notify(message, {
       ...options,
       type: 'warning',
-      message,
-    }, appInstance);
+    });
+
   };
 
   return {
