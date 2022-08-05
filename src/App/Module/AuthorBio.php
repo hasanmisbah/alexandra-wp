@@ -16,7 +16,9 @@ class AuthorBio extends Controller
 
         add_filter('user_contactmethods', [$this, 'socialMetaFieldToUserProfile']);
         add_filter('the_content', [$this, 'addAuthorBioToPost']);
-        $this->enqueueStyleSheet();
+
+        add_action('init', [$this, 'enqueueStyleSheet']);
+        //$this->enqueueStyleSheet();
     }
 
     public function socialMetaFieldToUserProfile($methods)
