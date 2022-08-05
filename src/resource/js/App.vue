@@ -12,6 +12,11 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
+<style>
+.el-message {
+  z-index: 99999999999999 !important;
+}
+.alexandra-notification {
+  z-index: 99999999999999 !important;
+}
 </style>
