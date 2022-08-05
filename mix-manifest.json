@@ -1,4 +1,6 @@
 {
     "/assets/js/app.js": "/assets/js/app.js",
-    "/assets/css/author_bio.css": "/assets/css/author_bio.css"
+    "/assets/js/ajax-handler.js": "/assets/js/ajax-handler.js",
+    "/assets/css/author_bio.css": "/assets/css/author_bio.css",
+    "/assets/css/alexandra.css": "/assets/css/alexandra.css"
 }

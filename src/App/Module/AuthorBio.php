@@ -17,7 +17,6 @@ class AuthorBio extends Controller
         add_filter('user_contactmethods', [$this, 'socialMetaFieldToUserProfile']);
         add_filter('the_content', [$this, 'addAuthorBioToPost']);
         $this->enqueueStyleSheet();
-        //add_action('wp_enqueue_scripts', [$this, 'enqueueStyleSheet']);
     }
 
     public function socialMetaFieldToUserProfile($methods)
@@ -71,12 +70,6 @@ class AuthorBio extends Controller
 
     public function enqueueStyleSheet()
     {
-//        $this->styles = [
-//            [
-//                'handle' => 'author_bio',
-//                'src'    => $this->assets->getStyleSheet('author_bio.css'),
-//            ]
-//        ];
         wp_enqueue_style('alexandra-author-bio', ALEXANDRA_URL . 'assets/css/author_bio.css');
     }
 }

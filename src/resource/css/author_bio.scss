@@ -63,8 +63,8 @@ $mainColor: #009688;
   bottom: 10px;
   @extend %flex;
   animation: animainfos 0.5s cubic-bezier(0.425, 1.04, 0.47, 1.105) 0.75s forwards;
-
-  span {
+  gap: 10px;
+  i {
     font-size: 1.6em;
     margin: 0px 6px;
     opacity: 0.6;
