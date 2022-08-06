@@ -1,24 +1,34 @@
 import { collection, LIST_ADMIN_SETTINGS } from '@/util/constants';
 
+const jQuery = window.jQuery;
 export const getAjaxUrl = collection?.ajax_url;
-export const getApiResponse = async (callback, { onSuccess = undefined, onError = undefined }) => {
-  try {
-    const response = await callback();
 
-    if (typeof onSuccess === 'function') {
-      return onSuccess(response);
-    }
+export const getApiResponse = ({ type = 'POST', data = {}, url = getAjaxUrl }) => {
 
-    return response;
+  const requestTypes = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
-  } catch (error) {
-
-    if (typeof onError === 'function') {
-      return onError(error);
-    }
-
-    return Promise.reject(error);
+  if (!requestTypes.includes(type?.toUpperCase())) {
+    throw new Error(`Invalid request type: ${ type }`);
   }
+
+  return new Promise((resolve, reject) => {
+
+    jQuery.ajax({
+        url: url,
+        data: data,
+        type: type,
+      })
+      .success((response) => {
+
+        return resolve(response);
+
+      })
+      .fail((error) => {
+
+        return  reject(error);
+
+      });
+  });
 };
 
 export const getAdminSettingTitle = (setting) => {

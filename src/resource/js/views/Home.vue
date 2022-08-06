@@ -1,7 +1,7 @@
 <template>
   <div
     v-loading="state.loading"
-    class="wrap"
+    class="wrap app-container"
   >
     <el-skeleton
       v-if="!state.isLoaded"
@@ -11,6 +11,7 @@
     <el-tabs
       v-else
       type="border-card"
+      tab-position="left"
     >
       <el-tab-pane label="Settings">
         <SettingForm
@@ -28,12 +29,10 @@
 
 <script>
 import SettingForm from '@/Components/SettingForm';
-import { getAjaxUrl } from '@/util/helper';
+import { getApiResponse } from '@/util/helper';
 import { useNotification } from '@/composables/composable';
 import { onBeforeMount, reactive } from 'vue';
 import { LIST_AJAX_ACTION } from '@/util/constants';
-
-const jQuery = window.jQuery;
 
 export default {
   name: 'Home',
@@ -56,8 +55,7 @@ export default {
       const data = { action: LIST_AJAX_ACTION.GET_ADMIN_SETTINGS };
 
       try {
-
-        const response = await jQuery.post(getAjaxUrl, data);
+        const response = await getApiResponse({ data });
         state.adminSettings = response.data;
 
       } finally {
@@ -71,18 +69,15 @@ export default {
 
       data.action = 'alexandra_update_admin_settings';
 
-      await jQuery.post(getAjaxUrl, data, function (data) {
+      try {
 
-          state.adminSettings = data.data;
+        const response = await getApiResponse({ data });
+        state.adminSettings = response.data;
+        notifySuccess('Setting successfully updated');
 
-          notifySuccess('Setting successfully updated', );
-
-        })
-        .fail(function (e) {
-
-          notifyError('Something went wrong. please try later');
-
-        });
+      } catch (e) {
+        notifyError('Something went wrong. please try later');
+      }
     };
 
     onBeforeMount(async () => {
@@ -102,6 +97,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.app-container {
+  height: 100%;
+}
 
+.el-tabs--right .el-tabs__content,
+.el-tabs--left .el-tabs__content {
+  height: 100%;
+}
 </style>

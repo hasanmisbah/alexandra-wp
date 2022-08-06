@@ -22,7 +22,9 @@ class Admin extends Controller
                 'menu_title' => 'Alexandra',
                 'capability' => 'manage_options',
                 'menu_slug'  => $this->menuSlug,
-                'callback'   => function () { return $this->view->render('admin.php');},
+                'callback'   => function () {
+                    return $this->view->render('admin.php');
+                },
                 'icon_url'   => 'dashicons-store',
                 'position'   => 110,
             ],
@@ -58,6 +60,7 @@ class Admin extends Controller
             [
                 'handle' => 'Alexandra',
                 'src'    => $this->assets->getStyleSheet('alexandra.css'),
+                'page' => $this->menuSlug
             ]
         ];
 
@@ -66,6 +69,7 @@ class Admin extends Controller
                 'handle'    => 'Alexandra',
                 'src'       => $this->assets->getScript('app.js'),
                 'in_footer' => true,
+                'page' => $this->menuSlug
             ],
         ];
 
@@ -82,7 +86,7 @@ class Admin extends Controller
 
         // Set Default Options for the plugin
         $defaultSettings = [
-            'author_bio'        => false,
+            'author_bio' => false,
         ];
 
         update_option($this->settingSlug, $defaultSettings);
@@ -112,7 +116,7 @@ class Admin extends Controller
     public function updateAjaxAdminSettings()
     {
         $settings = [
-            'author_bio'        => (bool)$_POST['author_bio'],
+            'author_bio' => (bool)$_POST['author_bio'],
         ];
 
         update_option($this->settingSlug, $settings);

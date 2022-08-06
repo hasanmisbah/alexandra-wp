@@ -36,26 +36,32 @@ trait Enqueueable
         return $this;
     }
 
-    public function registerAssets()
+    public function registerAssets($hook)
     {
-        $this->registerScripts();
-        $this->registerStyleSheets();
+        $this->registerScripts($hook);
+        $this->registerStyleSheets($hook);
     }
 
-    public function registerStyleSheets()
+    public function registerStyleSheets($hook)
     {
         if (empty($this->stylesheets)) {
             return;
         }
 
         foreach ($this->stylesheets as $styleSheet) {
+
             wp_register_style($styleSheet['handle'], $styleSheet['src'], $styleSheet['deps'] ?? [],
                 $styleSheet['ver'] ?? false, $styleSheet['media'] ?? 'all');
+
+            if(isset($styleSheet['page']) && $hook !== 'toplevel_page_' . $styleSheet['page']) {
+                return;
+            }
+
             wp_enqueue_style($styleSheet['handle']);
         }
     }
 
-    public function registerScripts()
+    public function registerScripts($hook)
     {
         if (empty($this->scripts)) {
             return;
@@ -64,6 +70,11 @@ trait Enqueueable
         foreach ($this->scripts as $script) {
             wp_register_script($script['handle'], $script['src'], $script['deps'] ?? [], $script['ver'] ?? false,
                 $script['in_footer'] ?? false);
+
+            if(isset($script['page']) && $hook !== 'toplevel_page_' . $script['page']) {
+                return;
+            }
+
             wp_enqueue_script($script['handle']);
         }
     }

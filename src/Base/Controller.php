@@ -8,9 +8,6 @@ use Alexandra\Provider\AssetProvider;
 
 class Controller
 {
-    // Global $wpdb instance
-    public $DB;
-
     // SettingsApi instance
     public $settings;
 
@@ -48,8 +45,6 @@ class Controller
 
     public function __construct()
     {
-        global $wpdb;
-        $this->DB = $wpdb;
 
         $this->settings = new SettingsApi();
         $this->assets = new AssetProvider();
