@@ -3,7 +3,7 @@ import { collection, LIST_ADMIN_SETTINGS } from '@/util/constants';
 const jQuery = window.jQuery;
 export const getAjaxUrl = collection?.ajax_url;
 
-export const getApiResponse = ({ type = 'POST', data = {}, url = getAjaxUrl }) => {
+export const getApiResponse = ({ type = 'POST', data = {}, url = getAjaxUrl, options }) => {
 
   const requestTypes = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
@@ -11,23 +11,18 @@ export const getApiResponse = ({ type = 'POST', data = {}, url = getAjaxUrl }) =
     throw new Error(`Invalid request type: ${ type }`);
   }
 
+  const ajaxOptions = {
+    type,
+    data,
+    url,
+    ...options,
+  };
+
   return new Promise((resolve, reject) => {
-
-    jQuery.ajax({
-        url: url,
-        data: data,
-        type: type,
-      })
-      .success((response) => {
-
-        return resolve(response);
-
-      })
-      .fail((error) => {
-
-        return  reject(error);
-
-      });
+    jQuery
+      .ajax(ajaxOptions)
+      .success((response) => resolve(response))
+      .fail((error) => reject(error));
   });
 };
 

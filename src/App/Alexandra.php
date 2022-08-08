@@ -11,8 +11,8 @@ class Alexandra extends Controller
 
     public $modules = [
         \Alexandra\App\Module\Admin::class,
-        \Alexandra\App\Module\Test::class,
-        \Alexandra\App\Module\AuthorBio::class
+        \Alexandra\App\Module\ContactBook::class,
+        \Alexandra\App\Module\AuthorBio::class,
     ];
 
     protected $modulerData = [

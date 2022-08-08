@@ -18,13 +18,13 @@ class Activator
 {
     public static function activate()
     {
+        (new Alexandra())->activator();
         flush_rewrite_rules();
     }
 
     public static function deactivate()
     {
-        $instance = new Alexandra();
-        $instance->unregister();
+        (new Alexandra())->unregister();
         flush_rewrite_rules();
     }
 

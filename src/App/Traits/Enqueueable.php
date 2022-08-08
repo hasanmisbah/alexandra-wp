@@ -68,6 +68,7 @@ trait Enqueueable
         }
 
         foreach ($this->scripts as $script) {
+
             wp_register_script($script['handle'], $script['src'], $script['deps'] ?? [], $script['ver'] ?? false,
                 $script['in_footer'] ?? false);
 

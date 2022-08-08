@@ -25,8 +25,19 @@ trait ApplicationContract
         foreach ($this->modules as $module) {
             $instance = $this->instantiate($module);
 
-            if (method_exists($instance, 'unregister')) {
-                $instance->unregister();
+            if (method_exists($instance, 'deactivate')) {
+                $instance->deactivate();
+            }
+        }
+    }
+
+    public function activator()
+    {
+        foreach ($this->modules as $module) {
+            $instance = $this->instantiate($module);
+
+            if (method_exists($instance, 'activate')) {
+                $instance->activate();
             }
         }
     }
