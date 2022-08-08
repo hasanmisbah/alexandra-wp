@@ -23,6 +23,12 @@ class Model
         return $results;
     }
 
+    public function where($condition)
+    {
+        $results = $this->DB->get_results("SELECT * FROM {$this->dbTable} WHERE {$condition}");
+        return $results;
+    }
+
     public function find($id)
     {
         $results = $this->DB->get_row("SELECT * FROM {$this->dbTable} WHERE {$this->primaryKey} = {$id}");
