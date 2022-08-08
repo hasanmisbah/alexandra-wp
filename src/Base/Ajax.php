@@ -9,6 +9,10 @@ class Ajax
 
     public function register()
     {
+        if(empty($this->actions)) {
+            return;
+        }
+
         foreach ($this->actions as $action) {
             add_action('wp_ajax_' . $action['action'], $action['callback']);
         }
