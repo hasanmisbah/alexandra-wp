@@ -3,12 +3,11 @@
     <el-table-column v-if="showIndex" type="index" :index="indexHandler"/>
     <el-table-column
       v-for="(column, index) in state.columns"
-      :key="`table-${index}`"
+      :key="`${state.componentId}-${index}`"
       :prop="column.key"
       :label="column.label"
       :sortable="column.sortable || false"
     >
-
       <template #default="{ row }">
         <slot
           :data="row"
@@ -22,8 +21,10 @@
   <el-pagination
     v-if="paginate"
     v-model:currentPage="state.paginationIndex"
+    v-model:page-size="state.perPage"
     :background="true"
-    layout="prev, pager, next"
+    :page-sizes="perPageOptions"
+    layout="sizes, prev, pager, next"
     :total="state.data.length"
     style="margin: 20px 0"
   />
@@ -80,6 +81,8 @@ export default defineComponent({
 
       columns: computed(() => props.columns),
 
+      componentId: computed(() => uid('data-table')),
+
       data: computed(() => props.data),
 
       paginationIndex: 1,
@@ -133,6 +136,13 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss">
+.el-pagination .el-input__inner {
+  background-color: #fff !important;
+  border-color: transparent !important;
+}
 
+.el-select .el-input.is-focus .el-input__wrapper {
+  border-color: transparent !important;
+}
 </style>

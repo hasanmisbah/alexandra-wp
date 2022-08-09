@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Contact</h1>
-    <DataTable :columns="state.columns" :data="state.data" show-index />
+    <DataTable :columns="state.columns" :data="state.data" show-index paginate />
   </div>
 </template>
 

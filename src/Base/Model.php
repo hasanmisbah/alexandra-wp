@@ -53,4 +53,26 @@ class Model
         return $this->DB->last_result;
     }
 
+    public function tableExists($table)
+    {
+        $tables = $this->DB->get_results("SHOW TABLES LIKE '{$table}'");
+        return count($tables) > 0;
+    }
+
+    public function createTable($tableName, $columns)
+    {
+        $sql = "CREATE TABLE {$tableName} (\n";
+        $sql .= implode(",\n", $columns);
+        $sql .= "\n)";
+        $this->DB->query($sql);
+    }
+
+    public function fetch($conditions)
+    {
+        $sql = "SELECT * FROM {$this->dbTable} WHERE ";
+        $sql .= implode(' AND ', $conditions);
+        $results = $this->DB->get_results($sql);
+        return $results;
+    }
+
 }
