@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Contact</h1>
-
     <DataTable :columns="state.columns" :data="state.data" show-index />
   </div>
 </template>
@@ -37,7 +36,7 @@ export default {
     });
 
     onBeforeMount(()=> {
-      state.data = contacts();
+      state.data = contacts(45);
     });
 
     return {
