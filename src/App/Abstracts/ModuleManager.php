@@ -76,20 +76,22 @@ abstract class ModuleManager
     }
 
     abstract public function activate(): void;
+
     abstract public function deactivate(): void;
+
     abstract public function unload(): void;
 
     final public function registerAssets(): void
     {
-        if(empty($this->styles) && empty($this->scripts)) {
+        if (empty($this->styles) && empty($this->scripts)) {
             return;
         }
 
-        if(!empty($this->styles)) {
+        if (!empty($this->styles)) {
             $this->assets->addCss($this->styles);
         }
 
-        if(!empty($this->scripts)) {
+        if (!empty($this->scripts)) {
             $this->assets->addScript($this->scripts);
         }
 
@@ -98,7 +100,7 @@ abstract class ModuleManager
 
     final public function registerAjaxAction()
     {
-        if(empty($this->ajaxAction)) {
+        if (empty($this->ajaxAction)) {
             return;
         }
 

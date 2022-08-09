@@ -1,5 +1,5 @@
 import { ElLoading, ElMessage } from 'element-plus';
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance, reactive } from 'vue';
 
 const appInstance = getCurrentInstance();
 
@@ -92,5 +92,18 @@ export function useNotification(options) {
     notifyError,
     notifySuccess,
     notifyWarning,
+  };
+}
+
+export function appState(){
+
+  const state = reactive({
+    loading: false,
+    errors: [],
+    errorMessage: '',
+  });
+
+  return {
+    state,
   };
 }

@@ -20,8 +20,17 @@
         />
       </el-tab-pane>
       <el-tab-pane label="Update"/>
-      <el-tab-pane label="About">
-        Role
+      <el-tab-pane
+        label="About"
+        lazy
+      >
+        <About/>
+      </el-tab-pane>
+      <el-tab-pane
+        label="Contact"
+        lazy
+      >
+        <Contact/>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -33,10 +42,12 @@ import { getApiResponse } from '@/util/helper';
 import { useNotification } from '@/composables/composable';
 import { onBeforeMount, reactive } from 'vue';
 import { LIST_AJAX_ACTION } from '@/util/constants';
+import About from '@/views/About';
+import Contact from '@/views/Contact';
 
 export default {
   name: 'Home',
-  components: { SettingForm },
+  components: { Contact, About, SettingForm },
   setup() {
 
     const { notifyError, notifySuccess, notify, notifyWarning } = useNotification();

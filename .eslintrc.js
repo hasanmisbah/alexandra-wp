@@ -21,5 +21,6 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     'vue/require-default-prop': 'off',
     'vue/html-closing-bracket-spacing': 'off',
+    'vue/max-attributes-per-line': 'off',
   }
 };
