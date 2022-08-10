@@ -2,10 +2,10 @@
 
 namespace Alexandra\App;
 
-use Alexandra\Base\Controller;
+use Alexandra\Base\Container;
 use Alexandra\App\Traits\ApplicationContract;
 
-class Alexandra extends Controller
+class Alexandra extends Container
 {
     use ApplicationContract;
 
@@ -13,15 +13,6 @@ class Alexandra extends Controller
         \Alexandra\App\Module\Admin::class,
         \Alexandra\App\Module\ContactBook::class,
         \Alexandra\App\Module\AuthorBio::class,
-    ];
-
-    protected $modulerData = [
-
-        // :TODO: Structure this data in a way that it can be used to register modules
-        'module_slug' => [
-            'module' => 'module_class',
-            'title'  => 'Module Title',
-        ],
     ];
 
     private $instance = null;

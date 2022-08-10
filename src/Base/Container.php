@@ -3,10 +3,10 @@
 namespace Alexandra\Base;
 
 use Alexandra\Api\SettingsApi;
-use Alexandra\Provider\ViewProvider;
 use Alexandra\Provider\AssetProvider;
+use Alexandra\Provider\ViewProvider;
 
-class Controller
+class Container
 {
     // SettingsApi instance
     public $settings;

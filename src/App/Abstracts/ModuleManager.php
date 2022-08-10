@@ -2,9 +2,9 @@
 
 namespace Alexandra\App\Abstracts;
 
-use Alexandra\Base\Controller;
+use Alexandra\Base\Container;
 
-abstract class ModuleManager extends Controller
+abstract class ModuleManager extends Container
 {
     abstract public function register();
 

@@ -2,7 +2,7 @@
 
 namespace Alexandra\Base;
 
-class Model
+class BaseModel
 {
     protected $columns = [];
     protected $table = '';
