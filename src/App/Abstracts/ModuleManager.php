@@ -9,6 +9,7 @@ use Alexandra\Provider\AssetProvider;
 
 abstract class ModuleManager
 {
+    // :TODO - Make this to mandatory use in all modules and remove controller from Module
     /*
      * @var SettingsApi
      */

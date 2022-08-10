@@ -1,15 +1,30 @@
 <template>
   <div>
-    <h1>Contact</h1>
+    <div class="d-flex header-content">
+      <h1>Contact</h1>
+      <div class="header-right">
+        <el-button type="primary" @click="handleCreate">Create</el-button>
+      </div>
+    </div>
     <DataTable :columns="state.columns" :data="state.data" show-index paginate>
       <template #action="{ data }">
-        <el-button type="primary" :icon="View" circle @click="handleContactSelect(data)"/>
-        <el-button type="primary" :icon="Edit" circle @click="state.sowAddUpdateModal = true"/>
-        <el-button type="danger" :icon="Delete" circle @click="onDelete(data)"/>
+        <el-button type="primary" :icon="View" circle @click="handleContactSelect(data, 'view')"/>
+        <el-button type="primary" :icon="Edit" circle @click="handleContactSelect(data, 'edit')"/>
+        <el-button type="danger" :icon="Delete" circle @click="handleContactSelect(data, 'delete')"/>
       </template>
     </DataTable>
   </div>
-  <ContactDetails v-model="state.showContactDetails" :contact="state.selectedContact"/>
+
+  <ContactDetails
+    v-model="state.showContactDetails"
+    :contact="state.selectedContact"
+  />
+
+  <ContactCreateUpdateForm
+    v-model="state.sowAddUpdateModal"
+    :contact="state.selectedContact"
+  />
+
 </template>
 
 <script>
@@ -20,10 +35,11 @@ import DataTable from '@/Components/DataTable';
 import { Delete, Edit, View } from '@element-plus/icons-vue';
 import { useConfirm, useNotification } from '@/composables/composable';
 import ContactDetails from '@/Components/Contact/ContactDetails';
+import ContactCreateUpdateForm from '@/Components/Contact/ContactCreateUpdateForm';
 
 export default {
   name: 'Contact',
-  components: { ContactDetails, DataTable },
+  components: { ContactCreateUpdateForm, ContactDetails, DataTable },
   setup() {
 
     const { confirm } = useConfirm();
@@ -56,22 +72,34 @@ export default {
       ]
     });
 
-    const handleContactSelect = (contact, type = 'view') =>  {
+    const handleContactSelect = (contact, action = 'view') => {
+
+      if (action === 'delete') {
+        return onDelete(contact);
+      }
+
       state.selectedContact = contact;
-      state.showContactDetails = true;
+
+      if (action === 'view') {
+        state.showContactDetails = true;
+        return;
+      }
+
+      if (action === 'edit') {
+        state.sowAddUpdateModal = true;
+      }
+
     };
 
-
-    const onDelete = (contact) => {
-
-      confirm({
-
-        onConfirm: () => handleDeleteContact(contact?.id),
-
-      });
+    const handleCreate = () => {
+      state.selectedContact = {};
+      state.sowAddUpdateModal = true;
     };
 
-    const handleDeleteContact = (id) => {
+    // all function defined with function keyword will run only inside the `setup` scope
+    // this will not be used in the `render` scope
+
+    function handleDeleteContact(id) {
 
       try {
 
@@ -85,8 +113,18 @@ export default {
 
       }
 
-    };
+    }
 
+    function onDelete(contact) {
+
+      confirm({
+
+        onConfirm: () => handleDeleteContact(contact?.id),
+
+      });
+    }
+
+    // this will run on lifecycle hook 'onBeforeMount'
     function beforeMount() {
       state.data = [...contacts(45)];
     }
@@ -98,13 +136,26 @@ export default {
       Delete,
       Edit,
       View,
-      onDelete,
-      handleContactSelect
+      handleContactSelect,
+      handleCreate
     };
   }
 };
 </script>
 
 <style scoped>
+.el-input__inner {
+  border-color: transparent !important;
+}
 
+.d-flex {
+  display: flex;
+}
+
+.header-content {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+}
 </style>
