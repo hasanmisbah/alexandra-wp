@@ -10,6 +10,7 @@
     :destroy-on-close="destroyOnClose"
     :close-on-click-modal="closeOnClickModal"
     modal
+    @close="$emit('close')"
   >
     <slot/>
     <template v-if="!hideFooter" #footer>
@@ -61,7 +62,7 @@ export default {
 
     destroyOnClose: {
       type: Boolean,
-      default: false,
+      default: true,
     },
 
     fullscreen: {
@@ -95,7 +96,7 @@ export default {
     },
 
   },
-  emits: ['update:modelValue', 'onConfirm', 'onCancel'],
+  emits: ['update:modelValue', 'onConfirm', 'onCancel', 'close'],
 
   setup(props, { emit }) {
 

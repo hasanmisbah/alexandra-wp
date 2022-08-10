@@ -3,15 +3,13 @@
     <h1>Contact</h1>
     <DataTable :columns="state.columns" :data="state.data" show-index paginate>
       <template #action="{ data }">
-        <el-button type="primary" :icon="View" circle/>
+        <el-button type="primary" :icon="View" circle @click="handleContactSelect(data)"/>
         <el-button type="primary" :icon="Edit" circle @click="state.sowAddUpdateModal = true"/>
         <el-button type="danger" :icon="Delete" circle @click="onDelete(data)"/>
       </template>
     </DataTable>
   </div>
-  <Modal v-model="state.sowAddUpdateModal" title="Test Modal">
-    <h1>Hello World</h1>
-  </Modal>
+  <ContactDetails v-model="state.showContactDetails" :contact="state.selectedContact"/>
 </template>
 
 <script>
@@ -21,11 +19,11 @@ import DataTable from '@/Components/DataTable';
 
 import { Delete, Edit, View } from '@element-plus/icons-vue';
 import { useConfirm, useNotification } from '@/composables/composable';
-import Modal from '@/Components/Modal';
+import ContactDetails from '@/Components/Contact/ContactDetails';
 
 export default {
   name: 'Contact',
-  components: { Modal, DataTable },
+  components: { ContactDetails, DataTable },
   setup() {
 
     const { confirm } = useConfirm();
@@ -36,6 +34,8 @@ export default {
       isLoaded: false,
       sowAddUpdateModal: false,
       data: [],
+      selectedContact: {},
+      showContactDetails: false,
       columns: [
         {
           key: 'name',
@@ -56,6 +56,10 @@ export default {
       ]
     });
 
+    const handleContactSelect = (contact, type = 'view') =>  {
+      state.selectedContact = contact;
+      state.showContactDetails = true;
+    };
 
 
     const onDelete = (contact) => {
@@ -94,7 +98,8 @@ export default {
       Delete,
       Edit,
       View,
-      onDelete
+      onDelete,
+      handleContactSelect
     };
   }
 };
