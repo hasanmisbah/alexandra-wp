@@ -2,9 +2,9 @@
 
 namespace Alexandra\App\Module;
 
-use Alexandra\Base\Controller;
+use Alexandra\App\Abstracts\ModuleManager;
 
-class ContactBook extends Controller
+class ContactBook extends ModuleManager
 {
     public function register()
     {
@@ -75,5 +75,10 @@ class ContactBook extends Controller
         $sql = "SELECT * FROM {$tableName} WHERE email = '$email'";
         $result = $wpdb->get_results($sql);
         return count($result) > 0;
+    }
+
+    public function uninstall()
+    {
+        // TODO: Implement uninstall() method.
     }
 }

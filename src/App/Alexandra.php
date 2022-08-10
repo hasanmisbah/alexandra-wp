@@ -20,7 +20,7 @@ class Alexandra extends Controller
         // :TODO: Structure this data in a way that it can be used to register modules
         'module_slug' => [
             'module' => 'module_class',
-            'title' => 'Module Title',
+            'title'  => 'Module Title',
         ],
     ];
 

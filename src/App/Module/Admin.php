@@ -2,11 +2,11 @@
 
 namespace Alexandra\App\Module;
 
-use Alexandra\Base\Controller;
+use Alexandra\App\Abstracts\ModuleManager;
 use Alexandra\App\Traits\HasInput;
 use Alexandra\App\Traits\Sanitizable;
 
-class Admin extends Controller
+class Admin extends ModuleManager
 {
     use Sanitizable, HasInput;
 
@@ -60,7 +60,7 @@ class Admin extends Controller
             [
                 'handle' => 'Alexandra',
                 'src'    => $this->assets->getStyleSheet('alexandra.css'),
-                'page' => $this->menuSlug
+                'page'   => $this->menuSlug
             ]
         ];
 
@@ -69,7 +69,7 @@ class Admin extends Controller
                 'handle'    => 'Alexandra',
                 'src'       => $this->assets->getScript('app.js'),
                 'in_footer' => true,
-                'page' => $this->menuSlug
+                'page'      => $this->menuSlug
             ],
         ];
 
@@ -124,4 +124,13 @@ class Admin extends Controller
         $this->getAjaxAdminSettings();
     }
 
+    public function deactivate()
+    {
+        // TODO: Implement deactivate() method.
+    }
+
+    public function uninstall()
+    {
+        // TODO: Implement uninstall() method.
+    }
 }
