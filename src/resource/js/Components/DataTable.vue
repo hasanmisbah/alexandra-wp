@@ -1,6 +1,6 @@
 <template>
   <el-table :data="state.renderableData" border>
-    <el-table-column v-if="showIndex" type="index" :index="indexHandler"/>
+    <el-table-column v-if="showIndex" type="index" :index="indexHandler" :label="indexLabel"/>
     <el-table-column
       v-for="(column, index) in state.columns"
       :key="`${state.componentId}-${index}`"

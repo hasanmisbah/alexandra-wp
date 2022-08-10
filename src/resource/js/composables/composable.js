@@ -1,4 +1,4 @@
-import { ElLoading, ElMessage } from 'element-plus';
+import { ElLoading, ElMessage, ElMessageBox } from 'element-plus';
 import { getCurrentInstance, reactive } from 'vue';
 
 const appInstance = getCurrentInstance();
@@ -95,7 +95,60 @@ export function useNotification(options) {
   };
 }
 
-export function appState(){
+export function useConfirm(options) {
+
+  const config = {
+    confirmButtonText: 'OK',
+    cancelButtonText: 'Cancel',
+    type: 'warning',
+    ...options,
+  };
+
+  /**
+   *
+   * @param message <String> - The message to display in the confirm dialog.
+   * @param title <String> - Optional
+   * @param onConfirm <Function>
+   * @param onCancel <Function>
+   * @param options <Object>
+   */
+  const confirm = ({
+                     message = 'Are you sure! you want to delete?',
+                     title = 'Warning!',
+                     onConfirm = (e) => e,
+                     onCancel = (c) => c,
+                     options = {},
+                   }) => {
+
+    const notificationConfig = {
+      ...config,
+      ...options
+    };
+
+    ElMessageBox.confirm(message, title, notificationConfig)
+      .then((value) => {
+
+        if (typeof onConfirm === 'function') {
+          onConfirm(value);
+        }
+
+      })
+      .catch((error) => {
+
+        if (typeof onCancel === 'function') {
+          onCancel(error);
+        }
+
+      });
+  }
+  ;
+
+  return {
+    confirm,
+  };
+}
+
+export function appState() {
 
   const state = reactive({
     loading: false,
