@@ -4,11 +4,14 @@
     <DataTable :columns="state.columns" :data="state.data" show-index paginate>
       <template #action="{ data }">
         <el-button type="primary" :icon="View" circle/>
-        <el-button type="primary" :icon="Edit" circle/>
+        <el-button type="primary" :icon="Edit" circle @click="state.sowAddUpdateModal = true"/>
         <el-button type="danger" :icon="Delete" circle @click="onDelete(data)"/>
       </template>
     </DataTable>
   </div>
+  <Modal v-model="state.sowAddUpdateModal" title="Test Modal">
+    <h1>Hello World</h1>
+  </Modal>
 </template>
 
 <script>
@@ -18,10 +21,11 @@ import DataTable from '@/Components/DataTable';
 
 import { Delete, Edit, View } from '@element-plus/icons-vue';
 import { useConfirm, useNotification } from '@/composables/composable';
+import Modal from '@/Components/Modal';
 
 export default {
   name: 'Contact',
-  components: { DataTable },
+  components: { Modal, DataTable },
   setup() {
 
     const { confirm } = useConfirm();
@@ -30,6 +34,7 @@ export default {
     const state = reactive({
       loading: true,
       isLoaded: false,
+      sowAddUpdateModal: false,
       data: [],
       columns: [
         {
