@@ -22,7 +22,7 @@ export const getApiResponse = ({ type = 'POST', data = {}, url = getAjaxUrl, opt
     jQuery
       .ajax(ajaxOptions)
       .success((response) => resolve(response))
-      .fail((error) => reject(error));
+      .error((error) => reject(error));
   });
 };
 

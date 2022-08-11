@@ -4,16 +4,25 @@ namespace Alexandra\Base;
 
 class BaseModel
 {
+    // List all columns in the table here
     protected $columns = [];
+
+    // set the table name here
     protected $table = '';
+
+    // set the primary key here
     protected $primaryKey = 'id';
+
     protected $DB = null;
+
     protected $dbTable = null;
 
     public function __construct()
     {
         global $wpdb;
+
         $this->DB = $wpdb;
+
         $this->dbTable = $this->DB->prefix . $this->table;
     }
 
@@ -53,18 +62,43 @@ class BaseModel
         return $this->DB->last_result;
     }
 
-    public function tableExists($table)
+    public function createTable()
     {
-        $tables = $this->DB->get_results("SHOW TABLES LIKE '{$table}'");
-        return count($tables) > 0;
+        if($this->isTableExist()) {
+            return;
+        }
+        // create column from associative array
+        $columns = [];
+
+        foreach ($this->columns as $key => $value) {
+            $columns[] = "{$key} {$value}";
+        }
+        // create sql query
+        $sql = "CREATE TABLE {$this->dbTable} (
+            {$this->primaryKey} mediumint(9) NOT NULL AUTO_INCREMENT,
+            " . implode(', ', $columns) . ",
+            UNIQUE KEY id ({$this->primaryKey})
+        ) {$this->DB->get_charset_collate()};";
+
+        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        dbDelta($sql);
     }
 
-    public function createTable($tableName, $columns)
+    public function dropTable()
     {
-        $sql = "CREATE TABLE {$tableName} (\n";
-        $sql .= implode(",\n", $columns);
-        $sql .= "\n)";
+        if(!$this->isTableExist()) {
+            return;
+        }
+
+        $sql = "DROP TABLE IF EXISTS {$this->dbTable};";
         $this->DB->query($sql);
+    }
+
+    public function isTableExist()
+    {
+        $sql = "SHOW TABLES LIKE '{$this->dbTable}';";
+        $result = $this->DB->get_results($sql);
+        return count($result) > 0;
     }
 
     public function fetch($conditions)

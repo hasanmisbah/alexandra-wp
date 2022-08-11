@@ -14,15 +14,21 @@
   >
     <slot/>
     <template v-if="!hideFooter" #footer>
+
       <slot name="footer">
+
         <div class="dialog-footer">
+
           <el-button @click="state.showModal = false">
-            Cancel
+            {{ cancelButtonText }}
           </el-button>
+
           <el-button :loading="state.confirming" type="primary" @click="handleConfirm">
-            Confirm
+            {{ confirmButtonText }}
           </el-button>
+
         </div>
+
       </slot>
     </template>
   </el-dialog>
@@ -93,6 +99,16 @@ export default {
     onCancel: {
       type: Function,
       required: false,
+    },
+
+    confirmButtonText: {
+      type: String,
+      default: 'OK',
+    },
+
+    cancelButtonText: {
+      type: String,
+      default: 'Cancel',
     },
 
   },

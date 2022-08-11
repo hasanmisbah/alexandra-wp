@@ -40,6 +40,7 @@ class Container
 
     protected $ajax = null;
 
+    protected $model = null;
 
     protected $ajaxAction = [];
 

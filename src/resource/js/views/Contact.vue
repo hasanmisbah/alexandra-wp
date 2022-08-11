@@ -36,6 +36,8 @@ import { Delete, Edit, View } from '@element-plus/icons-vue';
 import { useConfirm, useNotification } from '@/composables/composable';
 import ContactDetails from '@/Components/Contact/ContactDetails';
 import ContactCreateUpdateForm from '@/Components/Contact/ContactCreateUpdateForm';
+import { LIST_AJAX_ACTION } from '@/util/constants';
+import { getApiResponse } from '@/util/helper';
 
 export default {
   name: 'Contact',
@@ -124,8 +126,18 @@ export default {
       });
     }
 
+    function loadContacts(){
+      const data = {
+        action: LIST_AJAX_ACTION.GET_ALL_CONTACTS
+      };
+
+      const response = getApiResponse({ data });
+      console.log(response);
+    }
+
     // this will run on lifecycle hook 'onBeforeMount'
-    function beforeMount() {
+    async function beforeMount() {
+      await loadContacts();
       state.data = [...contacts(45)];
     }
 

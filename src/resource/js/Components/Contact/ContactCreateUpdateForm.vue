@@ -4,8 +4,9 @@
     :title="`${state.isUpdating ? 'Update' : 'Create'} Contact`"
     :on-confirm="handleConfirm"
     :on-cancel="handleCancel"
+    :confirm-button-text="`${state.isUpdating ? 'Update' : 'Create'}`"
   >
-    <!--  element-plus form  -->
+
     <el-form :model="state.contact" label-width="120px" @submit="handleConfirm">
 
       <el-form-item label="Name" prop="name">
@@ -150,17 +151,11 @@ export default {
       };
     }
 
-    watch(() => props.modelValue, (value) => {
-      state.showModal = value;
-    });
+    watch(() => props.modelValue, (value) => state.showModal = value, { immediate: true });
 
-    watch(() => state.showModal, (value) => {
-      emit('update:modelValue', value);
-    });
+    watch(() => state.showModal, (value) => emit('update:modelValue', value), { immediate: true });
 
-    watch(() => props.contact, (value) => {
-      populateContactForm(value);
-    });
+    watch(() => props.contact, (value) => populateContactForm(value));
 
     return {
       state,
@@ -174,7 +169,9 @@ export default {
 <style scoped lang="scss">
 ::v-deep(.el-input__inner) {
   border-color: transparent !important;
-  &:focus{
+  padding: 0 !important;
+
+  &:focus {
     outline-color: transparent;
     border-color: transparent;
     box-shadow: none;
