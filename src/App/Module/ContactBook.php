@@ -4,9 +4,12 @@ namespace Alexandra\App\Module;
 
 use Alexandra\App\Models\Contact;
 use Alexandra\App\Abstracts\ModuleManager;
+use Alexandra\Base\Request;
 
 class ContactBook extends ModuleManager
 {
+
+    public $request;
 
     public function register()
     {
@@ -23,7 +26,7 @@ class ContactBook extends ModuleManager
     public function getAllContacts()
     {
         $contacts = $this->model->all();
-        wp_send_json($contacts);
+        wp_send_json($this->request->method);
     }
     public function activate()
     {

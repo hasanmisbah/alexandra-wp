@@ -19,7 +19,7 @@ export const getApiResponse = ({ type = 'POST', data = {}, url = getAjaxUrl, opt
   };
 
   return new Promise((resolve, reject) => {
-    jQuery
+    return jQuery
       .ajax(ajaxOptions)
       .success((response) => resolve(response))
       .error((error) => reject(error));

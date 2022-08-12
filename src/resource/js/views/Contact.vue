@@ -126,12 +126,12 @@ export default {
       });
     }
 
-    function loadContacts(){
+    async function loadContacts(){
       const data = {
-        action: LIST_AJAX_ACTION.GET_ALL_CONTACTS
+        action: LIST_AJAX_ACTION.GET_ALL_CONTACTS,
       };
 
-      const response = getApiResponse({ data });
+      const response = await getApiResponse({ data });
       console.log(response);
     }
 
