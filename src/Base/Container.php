@@ -42,6 +42,8 @@ class Container
 
     protected $model = null;
 
+    public $request = null;
+
     protected $ajaxAction = [];
 
     public function __construct()
@@ -52,6 +54,8 @@ class Container
         $this->view = new ViewProvider();
 
         $this->ajax = new Ajax();
+
+        $this->request = new Request();
     }
 
     public function registerSettings(): void
