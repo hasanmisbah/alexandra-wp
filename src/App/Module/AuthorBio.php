@@ -14,10 +14,15 @@ class AuthorBio extends ModuleManager
             return;
         }
 
-        add_filter('user_contactmethods', [$this, 'socialMetaFieldToUserProfile']);
-        add_filter('the_content', [$this, 'addAuthorBioToPost']);
 
         add_action('init', [$this, 'enqueueStyleSheet']);
+        add_action('init', [$this, 'registerAuthorBio']);
+    }
+
+    public function registerAuthorBio()
+    {
+        add_filter('user_contactmethods', [$this, 'socialMetaFieldToUserProfile']);
+        add_filter('the_content', [$this, 'addAuthorBioToPost']);
     }
 
     public function socialMetaFieldToUserProfile($methods)
@@ -55,6 +60,10 @@ class AuthorBio extends ModuleManager
     public function addAuthorBioToPost($content)
     {
         global $post;
+
+        if(!is_single()) {
+            return $content;
+        }
 
         $author = get_user_by('id', $post->post_author);
 
