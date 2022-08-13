@@ -3,6 +3,7 @@
 namespace Alexandra\Base;
 
 use Alexandra\Api\SettingsApi;
+use Alexandra\App\Models\Model;
 use Alexandra\Provider\AssetProvider;
 use Alexandra\Provider\ViewProvider;
 
@@ -40,6 +41,7 @@ class Container
 
     protected $ajax = null;
 
+    /* @var $model Model*/
     protected $model = null;
 
     public $request = null;

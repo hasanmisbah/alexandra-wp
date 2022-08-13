@@ -23,6 +23,7 @@
   <ContactCreateUpdateForm
     v-model="state.sowAddUpdateModal"
     :contact="state.selectedContact"
+    :on-confirm="handleContactCreateUpdate"
   />
 
 </template>
@@ -68,6 +69,10 @@ export default {
           label: 'Email'
         },
         {
+          key: 'message',
+          label: 'Notes'
+        },
+        {
           key: 'action',
           label: 'Action'
         }
@@ -93,6 +98,15 @@ export default {
 
     };
 
+    const handleContactCreateUpdate = (data, isUpdating) => {
+
+      if(!isUpdating) {
+        return createContact(data);
+      }
+
+
+    };
+
     const handleCreate = () => {
       state.selectedContact = {};
       state.sowAddUpdateModal = true;
@@ -101,12 +115,39 @@ export default {
     // all function defined with function keyword will run only inside the `setup` scope
     // this will not be used in the `render` scope
 
-    function handleDeleteContact(id) {
+    async function createContact(contact) {
+
+      const data = {
+        action: LIST_AJAX_ACTION.CREATE_NEW_CONTACT,
+        ...contact
+      };
+
+      try {
+        const response = await getApiResponse({ data });
+
+        state.sowAddUpdateModal = false;
+        state.data.push(response);
+        notifySuccess('Contact created successfully');
+
+      }catch (e) {
+
+        notifyError('Something went wrong');
+
+      }
+
+    }
+
+    async function handleDeleteContact(id) {
+
+      const data = {
+        action: LIST_AJAX_ACTION.DELETE_CONTACT,
+        id: id
+      };
 
       try {
 
-        state.data = state.data.filter(contact => contact.id !== id);
-
+        const response = await getApiResponse({ data });
+        state.data = state.data.filter(contact => contact.id !== response.id);
         notifySuccess('Contact has been deleted');
 
       } catch (e) {
@@ -132,13 +173,12 @@ export default {
       };
 
       const response = await getApiResponse({ data });
-      state.data = response;
+      state.data = [...response];
     }
 
     // this will run on lifecycle hook 'onBeforeMount'
     async function beforeMount() {
       await loadContacts();
-      //state.data = [...contacts(45)];
     }
 
     onBeforeMount(() => beforeMount());
@@ -149,7 +189,8 @@ export default {
       Edit,
       View,
       handleContactSelect,
-      handleCreate
+      handleCreate,
+      handleContactCreateUpdate
     };
   }
 };

@@ -51,7 +51,7 @@ export default {
         name: '',
         phone: '',
         email: '',
-        notes: '',
+        message: '',
       }),
     },
 
@@ -92,8 +92,7 @@ export default {
         name: state.contactForm.name,
         phone: state.contactForm.phone,
         email: state.contactForm.email,
-        notes: state.contactForm.message,
-        isUpdating: state.isUpdating,
+        message: state.contactForm.message
       };
 
       state.formSubmitting = true;
@@ -101,7 +100,7 @@ export default {
       if (typeof props.onConfirm === 'function') {
 
         try {
-          props.onConfirm(dataToSubmit);
+          props.onConfirm(dataToSubmit, state.isUpdating);
         } finally {
           state.formSubmitting = true;
         }

@@ -14,16 +14,61 @@ class ContactBook extends ModuleManager
         $this->ajaxAction = [
             [
                 'action'   => 'alexandra_get_all_contacts',
-                'callback' => [$this, 'getAllContacts'],
+                'callback' => [$this, 'index'],
+            ],
+            [
+                'action'   => 'alexandra_create_contact',
+                'callback' => [$this, 'create'],
+            ],
+            [
+                'action'   => 'alexandra_delete_contact',
+                'callback' => [$this, 'destroy'],
             ],
         ];
     }
 
-    public function getAllContacts()
+    public function index()
     {
         $contacts = $this->model->all();
         wp_send_json($contacts);
     }
+
+    public function create()
+    {
+        $data = [
+            'name' => $this->request->get('name'),
+            'email' => $this->request->get('email'),
+            'phone' => $this->request->get('phone'),
+            'message' => $this->request->get('message'),
+        ];
+
+        //$data = $_REQUEST;
+
+        $validatedData = $this->model->sanitizeAll($data);
+        $contact = $this->model->create($validatedData);
+
+        wp_send_json($contact);
+    }
+
+    public function destroy()
+    {
+        $id = $this->request->get('id');
+
+        $contact = $this->model->find($id);
+
+
+
+        if(!$contact) {
+            wp_send_json(['error' => 'Contact not found'], 404);
+        }
+
+        $this->model->delete($contact->id);
+
+
+
+        wp_send_json($contact);
+    }
+
     public function activate()
     {
         $this->model->createTable();

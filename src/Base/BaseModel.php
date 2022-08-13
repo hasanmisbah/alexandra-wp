@@ -25,6 +25,7 @@ class BaseModel
 
     public function __construct()
     {
+        // :TODO Add validation with error messages
         global $wpdb;
 
         $this->DB = $wpdb;
@@ -53,7 +54,8 @@ class BaseModel
     public function create($data)
     {
         $this->DB->insert($this->dbTable, $data);
-        return $this->DB->last_result;
+        $results = $this->find($this->DB->insert_id);
+        return $results;
     }
 
     public function update($id, $data)
@@ -173,6 +175,10 @@ class BaseModel
         $sanitizedData = [];
 
         foreach ($data as $key => $value) {
+
+            if(!$value) {
+                $sanitizedData[$key] = null;
+            }
 
             if(isset($this->schema[$key])) {
                 $sanitizedData[$key] = $this->sanitizeData($key, $value);
