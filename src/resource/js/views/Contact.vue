@@ -99,7 +99,7 @@ export default {
 
     const handleContactCreateUpdate = (data, isUpdating) => {
 
-      if(!isUpdating) {
+      if (!isUpdating) {
         return createContact(data);
       }
 
@@ -129,7 +129,7 @@ export default {
         state.data.push(response);
         notifySuccess('Contact created successfully');
 
-      }catch (e) {
+      } catch (e) {
 
         notifyError('Something went wrong');
 
@@ -158,25 +158,25 @@ export default {
 
     }
 
-    async function handleUpdateContact (contact) {
+    async function handleUpdateContact(contact) {
 
-        const data = {
-          action: LIST_AJAX_ACTION.UPDATE_CONTACT,
-          ...contact
-        };
+      const data = {
+        action: LIST_AJAX_ACTION.UPDATE_CONTACT,
+        ...contact
+      };
 
-        try {
+      try {
 
-          const response = await getApiResponse({ data });
-          state.data = state.data.map(contact => (contact.id === response.id ? response : contact));
-          state.sowAddUpdateModal = false;
-          notifySuccess('Contact has been updated');
+        const response = await getApiResponse({ data });
+        state.data = state.data.map(contact => (contact.id === response.id ? response : contact));
+        state.sowAddUpdateModal = false;
+        notifySuccess('Contact has been updated');
 
-        } catch (e) {
+      } catch (e) {
 
-          notifyError('Contact has not been updated');
+        notifyError('Contact has not been updated');
 
-        }
+      }
     }
 
     function onDelete(contact) {
@@ -188,7 +188,7 @@ export default {
       });
     }
 
-    async function loadContacts(){
+    async function loadContacts() {
       const data = {
         action: LIST_AJAX_ACTION.GET_ALL_CONTACTS,
       };
