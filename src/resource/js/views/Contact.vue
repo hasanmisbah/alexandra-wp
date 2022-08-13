@@ -30,7 +30,6 @@
 
 <script>
 import { onBeforeMount, reactive } from 'vue';
-import { contacts } from '@/util/_mocks';
 import DataTable from '@/Components/DataTable';
 
 import { Delete, Edit, View } from '@element-plus/icons-vue';
