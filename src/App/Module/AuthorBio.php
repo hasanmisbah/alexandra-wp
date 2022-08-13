@@ -61,7 +61,7 @@ class AuthorBio extends ModuleManager
     {
         global $post;
 
-        if(!is_single()) {
+        if (!is_single()) {
             return $content;
         }
 

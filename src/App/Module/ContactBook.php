@@ -29,6 +29,8 @@ class ContactBook extends ModuleManager
                 'callback' => [$this, 'update'],
             ],
         ];
+
+        add_shortcode('alex_contact', [$this, 'shortCode']);
     }
 
     public function index()
@@ -46,7 +48,6 @@ class ContactBook extends ModuleManager
             'message' => $this->request->get('message'),
         ];
 
-        //$data = $_REQUEST;
 
         $validatedData = $this->model->sanitizeAll($data);
         $contact = $this->model->create($validatedData);
@@ -56,6 +57,7 @@ class ContactBook extends ModuleManager
 
     public function update()
     {
+        // :Todo refactor this add validation and move conditional logic to model
         $data = [
             'name' => $this->request->get('name'),
             'email' => $this->request->get('email'),
@@ -128,6 +130,11 @@ class ContactBook extends ModuleManager
             'email'   => 'john@exaple.com',
             'message' => 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.'
         ]);
+    }
+
+    public function shortCode($attr, $content)
+    {
+        return $this->view->render('contactShortcodeView');
     }
 
     public function uninstall()
