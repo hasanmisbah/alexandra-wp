@@ -38,7 +38,7 @@ class ContactBook extends ModuleManager
 
     public function loadInitialData()
     {
-        if ($this->exist('john@exaple.com')) {
+        if ($this->model->exist('email','john@exaple.com')) {
             return;
         }
 

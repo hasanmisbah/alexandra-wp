@@ -126,8 +126,13 @@ class BaseModel
      * @return bool
      */
 
-    public function exist($key = 'id', $value)
+    public function exist($key, $value)
     {
+        if(!$value) {
+            $key = $this->primaryKey;
+            $value = $key;
+        }
+
         $sql = "SELECT * FROM {$this->dbTable} WHERE {$key} = {$value};";
         $result = $this->DB->get_results($sql);
         return count($result) > 0;
