@@ -88,12 +88,7 @@ export default {
 
     const handleConfirm = () => {
 
-      const dataToSubmit = {
-        name: state.contactForm.name,
-        phone: state.contactForm.phone,
-        email: state.contactForm.email,
-        message: state.contactForm.message
-      };
+      const dataToSubmit = { ...state.contactForm };
 
       state.formSubmitting = true;
 

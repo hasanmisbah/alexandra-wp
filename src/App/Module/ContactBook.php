@@ -24,6 +24,10 @@ class ContactBook extends ModuleManager
                 'action'   => 'alexandra_delete_contact',
                 'callback' => [$this, 'destroy'],
             ],
+            [
+                'action'   => 'alexandra_update_contact',
+                'callback' => [$this, 'update'],
+            ],
         ];
     }
 
@@ -50,21 +54,53 @@ class ContactBook extends ModuleManager
         wp_send_json($contact);
     }
 
+    public function update()
+    {
+        $data = [
+            'name' => $this->request->get('name'),
+            'email' => $this->request->get('email'),
+            'phone' => $this->request->get('phone'),
+            'message' => $this->request->get('message'),
+        ];
+
+        $id = $this->request->get('id');
+
+        if(!$id) {
+            wp_send_json_error('No id provided');
+        }
+
+        $contact = $this->model->find($id);
+
+
+        if(!$contact) {
+            wp_send_json_error('Contact not found');
+        }
+
+        $validatedData = $this->model->sanitizeAll($data);
+
+        foreach ($validatedData as $key => $value) {
+
+            if(!$value) {
+                unset($validatedData[$key]);
+            }
+        }
+
+        $this->model->update($contact->id, $validatedData);
+        $result = $this->model->find($contact->id);
+        wp_send_json($result);
+    }
+
     public function destroy()
     {
         $id = $this->request->get('id');
 
         $contact = $this->model->find($id);
 
-
-
         if(!$contact) {
             wp_send_json(['error' => 'Contact not found'], 404);
         }
 
         $this->model->delete($contact->id);
-
-
 
         wp_send_json($contact);
     }

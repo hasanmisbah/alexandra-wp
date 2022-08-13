@@ -6,6 +6,7 @@ export const LIST_AJAX_ACTION = {
   GET_ALL_CONTACTS: 'alexandra_get_all_contacts',
   CREATE_NEW_CONTACT: 'alexandra_create_contact',
   DELETE_CONTACT: 'alexandra_delete_contact',
+  UPDATE_CONTACT: 'alexandra_update_contact',
 };
 
 export const LIST_ADMIN_SETTINGS = {

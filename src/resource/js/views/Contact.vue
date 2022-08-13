@@ -104,6 +104,7 @@ export default {
         return createContact(data);
       }
 
+      return handleUpdateContact(data);
 
     };
 
@@ -156,6 +157,27 @@ export default {
 
       }
 
+    }
+
+    async function handleUpdateContact (contact) {
+
+        const data = {
+          action: LIST_AJAX_ACTION.UPDATE_CONTACT,
+          ...contact
+        };
+
+        try {
+
+          const response = await getApiResponse({ data });
+          state.data = state.data.map(contact => (contact.id === response.id ? response : contact));
+          state.sowAddUpdateModal = false;
+          notifySuccess('Contact has been updated');
+
+        } catch (e) {
+
+          notifyError('Contact has not been updated');
+
+        }
     }
 
     function onDelete(contact) {
