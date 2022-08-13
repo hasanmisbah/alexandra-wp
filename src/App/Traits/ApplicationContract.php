@@ -54,6 +54,7 @@ trait ApplicationContract
         $this->registerMetabox();
         $this->applySettingLinks();
         $this->registerAjaxAction();
+        $this->registerShortCodes();
     }
 
     public function bindModuleData($instance)
@@ -71,5 +72,6 @@ trait ApplicationContract
         $this->fields = array_merge($this->fields, (array)$instance->fields);
 
         $this->ajaxAction = array_merge($this->ajaxAction, (array)$instance->ajaxAction);
+        $this->shortcodes = array_merge($this->shortcodes, (array)$instance->shortcodes);
     }
 }

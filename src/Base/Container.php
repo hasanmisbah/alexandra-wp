@@ -3,9 +3,10 @@
 namespace Alexandra\Base;
 
 use Alexandra\Api\SettingsApi;
+use Alexandra\Api\ShortCodeApi;
 use Alexandra\App\Models\Model;
-use Alexandra\Provider\AssetProvider;
 use Alexandra\Provider\ViewProvider;
+use Alexandra\Provider\AssetProvider;
 
 class Container
 {
@@ -48,6 +49,10 @@ class Container
 
     protected $ajaxAction = [];
 
+    protected $shortcodes = [];
+
+    protected $shortcode = null;
+
     public function __construct()
     {
 
@@ -58,6 +63,8 @@ class Container
         $this->ajax = new Ajax();
 
         $this->request = new Request();
+
+        $this->shortcode = new ShortCodeApi();
 
         $this->registerContainer();
     }
@@ -92,6 +99,11 @@ class Container
     public function registerAjaxAction()
     {
         $this->ajax->addAction($this->ajaxAction)->register();
+    }
+
+    public function registerShortCodes(): void
+    {
+        $this->shortcode->addShortCode($this->shortcodes)->register();
     }
 
     public function isActive(string $module)
