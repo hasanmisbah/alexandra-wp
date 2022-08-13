@@ -30,7 +30,12 @@ class ContactBook extends ModuleManager
             ],
         ];
 
-        add_shortcode('alex_contact', [$this, 'shortCode']);
+        $this->shortcodes = [
+            [
+                'tag'      => 'alex_contact',
+                'callback' => [$this, 'shortCode'],
+            ]
+        ];
     }
 
     public function index()
@@ -134,7 +139,7 @@ class ContactBook extends ModuleManager
 
     public function shortCode($attr, $content)
     {
-        return $this->view->render('contactShortcodeView');
+        return $this->view->render('contactShortcodeView.php', null, false);
     }
 
     public function uninstall()
