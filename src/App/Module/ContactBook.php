@@ -4,7 +4,6 @@ namespace Alexandra\App\Module;
 
 use Alexandra\App\Models\Contact;
 use Alexandra\App\Abstracts\ModuleManager;
-use Alexandra\Base\Request;
 
 class ContactBook extends ModuleManager
 {

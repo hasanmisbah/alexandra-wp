@@ -56,10 +56,10 @@ class Request
         $this->post = $_POST;
         $this->request = $_REQUEST;
         $this->url = parse_url($_SERVER['REQUEST_URI']);
-        $this->uri = explode('/', $this->url['path']);
-        $this->urlParts = explode('/', $this->url['path']);
-        $this->urlPath = explode('/', $this->url['path']);
-        $this->urlQuery = explode('/', $this->url['query']);
+        $this->uri = explode('/', $this->url['path'] ?? '');
+        $this->urlParts = explode('/', $this->url['path'] ?? '');
+        $this->urlPath = explode('/', $this->url['path'] ?? '');
+        $this->urlQuery = explode('/', $this->url['query'] ?? '');
         $this->urlFragment = explode('/', $this->url['fragment'] ?? '');
         $this->urlHost = explode('/', $this->url['host'] ?? '');
         $this->urlPort = explode('/', $this->url['port'] ?? '');

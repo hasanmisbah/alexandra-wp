@@ -132,13 +132,13 @@ export default {
       };
 
       const response = await getApiResponse({ data });
-      console.log(response);
+      state.data = response;
     }
 
     // this will run on lifecycle hook 'onBeforeMount'
     async function beforeMount() {
       await loadContacts();
-      state.data = [...contacts(45)];
+      //state.data = [...contacts(45)];
     }
 
     onBeforeMount(() => beforeMount());
