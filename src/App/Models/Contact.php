@@ -6,7 +6,7 @@ class Contact extends Model
 {
     protected $table = 'alexandra_contact_book';
 
-    protected $columns = [
+    protected $schema = [
         // The Worst Code Ever || refactor this code with a better approach by creating a seeder
         'name'    => 'varchar(255) NOT NULL',
         'phone'   => 'varchar(25) NOT NULL',

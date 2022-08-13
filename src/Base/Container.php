@@ -56,6 +56,8 @@ class Container
         $this->ajax = new Ajax();
 
         $this->request = new Request();
+
+        $this->registerContainer();
     }
 
     public function registerSettings(): void
@@ -94,6 +96,11 @@ class Container
     {
         $options = get_option(MODULE_SETTINGS_SLUG);
         return $options[$module] ?? false;
+    }
+
+    public function registerContainer()
+    {
+
     }
 
 }

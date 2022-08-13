@@ -9,11 +9,8 @@ use Alexandra\Base\Request;
 class ContactBook extends ModuleManager
 {
 
-    public $request;
-
     public function register()
     {
-        $this->model = new Contact();
 
         $this->ajaxAction = [
             [
@@ -26,7 +23,7 @@ class ContactBook extends ModuleManager
     public function getAllContacts()
     {
         $contacts = $this->model->all();
-        wp_send_json($this->request->method);
+        wp_send_json($contacts);
     }
     public function activate()
     {
@@ -53,18 +50,13 @@ class ContactBook extends ModuleManager
         ]);
     }
 
-    public function exist($email)
-    {
-        global $wpdb;
-
-        $tableName = $wpdb->prefix . 'alexandra_contact_book';
-        $sql = "SELECT * FROM {$tableName} WHERE email = '$email'";
-        $result = $wpdb->get_results($sql);
-        return count($result) > 0;
-    }
-
     public function uninstall()
     {
         // TODO: Implement uninstall() method.
+    }
+
+    public function registerContainer()
+    {
+        $this->model = new Contact();
     }
 }

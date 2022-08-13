@@ -60,9 +60,9 @@ class Request
         $this->urlParts = explode('/', $this->url['path']);
         $this->urlPath = explode('/', $this->url['path']);
         $this->urlQuery = explode('/', $this->url['query']);
-        $this->urlFragment = explode('/', $this->url['fragment']);
-        $this->urlHost = explode('/', $this->url['host']);
-        $this->urlPort = explode('/', $this->url['port']);
+        $this->urlFragment = explode('/', $this->url['fragment'] ?? '');
+        $this->urlHost = explode('/', $this->url['host'] ?? '');
+        $this->urlPort = explode('/', $this->url['port'] ?? '');
     }
 
     public function all()
