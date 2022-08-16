@@ -41,19 +41,22 @@ class BaseModel
 
     public function where($condition)
     {
-        $results = $this->DB->get_results("SELECT * FROM {$this->dbTable} WHERE {$condition}");
+        $conditions = [];
+
+        foreach ($condition as $key => $value) {
+            $conditions[] = "{$key} = {$value}";
+        }
+
+        $conditions = implode(' AND ', $conditions);
+
+        $results = $this->DB->get_results("SELECT * FROM {$this->dbTable} WHERE {$conditions}");
         return $results;
     }
 
     public function find($key, $value)
     {
-        if(!$value) {
-            $key = $this->primaryKey;
-            $value = $key;
-        }
-
-        $results = $this->DB->get_row("SELECT * FROM {$this->dbTable} WHERE {$key} = '{$value}'");
-        return $results;
+        $result = $this->where([$key => $value]);
+        return $result[0];
     }
 
     public function create($data)
@@ -80,8 +83,14 @@ class BaseModel
 
     public function delete($id)
     {
+        $model = $this->find('id', $id);
+
+        if(!$model) {
+            throw new \Exception('Model not found');
+        }
+
         $this->DB->delete($this->dbTable, array($this->primaryKey => $id));
-        return $this->DB->last_result;
+        return $model;
     }
 
     /**

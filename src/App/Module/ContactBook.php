@@ -94,16 +94,8 @@ class ContactBook extends ModuleManager
     public function destroy()
     {
         $id = $this->request->get('id');
-
-        $contact = $this->model->find('id', $id);
-
-        if(!$contact) {
-            wp_send_json(['error' => 'Contact not found'], 404);
-        }
-
-        $this->model->delete($contact->id);
-
-        wp_send_json($contact);
+        $result = $this->model->delete($id);
+        wp_send_json($result);
     }
 
     public function activate()
@@ -126,7 +118,7 @@ class ContactBook extends ModuleManager
         $this->model->create([
             'name'    => 'John Doe',
             'phone'   => '123-456-7890',
-            'email'   => 'john@exaple.com',
+            'email'   => 'john@example.com',
             'message' => 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.'
         ]);
     }
