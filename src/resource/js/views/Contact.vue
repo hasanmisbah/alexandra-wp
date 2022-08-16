@@ -7,11 +7,15 @@
       </div>
     </div>
     <DataTable :columns="state.columns" :data="state.data" show-index paginate>
+
       <template #action="{ data }">
+
         <el-button type="primary" :icon="View" circle @click="handleContactSelect(data, 'view')"/>
         <el-button type="primary" :icon="Edit" circle @click="handleContactSelect(data, 'edit')"/>
         <el-button type="danger" :icon="Delete" circle @click="handleContactSelect(data, 'delete')"/>
+
       </template>
+
     </DataTable>
   </div>
 
@@ -41,8 +45,11 @@ import { LIST_AJAX_ACTION } from '@/util/constants';
 import { copyToClipboard, getApiResponse } from '@/util/helper';
 
 export default {
+
   name: 'Contact',
+
   components: { ContactCreateUpdateForm, ContactDetails, DataTable },
+
   setup() {
 
     const { confirm } = useConfirm();
@@ -114,11 +121,16 @@ export default {
     };
 
     const handleCopyToClipboard = async (value)=> {
+
       try {
-        await copyToClipboard(value)
+
+        await copyToClipboard(value);
         notifySuccess('Copied to clipboard');
+
       }catch (e) {
+
         notifyError('Failed to copy to clipboard');
+
       }
     };
 

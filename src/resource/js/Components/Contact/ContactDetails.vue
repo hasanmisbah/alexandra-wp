@@ -81,6 +81,7 @@ export default {
     const state = reactive({
 
       showModal: false,
+
       contact: {
         name: '',
         phone: '',
