@@ -4,6 +4,7 @@ const webpackConfig = require('./webpack.config.js');
 mix
   .sass('src/resource/css/author_bio.scss', 'assets/css')
   .css('src/resource/css/alexandra.css', 'assets/css')
+  .sass('src/resource/css/contact_short_code.scss', 'assets/css')
   .js('src/resource/js/app.js', 'assets/js')
   .vue({ version: 3 })
   .js('src/resource/js/ajax-handler.js', 'assets/js')

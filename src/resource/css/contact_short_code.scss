@@ -1,123 +1,59 @@
-.section {
-  padding: 100px 0;
-  position: relative;
-}
-.gray-bg {
-  background-color: #f5f5f5;
-}
-img {
-  max-width: 100%;
-}
-img {
-  vertical-align: middle;
-  border-style: none;
-}
-/* About Me
----------------------*/
-.about-text {
-  h3 {
-    font-size: 45px;
-    font-weight: 700;
-    margin: 0 0 6px;
+.user-profile {
+
+  margin: auto;
+  width: 25em;
+  height: 11em;
+  background: #fff;
+  border-radius: .3em;
+
+  .username {
+    margin: -4.40em auto auto 5.80em;
+    color: #658585;
+    font-size: 1.53em;
+    font-family: "Coda", sans-serif;
+    font-weight: bold;
   }
 
-  h6 {
-    font-weight: 600;
-    margin-bottom: 15px;
-  }
-  p {
-    font-size: 18px;
-    max-width: 450px;
-  }
-
-  p mark {
-    font-weight: 600;
-    color: #20247b;
-  }
-}
-
-@media (max-width: 767px) {
-  .about-text h3 {
-    font-size: 35px;
+  .bio {
+    display: inline-block;
+    margin: auto auto auto 10.43em;
+    color: #e76043;
+    font-size: .87em;
+    font-family: "varela round", sans-serif;
   }
 
-  .about-text h6 {
-    font-size: 18px;
+  & > .description {
+    margin: 1.35em 4.43em auto auto;
+    width: 14em;
+    color: #c0c5c5;
+    font-size: .87em;
+    font-family: "varela round", sans-serif;
   }
-}
 
-.about-list {
-  padding-top: 10px;
-  .media {
-    padding: 5px 0;
+  & > img.avatar {
+    padding: .7em;
+    margin-left: .3em;
+    margin-top: .3em;
+    height: 6.23em;
+    width: 6.23em;
+    border-radius: 18em;
   }
-  p {
-    margin: 0;
-    font-size: 15px;
+  .data {
+    margin: 2em auto;
+    height: 5px;
+    background: #4eb6b6;
+    text-align: center;
+    border-radius: 0 0 .3em .3em;
   }
-  label {
-    color: #20247b;
-    font-weight: 600;
-    width: 88px;
-    margin: 0;
-    position: relative;
-    &:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 11px;
-        width: 1px;
-        height: 12px;
-        background: #20247b;
-        -moz-transform: rotate(15deg);
-        -o-transform: rotate(15deg);
-        -ms-transform: rotate(15deg);
-        -webkit-transform: rotate(15deg);
-        transform: rotate(15deg);
-        margin: auto;
-        opacity: 0.5;
-      }
-  }
-}
 
-@media (max-width: 991px) {
-  .about-avatar {
-    margin-top: 30px;
+  span {
+    font-family: "varela round", sans-serif;
+    color: #e3eeee;
+    white-space: nowrap;
+    font-size: 1.27em;
+    font-weight: bold;
+    &:hover {
+      color: #daebea;
+    }
   }
-}
-
-.about-section .counter {
-  padding: 22px 20px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
-}
-.about-section .counter .count-data {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.about-section .counter .count {
-  font-weight: 700;
-  color: #20247b;
-  margin: 0 0 5px;
-}
-.about-section .counter p {
-  font-weight: 600;
-  margin: 0;
-}
-mark {
-  background-image: linear-gradient(rgba(252, 83, 86, 0.6), rgba(252, 83, 86, 0.6));
-  background-size: 100% 3px;
-  background-repeat: no-repeat;
-  background-position: 0 bottom;
-  background-color: transparent;
-  padding: 0;
-  color: currentColor;
-}
-.theme-color {
-  color: #fc5356;
-}
-.dark-color {
-  color: #20247b;
 }

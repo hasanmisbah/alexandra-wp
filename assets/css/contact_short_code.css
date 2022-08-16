@@ -1,0 +1,53 @@
+.user-profile {
+  margin: auto;
+  width: 25em;
+  height: 11em;
+  background: #fff;
+  border-radius: 0.3em;
+}
+.user-profile .username {
+  margin: -4.4em auto auto 5.8em;
+  color: #658585;
+  font-size: 1.53em;
+  font-family: "Coda", sans-serif;
+  font-weight: bold;
+}
+.user-profile .bio {
+  display: inline-block;
+  margin: auto auto auto 10.43em;
+  color: #e76043;
+  font-size: 0.87em;
+  font-family: "varela round", sans-serif;
+}
+.user-profile > .description {
+  margin: 1.35em 4.43em auto auto;
+  width: 14em;
+  color: #c0c5c5;
+  font-size: 0.87em;
+  font-family: "varela round", sans-serif;
+}
+.user-profile > img.avatar {
+  padding: 0.7em;
+  margin-left: 0.3em;
+  margin-top: 0.3em;
+  height: 6.23em;
+  width: 6.23em;
+  border-radius: 18em;
+}
+.user-profile .data {
+  margin: 2em auto;
+  height: 5px;
+  background: #4eb6b6;
+  text-align: center;
+  border-radius: 0 0 0.3em 0.3em;
+}
+.user-profile span {
+  font-family: "varela round", sans-serif;
+  color: #e3eeee;
+  white-space: nowrap;
+  font-size: 1.27em;
+  font-weight: bold;
+}
+.user-profile span:hover {
+  color: #daebea;
+}

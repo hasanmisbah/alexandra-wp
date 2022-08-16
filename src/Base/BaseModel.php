@@ -45,9 +45,14 @@ class BaseModel
         return $results;
     }
 
-    public function find($id)
+    public function find($key = 'id', $value)
     {
-        $results = $this->DB->get_row("SELECT * FROM {$this->dbTable} WHERE {$this->primaryKey} = {$id}");
+        if(!$value) {
+            $key = $this->primaryKey;
+            $value = $this->$key;
+        }
+
+        $results = $this->DB->get_row("SELECT * FROM {$this->dbTable} WHERE {$key} = '{$value}'");
         return $results;
     }
 

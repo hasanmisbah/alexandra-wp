@@ -36,6 +36,7 @@ class ContactBook extends ModuleManager
                 'callback' => [$this, 'shortCode'],
             ]
         ];
+        add_action('wp_enqueue_scripts', [$this, 'registerStylesheet']);
     }
 
     public function index()
@@ -139,7 +140,23 @@ class ContactBook extends ModuleManager
 
     public function shortCode($attr, $content)
     {
-        return $this->view->render('contactShortcodeView.php', null, false);
+        if(!$attr['email']) {
+            return 'No id provided';
+        }
+
+        $contact = $this->model->find('email', $attr['email']);
+
+        if(!$contact) {
+            return 'Contact not found';
+        }
+
+        return $this->view->render('contactShortcodeView.php', ['data' => $contact], false);
+    }
+
+    public function registerStylesheet()
+    {
+        wp_register_style('alexandra-contact-short-code', $this->assets->getStyleSheet('contact_short_code.css'));
+        wp_enqueue_style('alexandra-contact-short-code');
     }
 
     public function uninstall()
