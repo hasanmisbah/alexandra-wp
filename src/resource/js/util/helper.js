@@ -36,3 +36,24 @@ export const getAdminSettingTitle = (setting) => {
 export const uid = () => {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 };
+
+export const copyToClipboard = async (text) => {
+
+  return new Promise((resolve, reject) => {
+
+    // for new browsers
+    if(navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      return resolve(true);
+    }
+
+    // for old browser
+    if(document.execCommand){
+      document.execCommand('copy', false, text);
+      return resolve(true);
+    }
+
+    return reject(true);
+
+  });
+};
