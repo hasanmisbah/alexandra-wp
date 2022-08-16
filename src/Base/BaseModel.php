@@ -45,11 +45,11 @@ class BaseModel
         return $results;
     }
 
-    public function find($key = 'id', $value)
+    public function find($key, $value)
     {
         if(!$value) {
             $key = $this->primaryKey;
-            $value = $this->$key;
+            $value = $key;
         }
 
         $results = $this->DB->get_row("SELECT * FROM {$this->dbTable} WHERE {$key} = '{$value}'");
@@ -59,14 +59,23 @@ class BaseModel
     public function create($data)
     {
         $this->DB->insert($this->dbTable, $data);
-        $results = $this->find($this->DB->insert_id);
-        return $results;
+        $result = $this->find('id', $this->DB->insert_id);
+        return $result;
     }
 
     public function update($id, $data)
     {
+        $model = $this->find('id', $id);
+
+        if(!$model) {
+            throw new \Exception('Model not found');
+        }
+
         $this->DB->update($this->dbTable, $data, array($this->primaryKey => $id));
-        return $this->DB->last_result;
+
+        $result = $this->find('id', $id);
+
+        return $result;
     }
 
     public function delete($id)
@@ -133,7 +142,7 @@ class BaseModel
      * @return bool
      */
 
-    public function exist($key, $value)
+    public function exist($key, $value = null)
     {
         if(!$value) {
             $key = $this->primaryKey;

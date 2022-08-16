@@ -77,13 +77,6 @@ class ContactBook extends ModuleManager
             wp_send_json_error('No id provided');
         }
 
-        $contact = $this->model->find($id);
-
-
-        if(!$contact) {
-            wp_send_json_error('Contact not found');
-        }
-
         $validatedData = $this->model->sanitizeAll($data);
 
         foreach ($validatedData as $key => $value) {
@@ -93,8 +86,8 @@ class ContactBook extends ModuleManager
             }
         }
 
-        $this->model->update($contact->id, $validatedData);
-        $result = $this->model->find($contact->id);
+        $result = $this->model->update($id, $validatedData);
+
         wp_send_json($result);
     }
 
@@ -102,7 +95,7 @@ class ContactBook extends ModuleManager
     {
         $id = $this->request->get('id');
 
-        $contact = $this->model->find($id);
+        $contact = $this->model->find('id', $id);
 
         if(!$contact) {
             wp_send_json(['error' => 'Contact not found'], 404);
