@@ -18,6 +18,7 @@
   <ContactDetails
     v-model="state.showContactDetails"
     :contact="state.selectedContact"
+    :copy-handler="handleCopyToClipboard"
   />
 
   <ContactCreateUpdateForm
@@ -37,7 +38,7 @@ import { useConfirm, useNotification } from '@/composables/composable';
 import ContactDetails from '@/Components/Contact/ContactDetails';
 import ContactCreateUpdateForm from '@/Components/Contact/ContactCreateUpdateForm';
 import { LIST_AJAX_ACTION } from '@/util/constants';
-import { getApiResponse } from '@/util/helper';
+import { copyToClipboard, getApiResponse } from '@/util/helper';
 
 export default {
   name: 'Contact',
@@ -110,6 +111,15 @@ export default {
     const handleCreate = () => {
       state.selectedContact = {};
       state.sowAddUpdateModal = true;
+    };
+
+    const handleCopyToClipboard = async (value)=> {
+      try {
+        await copyToClipboard(value)
+        notifySuccess('Copied to clipboard');
+      }catch (e) {
+        notifyError('Failed to copy to clipboard');
+      }
     };
 
     // all function defined with function keyword will run only inside the `setup` scope
@@ -211,7 +221,8 @@ export default {
       View,
       handleContactSelect,
       handleCreate,
-      handleContactCreateUpdate
+      handleContactCreateUpdate,
+      handleCopyToClipboard
     };
   }
 };

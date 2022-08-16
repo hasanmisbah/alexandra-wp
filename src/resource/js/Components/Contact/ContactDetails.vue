@@ -3,28 +3,36 @@
     <table class="contact-table" style="width: 100%">
       <tbody>
         <tr>
-          <th scope="row">
-            Name
-          </th>
+          <th scope="row"> Name</th>
           <td> {{ state.contact.name }}</td>
         </tr>
         <tr>
-          <th scope="row">
-            Phone
-          </th>
+          <th scope="row"> Phone</th>
           <td>{{ state.contact.phone }}</td>
         </tr>
         <tr>
-          <th scope="row">
-            Email
-          </th>
+          <th scope="row"> Email</th>
           <td>{{ state.contact.email }}</td>
         </tr>
         <tr>
-          <th scope="row">
-            Message
-          </th>
+          <th scope="row"> Message</th>
           <td>{{ state.contact.message }}</td>
+        </tr>
+
+        <tr>
+          <th scope="row"/>
+          <td>
+            <el-input ref="shortCode" :value="formatShortcode(state.contact.email)" readonly>
+              <template #append>
+                <el-button
+                  type="primary"
+                  :icon="CopyDocument"
+                  title="Copy to clipboard"
+                  @click="handleCopyToClipboard"
+                />
+              </template>
+            </el-input>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -33,7 +41,8 @@
 
 <script>
 import Modal from '@/Components/Modal';
-import { reactive, watch } from 'vue';
+import { reactive, watch, ref, nextTick } from 'vue';
+import { CopyDocument } from '@element-plus/icons-vue';
 
 export default {
   name: 'ContactDetails',
@@ -57,6 +66,12 @@ export default {
       })
 
     },
+
+    copyHandler: {
+      type: Function,
+      default: () => {
+      }
+    },
   },
 
   emits: ['update:modelValue'],
@@ -74,6 +89,25 @@ export default {
       },
 
     });
+
+   const shortCode = ref(null);
+
+    const formatShortcode = (value) => `[alex_contact email="${value}"]`;
+
+    const handleCopyToClipboard = () => {
+
+      nextTick(async () => {
+
+        shortCode.value.focus();
+        shortCode.value.select();
+
+        const text = shortCode.value.ref.value;
+        await props.copyHandler(text);
+
+      });
+    };
+
+
 
     watch(() => props.modelValue, (value) => {
 
@@ -93,7 +127,11 @@ export default {
     });
 
     return {
-      state
+      state,
+      formatShortcode,
+      CopyDocument,
+      shortCode,
+      handleCopyToClipboard
     };
   },
 };
@@ -126,5 +164,27 @@ export default {
     }
   }
 
+}
+
+::v-deep(.el-input__inner) {
+  border-color: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+
+  &.disabled, &:disabled {
+    background-color: transparent;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  &:read-only, &.readonly {
+    background-color: transparent;
+  }
+
+  &:focus {
+    outline-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
 }
 </style>
