@@ -39,24 +39,31 @@ class BaseModel
         return $results;
     }
 
-    public function where($condition)
+    public function where($conditions, $limit = null)
     {
-        $conditions = [];
+        $query = "SELECT * FROM {$this->dbTable} WHERE ";
 
-        foreach ($condition as $key => $value) {
-            $conditions[] = "{$key} = {$value}";
+        $query .= implode(' AND ', array_map(function ($key, $value) {
+            return "{$key} = '{$value}'";
+        }, array_keys($conditions), array_values($conditions)));
+
+        if($limit) {
+            $query .= " LIMIT {$limit} ";
         }
 
-        $conditions = implode(' AND ', $conditions);
-
-        $results = $this->DB->get_results("SELECT * FROM {$this->dbTable} WHERE {$conditions}");
+        $results = $this->DB->get_results($query);
         return $results;
     }
 
     public function find($key, $value)
     {
-        $result = $this->where([$key => $value]);
-        return $result[0];
+        $results = $this->where([$key => $value], 1);
+
+        if(empty($results)) {
+            return null;
+        }
+
+        return $results[0];
     }
 
     public function create($data)
