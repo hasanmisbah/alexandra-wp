@@ -210,4 +210,9 @@ class BaseModel
         return count($result) > 0;
     }
 
+    public function getTableName()
+    {
+        return $this->table;
+    }
+
 }

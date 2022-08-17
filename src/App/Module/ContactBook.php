@@ -36,7 +36,17 @@ class ContactBook extends ModuleManager
                 'callback' => [$this, 'shortCode'],
             ]
         ];
+
         add_action('wp_enqueue_scripts', [$this, 'registerStylesheet']);
+
+        add_filter("before_create_{$this->model->getTableName()}_model", [$this, 'validateData']);
+
+        add_filter("before_update_{$this->model->getTableName()}_model", [$this, 'validateData']);
+    }
+
+    public function validateData($data)
+    {
+       return $data;
     }
 
     public function index()
