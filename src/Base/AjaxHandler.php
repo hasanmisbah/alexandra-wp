@@ -2,7 +2,7 @@
 
 namespace Alexandra\Base;
 
-class Ajax
+class AjaxHandler
 {
     public $actions = [];
 

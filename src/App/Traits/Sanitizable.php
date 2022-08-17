@@ -4,26 +4,52 @@ namespace Alexandra\App\Traits;
 
 trait Sanitizable
 {
-    public function sanitizeCheckBox($input)
+    protected $sanitizationRules = [];
+
+    /**
+     * @param $key string
+     * @param $value mixed
+     * @return mixed
+     * @throws \Exception
+     */
+    public function sanitizeData($key, $value)
     {
-        $fieldList = [
-            'cpt_settings' => 'Activate CPT Manager',
-            'taxonomy_settings' => 'Activate Taxonomy Manager',
-            'widget_settings' => 'Activate Widget Manager',
-            'gallery_settings' => 'Activate Gallery Manager',
-            'testimonial_settings' => 'Activate Testimonial Manager',
-            'template_settings' => 'Activate Template Manager',
-            'login_settings' => 'Activate Login Manager',
-            'membership_settings' => 'Activate Membership Manager',
-            'chat_settings' => 'Activate Chat Manager',
-        ];
-
-        $output = [];
-
-        foreach ($fieldList as $key => $value) {
-            $output[$key] = isset($input[$key]) ? 1 : 0;
+        if(empty($this->sanitizationRules)) {
+            return $value;
         }
 
-        return $output;
+        if(!isset($this->schema[$key])) {
+            throw new \Exception("{$key} is not a valid column");
+        }
+
+        if(!isset($this->sanitizationRules[$key])) {
+            throw new \Exception("{$key} Sanitization rule is not defined");
+        }
+
+        return call_user_func($this->sanitizationRules[$key], $value);
+    }
+
+    /**
+     * Sanitize All Data
+     * @param $data array
+     * @return array
+     * @throws \Exception
+     */
+    public function sanitizeAll(array $data)
+    {
+        $sanitizedData = [];
+
+        foreach ($data as $key => $value) {
+
+            if(!$value) {
+                $sanitizedData[$key] = null;
+            }
+
+            if(isset($this->schema[$key])) {
+                $sanitizedData[$key] = $this->sanitizeData($key, $value);
+            }
+        }
+
+        return $sanitizedData;
     }
 }

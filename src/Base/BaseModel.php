@@ -2,8 +2,11 @@
 
 namespace Alexandra\Base;
 
+use Alexandra\App\Traits\Sanitizable;
+
 class BaseModel
 {
+    use Sanitizable;
     // List all columns in the table here
     protected $columns = [];
 
@@ -12,9 +15,6 @@ class BaseModel
 
     // set the table name here
     protected $table = '';
-
-    // sanitization rules
-    protected $sanitizationRules = [];
 
     // set the primary key here
     protected $primaryKey = 'id';
@@ -106,7 +106,7 @@ class BaseModel
      */
     public function createTable()
     {
-        if ($this->isTableExist()) {
+        if ($this->doesTableExists()) {
             return;
         }
         // create column from associative array
@@ -132,7 +132,7 @@ class BaseModel
      */
     public function dropTable()
     {
-        if (!$this->isTableExist()) {
+        if (!$this->doesTableExists()) {
             return;
         }
 
@@ -144,7 +144,7 @@ class BaseModel
      * Check if table exist in the database
      * @return bool
      */
-    public function isTableExist()
+    public function doesTableExists()
     {
         $sql = "SHOW TABLES LIKE '{$this->dbTable}';";
         $result = $this->DB->get_results($sql);
@@ -168,54 +168,6 @@ class BaseModel
         $sql = "SELECT * FROM {$this->dbTable} WHERE {$key} = {$value};";
         $result = $this->DB->get_results($sql);
         return count($result) > 0;
-    }
-
-    /**
-     * @param $key string
-     * @param $value mixed
-     * @return mixed
-     * @throws \Exception
-     */
-
-    public function sanitizeData($key, $value)
-    {
-        if(empty($this->sanitizationRules)) {
-            return $value;
-        }
-
-        if(!isset($this->schema[$key])) {
-            throw new \Exception("{$key} is not a valid column");
-        }
-
-        if(!isset($this->sanitizationRules[$key])) {
-            throw new \Exception("{$key} Sanitization rule is not defined");
-        }
-
-        return call_user_func($this->sanitizationRules[$key], $value);
-    }
-
-    /**
-     * Sanitize All Data
-     * @param $data array
-     * @return array
-     * @throws \Exception
-     */
-    public function sanitizeAll(array $data)
-    {
-        $sanitizedData = [];
-
-        foreach ($data as $key => $value) {
-
-            if(!$value) {
-                $sanitizedData[$key] = null;
-            }
-
-            if(isset($this->schema[$key])) {
-                $sanitizedData[$key] = $this->sanitizeData($key, $value);
-            }
-        }
-
-        return $sanitizedData;
     }
 
 }

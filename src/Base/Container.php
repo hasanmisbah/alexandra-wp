@@ -60,7 +60,7 @@ class Container
         $this->assets = new AssetProvider();
         $this->view = new ViewProvider();
 
-        $this->ajax = new Ajax();
+        $this->ajax = new AjaxHandler();
 
         $this->request = new Request();
 
