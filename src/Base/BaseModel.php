@@ -33,12 +33,20 @@ class BaseModel
         $this->dbTable = $this->DB->prefix . $this->table;
     }
 
+    /**
+     * @return array|object|\stdClass[]|null
+     */
     public function all()
     {
         $results = $this->DB->get_results("SELECT * FROM {$this->dbTable}");
         return $results;
     }
 
+    /**
+     * @param $conditions array('column' => 'value')
+     * @param $limit int|null
+     * @return array|object|\stdClass[]|null
+     */
     public function where($conditions, $limit = null)
     {
         $query = "SELECT * FROM {$this->dbTable} WHERE ";
@@ -55,6 +63,11 @@ class BaseModel
         return $results;
     }
 
+    /**
+     * @param $key string
+     * @param $value string
+     * @return mixed|\stdClass|null
+     */
     public function find($key, $value)
     {
         $results = $this->where([$key => $value], 1);
@@ -66,13 +79,27 @@ class BaseModel
         return $results[0];
     }
 
+    /**
+     * @param $data array ['column' => 'value']
+     * @return mixed|\stdClass|null
+     */
     public function create($data)
     {
+        apply_filters('before_create_model', $data);
+
         $this->DB->insert($this->dbTable, $data);
         $result = $this->find('id', $this->DB->insert_id);
+
+        apply_filters('after_create_model', $result);
         return $result;
     }
 
+    /**
+     * @param $id int
+     * @param $data array ['column' => 'value']
+     * @return mixed|\stdClass|null
+     * @throws \Exception
+     */
     public function update($id, $data)
     {
         $model = $this->find('id', $id);
@@ -81,13 +108,21 @@ class BaseModel
             throw new \Exception('Model not found');
         }
 
-        $this->DB->update($this->dbTable, $data, array($this->primaryKey => $id));
+        apply_filters('before_update_model', $data, $id);
 
+        $this->DB->update($this->dbTable, $data, array($this->primaryKey => $id));
         $result = $this->find('id', $id);
+
+        apply_filters('after_update_model', $data, $id);
 
         return $result;
     }
 
+    /**
+     * @param $id int
+     * @return mixed|\stdClass|null
+     * @throws \Exception
+     */
     public function delete($id)
     {
         $model = $this->find('id', $id);
@@ -96,7 +131,12 @@ class BaseModel
             throw new \Exception('Model not found');
         }
 
+        do_action('before_delete_model', $model);
+
         $this->DB->delete($this->dbTable, array($this->primaryKey => $id));
+
+        do_action('after_delete_model', $model);
+
         return $model;
     }
 
