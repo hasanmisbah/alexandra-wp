@@ -85,12 +85,12 @@ class BaseModel
      */
     public function create($data)
     {
-        apply_filters('before_create_model', $data);
+        apply_filters('before_create_'.$this->table.'_model', $data);
 
         $this->DB->insert($this->dbTable, $data);
         $result = $this->find('id', $this->DB->insert_id);
 
-        apply_filters('after_create_model', $result);
+        apply_filters('after_create_'.$this->table.'_model', $result);
         return $result;
     }
 
@@ -108,12 +108,12 @@ class BaseModel
             throw new \Exception('Model not found');
         }
 
-        apply_filters('before_update_model', $data, $id);
+        apply_filters('before_update_'.$this->table.'_model', $data, $id);
 
         $this->DB->update($this->dbTable, $data, array($this->primaryKey => $id));
         $result = $this->find('id', $id);
 
-        apply_filters('after_update_model', $data, $id);
+        apply_filters('after_update_'.$this->table.'_model', $data, $id);
 
         return $result;
     }
@@ -131,11 +131,11 @@ class BaseModel
             throw new \Exception('Model not found');
         }
 
-        do_action('before_delete_model', $model);
+        do_action('before_delete_'.$this->table.'_model', $model);
 
         $this->DB->delete($this->dbTable, array($this->primaryKey => $id));
 
-        do_action('after_delete_model', $model);
+        do_action('after_delete_'.$this->table.'_model', $model);
 
         return $model;
     }
