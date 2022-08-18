@@ -10,6 +10,13 @@ use Alexandra\Provider\AssetProvider;
 
 class Container
 {
+    /*
+     * ::$instances is an array that holds all the instances of the classes
+     * the idea behind all the instance is to have a single instance of the class
+     * and to use it whenever we need it and run from a single container instance
+     * is quite useful for us because we can use the same instance of the class
+     * [note : perhaps it's impossible to use WordPress functions from the class itself]
+     * */
     // SettingsApi instance
     public $settings;
 
@@ -52,6 +59,8 @@ class Container
     protected $shortcodes = [];
 
     protected $shortcode = null;
+
+    public $controller;
 
     public function __construct()
     {

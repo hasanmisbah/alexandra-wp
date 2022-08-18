@@ -8,8 +8,6 @@ use Alexandra\App\Controllers\ContactController;
 
 class ContactBook extends ModuleManager
 {
-    public $controller;
-
     public function register()
     {
         $this->controller = new ContactController();

@@ -2,10 +2,13 @@
 
 namespace Alexandra\Base;
 
+use Alexandra\App\Models\Model;
+
 class BaseController
 {
     public $request = null;
 
+    /* @var $model Model */
     public $model = null;
 
     public $response = null;
@@ -14,10 +17,10 @@ class BaseController
     {
         $this->request = new Request();
         $this->response = new Response();
-        $this->register();
+        $this->init();
     }
 
-    public function register()
+    public function init()
     {
 
     }

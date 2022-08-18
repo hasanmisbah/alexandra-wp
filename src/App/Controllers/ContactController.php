@@ -7,9 +7,8 @@ use Alexandra\App\Models\Contact;
 class ContactController extends Controller
 {
 
-    public function __construct()
+    public function init()
     {
-        parent::__construct();
         $this->model = new Contact();
     }
 
