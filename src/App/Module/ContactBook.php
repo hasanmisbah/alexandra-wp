@@ -4,29 +4,32 @@ namespace Alexandra\App\Module;
 
 use Alexandra\App\Models\Contact;
 use Alexandra\App\Abstracts\ModuleManager;
+use Alexandra\App\Controllers\ContactController;
 
 class ContactBook extends ModuleManager
 {
+    public $controller;
 
     public function register()
     {
+        $this->controller = new ContactController();
 
         $this->ajaxAction = [
             [
                 'action'   => 'alexandra_get_all_contacts',
-                'callback' => [$this, 'index'],
+                'callback' => [$this->controller, 'index'],
             ],
             [
                 'action'   => 'alexandra_create_contact',
-                'callback' => [$this, 'create'],
-            ],
-            [
-                'action'   => 'alexandra_delete_contact',
-                'callback' => [$this, 'destroy'],
+                'callback' => [$this->controller, 'create'],
             ],
             [
                 'action'   => 'alexandra_update_contact',
-                'callback' => [$this, 'update'],
+                'callback' => [$this->controller, 'update'],
+            ],
+            [
+                'action'   => 'alexandra_delete_contact',
+                'callback' => [$this->controller, 'destroy'],
             ],
         ];
 
@@ -38,75 +41,8 @@ class ContactBook extends ModuleManager
         ];
 
         add_action('wp_enqueue_scripts', [$this, 'registerStylesheet']);
-
-        add_filter("before_create_{$this->model->getTableName()}_model", [$this, 'validateData']);
-
-        add_filter("before_update_{$this->model->getTableName()}_model", [$this, 'validateData']);
     }
 
-    public function validateData($data)
-    {
-       return $data;
-    }
-
-    public function index()
-    {
-        $contacts = $this->model->all();
-        wp_send_json($contacts);
-    }
-
-    public function create()
-    {
-        $data = [
-            'name' => $this->request->get('name'),
-            'email' => $this->request->get('email'),
-            'phone' => $this->request->get('phone'),
-            'message' => $this->request->get('message'),
-        ];
-
-
-        $validatedData = $this->model->sanitizeAll($data);
-        $contact = $this->model->create($validatedData);
-
-        wp_send_json($contact);
-    }
-
-    public function update()
-    {
-        // :Todo refactor this add validation and move conditional logic to model
-        $data = [
-            'name' => $this->request->get('name'),
-            'email' => $this->request->get('email'),
-            'phone' => $this->request->get('phone'),
-            'message' => $this->request->get('message'),
-        ];
-
-        $id = $this->request->get('id');
-
-        if(!$id) {
-            wp_send_json_error('No id provided');
-        }
-
-        $validatedData = $this->model->sanitizeAll($data);
-
-        foreach ($validatedData as $key => $value) {
-
-            if(!$value) {
-                unset($validatedData[$key]);
-            }
-        }
-
-        $result = $this->model->update($id, $validatedData);
-
-        wp_send_json($result);
-    }
-
-    public function destroy()
-    {
-        $id = $this->request->get('id');
-        $result = $this->model->delete($id);
-        wp_send_json($result);
-    }
 
     public function activate()
     {
